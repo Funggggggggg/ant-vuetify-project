@@ -16,18 +16,22 @@ const router = createRouter({
   routes: setupLayouts(routes),
 })
 
-// START_LOCATION 重新整理時，將沒有頁面轉入至有頁面
+// beforeEach 進入每頁之前執行 function
+// 用 jwt tokens 將資料拿回 pinia
+// START_LOCATION 初始導航 => 路由器的初始路由位置 (是固定寫法)
 router.beforeEach(async (to, from, next) => {
   const { apiAuth } = useAxios()
   const user = useUserStore()
 
+  // 若是初始導航且有 jwt 才去呼叫
+  // 6. 進到這取資料 => isLoggedIn、login、logout 是取 stores/user 的 useUserStore 的 computed
   if (from === START_LOCATION && user.isLoggedIn) {
     try {
       const { data } = await apiAuth.get('/user/profile')
       user.login(data.result)
     } catch (error) {
       console.log(error)
-      user.logout()
+      user.logout() //有錯誤直接登出
     }
   }
 
@@ -48,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title + ' | 購物網站'
+  document.title = to.meta.title + ' | 紀念巢'
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804

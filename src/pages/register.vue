@@ -7,6 +7,8 @@
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12">
+        <!-- 當我送出中時，把整個表單 disable 停用 ，submit 是自己寫的 fuction-->
+        <!-- ⭐ 阻擋使用者重複點按 -->
         <v-form :disabled="isSubmitting" @submit.prevent="submit">
           <v-text-field
             v-model="account.value.value"
@@ -34,6 +36,7 @@
             minlength="4" maxlength="20" counter
           />
           <div class="text-center">
+            <!-- 送出中就顯示 loading (轉圈圈的東西)-->
             <v-btn :loading="isSubmitting" type="submit" color="primary">{{ '建立帳號'}}</v-btn>
           </div>
         </v-form>
@@ -46,10 +49,7 @@
 import { useForm, useField } from 'vee-validate' //類似表單功能，與 yup 搭配使用
 import * as yup from 'yup'// 語法參照檔案
 import validator from 'validator' //後端 email 驗證
-<<<<<<< HEAD
-import { useI18n } from 'vue-i18n';
-=======
->>>>>>> d52b0bb5917d7c937a3ca1fa68f1e7ce50b66edc
+
 import { useAxios } from '@/composables/axios'
 import { useSnackbar } from 'vuetify-use-dialog'
 import { useRouter } from 'vue-router'
@@ -105,16 +105,19 @@ const email = useField('email')
 const password = useField('password')
 const passwordConfirm = useField('passwordConfirm')
 
+// values => 表單內的每個資料 => 會幫你再看一次表單內的所有欄位是否 ok
 const submit = handleSubmit(async (values) => {
-  // ⭐ composible組合式 => 自己寫 use 的方式
+  // ⭐ composible 組合式 => 自己寫 use 的方式
+  // 放在 composable/ axios
   try {
     await api.post('/user', {
       account: values.account,
       email: values.email,
       password: values.password
+      // 後端不用做密碼確認也無妨
     })
     createSnackbar({
-      text: 'register.success',
+      text: '註冊成功',
       snackbarProps: {
         color: 'green'
       }
@@ -123,7 +126,8 @@ const submit = handleSubmit(async (values) => {
   } catch (error) {
     console.log(error)
     createSnackbar({
-      text: 'api.' + (error?.response?.data?.message || '未知錯誤'),
+      // 所有錯誤一起處理
+      text: error?.response?.data?.message || '未知錯誤',
       snackbarProps: {
         color: 'red'
       }

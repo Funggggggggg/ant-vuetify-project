@@ -1,14 +1,17 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue' // pinia 的 setup 寫法，另一種是  option寫法 (番茄5鐘使用state, actions, getters)
 import UserRole from '@/enums/UserRole'
 
 export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const account = ref('')
   const role = ref(UserRole.USER)
-  const cart = ref(0)
+  const collectedPosts = ref([]) // 收藏的文章清單 (postId 陣列)
+  const createdPosts = ref([]) // 發佈過的文章清單 (postId 陣列)
 
+  // 檢查是否登入
+  // 6. (isLoggedIn 來源)
   const isLoggedIn = computed(() => {
     return token.value.length > 0
   })
@@ -21,29 +24,38 @@ export const useUserStore = defineStore('user', () => {
     return `https://api.multiavatar.com/${account.value}.png`
   })
 
+  // 6. (再放進 login)
   const login = (data) => {
+    // 如果有 token 就換 token ，沒有就不換
+    // 4. 將取到的資料放到 pinia 裡面 (再到安全性 => 最下方保存 token)
     if (data.token) {
       token.value = data.token
     }
     account.value = data.account
     role.value = data.role
-    cart.value = data.cart
+    collectedPosts.value = data.collected || []  // 從後端同步收藏清單
+    createdPosts.value = data.created || []  // 從後端同步發佈清單
   }
 
+  // 6. (出錯即登出)
   const logout = () => {
     token.value = ''
     account.value = ''
     role.value = UserRole.USER
-    cart.value = 0
+    collectedPosts.value = [] // 清空收藏文章
+    createdPosts.value = [] // 清空發佈文章
   }
 
   return {
-    token, account, role, cart,
+    token, account, role,
+    collectedPosts, createdPosts,
     isLoggedIn, isAdmin, avatar, login, logout
   }
 }, {
+  // Pinia 的 persist 插件可以自動幫助我們將 狀態 (state) 保存到 localStorage 或 sessionStorage
   persist: {
-    key: 'shop-user',
+    key: 'ant-user',
+    // 5. 因為安全性關係，只有保存 token jwt，其他資訊需另外跟後端要 => 進到前端路由 router/index
     pick: ['token']
   }
 })

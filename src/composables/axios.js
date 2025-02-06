@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useUserStore } from '@/stores/user'
 
+// baseURL 縮減網址
 // baseURL = http://localhost:4000
 // axios.post('/user')
 // axios.post('/user/login')
@@ -9,6 +10,8 @@ import { useUserStore } from '@/stores/user'
 // axios.post('http://localhost:4000/user')
 // axios.post('http://localhost:4000/user/login')
 
+// 複製一份 axios 出來修改，而不是拿 defalt 直接改，容易出問題
+// VITE_API 縮寫在 .env.develoment 中
 const api = axios.create({
   baseURL: import.meta.env.VITE_API
 })
@@ -18,9 +21,9 @@ const apiAuth = axios.create({
 
 // axios 攔截器
 // 1. axios.get() / axios.post()
-// 2. interceptors.request(請求設定 => {})
+// 2. 送出攔截器(先加點料) interceptors.request(config請求設定 => {}) 送出攔截器(先加點料)
 // 3. 送出
-// 4. interceptors.response(成功處理, 失敗處理)
+// 4. 回來攔截器 interceptors.response(成功處理, 失敗處理)
 // 5. await / .then().catch()
 apiAuth.interceptors.request.use(config => {
   const user = useUserStore()
@@ -57,7 +60,8 @@ apiAuth.interceptors.response.use(res => res, async error => {
   return Promise.reject(error)
 })
 
-
+// 匯出給其他地方使用
+// useAxios => 配合組合式語法用 use 開頭，Axios 這個檔案名
 export const useAxios = () => {
     return { api, apiAuth  }
 }
