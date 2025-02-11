@@ -2,15 +2,15 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1 class="text-center">{{ $t('nav.adminProducts') }}</h1>
+        <h1 class="text-center">{{ $t('nav.adminPosts') }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12">
-        <v-data-table :items="products" :headers="headers" :search="search">
+        <v-data-table :items="posts" :headers="headers" :search="search">
           <template #top>
             <v-toolbar>
               <!-- 新增按鈕 -->
-              <v-btn @click="openDialog(null)">{{ $t('adminProduct.new') }}</v-btn>
+              <v-btn @click="openDialog(null)">{{ $t('adminPost.new') }}</v-btn>
               <v-spacer></v-spacer>
               <v-text-field v-model="search" prepend-inner-icon="mdi-magnify" variant="underlined"></v-text-field>
             </v-toolbar>
@@ -29,7 +29,7 @@
             {{ new Date(value).toLocaleString() }}
           </template>
           <template #[`item.category`]="{ value }">
-            {{ $t('productCategory.' + value) }}
+            {{ $t('postCategory.' + value) }}
           </template>
           <!-- 虛擬欄位 -->
           <template #[`item.edit`]="{ item }">
@@ -43,16 +43,16 @@
   <v-dialog v-model="dialog.open" persistent>
     <v-form :disabled="isSubmitting" @submit.prevent="submit">
       <v-card>
-        <v-card-title>{{ $t(dialog.id ? 'adminProduct.edit' : 'adminProduct.new')}}</v-card-title>
+        <v-card-title>{{ $t(dialog.id ? 'adminPost.edit' : 'adminPost.new')}}</v-card-title>
         <v-card-text>
           <v-text-field
             v-model="name.value.value"
-            :label="$t('product.name')"
+            :label="$t('post.name')"
             :error-messages="name.errorMessage.value"
           ></v-text-field>
           <v-text-field
             v-model="price.value.value"
-            :label="$t('product.price')"
+            :label="$t('post.price')"
             :error-messages="price.errorMessage.value"
             type="number" min="0"
           ></v-text-field>
@@ -60,18 +60,18 @@
             v-model="category.value.value"
             :error-messages="category.errorMessage.value"
             :items="categoryOptions"
-            :label="$t('product.category')"
+            :label="$t('post.category')"
             item-title="text"
             item-value="value"
           ></v-select>
           <v-checkbox
             v-model="sell.value.value"
-            :label="$t('product.onSell')"
+            :label="$t('post.onSell')"
             :error-messages="sell.errorMessage.value"
           ></v-checkbox>
           <v-textarea
             v-model="description.value.value"
-            :label="$t('product.description')"
+            :label="$t('post.description')"
             :error-messages="description.errorMessage.value"
           ></v-textarea>
           <VueFileAgent
@@ -86,8 +86,8 @@
         </v-card-text>
         <v-card-actions>
           <!-- 取消送出按鈕 -->
-          <v-btn @click="closeDialog">{{ $t('adminProduct.cancel') }}</v-btn>
-          <v-btn type="submit" :loading="isSubmitting">{{ $t('adminProduct.submit') }}</v-btn>
+          <v-btn @click="closeDialog">{{ $t('adminPost.cancel') }}</v-btn>
+          <v-btn type="submit" :loading="isSubmitting">{{ $t('adminPost.submit') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
@@ -106,29 +106,29 @@ const { t } = useI18n()
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
 
-const products = reactive([])
+const posts = reactive([])
 const search = ref('')
 // 商品資料欄位
 const headers = computed(() => {
   return [
   { title: 'ID', key: '_id', sortable: true },
-    { title: t('product.image'), key: 'image', sortable: false },
-    { title: t('product.name'), key: 'name', sortable: true },
-    { title: t('product.description'), key: 'description', sortable: true },
-    { title: t('product.price'), key: 'price', sortable: true },
-    { title: t('product.category'), key: 'category', sortable: true },
-    { title: t('product.sell'), key: 'sell', sortable: true },
-    { title: t('product.createdAt'), key: 'createdAt', sortable: true },
-    { title: t('product.updatedAt'), key: 'updatedAt', sortable: true },
+    { title: t('post.image'), key: 'image', sortable: false },
+    { title: t('post.name'), key: 'name', sortable: true },
+    { title: t('post.description'), key: 'description', sortable: true },
+    { title: t('post.price'), key: 'price', sortable: true },
+    { title: t('post.category'), key: 'category', sortable: true },
+    { title: t('post.sell'), key: 'sell', sortable: true },
+    { title: t('post.createdAt'), key: 'createdAt', sortable: true },
+    { title: t('post.updatedAt'), key: 'updatedAt', sortable: true },
     // 可設定虛擬欄位 => 不在後端的欄位 => 顯示方式要自己寫
-    { title: t('adminProduct.edit'), key: 'edit', sortable: false },
+    { title: t('adminPost.edit'), key: 'edit', sortable: false },
   ]
 })
 
-const getProducts = async () => {
+const getPosts = async () => {
   try {
-    const { data } = await apiAuth.get('/product/all')
-    products.push(...data.result)
+    const { data } = await apiAuth.get('/post/all')
+    posts.push(...data.result)
   } catch (error) {
     console.log(error)
     createSnackbar({
@@ -140,7 +140,7 @@ const getProducts = async () => {
   }
 
 }
-getProducts()
+getPosts()
 
 // 表單
 const dialog = ref({
@@ -171,21 +171,21 @@ const closeDialog = () => {
 const schema = yup.object({
   name: yup
     .string()
-    .required(t('api.productNameRequired')),
+    .required(t('api.postNameRequired')),
   price: yup
     .number()
-    .required(t('api.productPriceRequired'))
-    .min(0, t('api.productPriceTooSmall')),
+    .required(t('api.postPriceRequired'))
+    .min(0, t('api.postPriceTooSmall')),
   description: yup
     .string()
-    .required(t('api.productDescriptionRequired')),
+    .required(t('api.postDescriptionRequired')),
   category: yup
     .string()
-    .required(t('api.productCategoryRequired'))
-    .oneOf(['food', 'drink', 'music', 'phone'], t('api.productCategoryInvalid')),
+    .required(t('api.postCategoryRequired'))
+    .oneOf(['food', 'drink', 'music', 'phone'], t('api.postCategoryInvalid')),
   sell: yup
     .boolean()
-    .required(t('api.productSellRequired')),
+    .required(t('api.postSellRequired')),
 })
 const { handleSubmit, isSubmitting, resetForm  } = useForm({
   validationSchema: schema,
@@ -203,10 +203,10 @@ const description = useField('description')
 const category = useField('category')
 const sell = useField('sell')
 const categoryOptions = computed(() => [
-  { text: t('productCategory.food'), value: 'food' },
-  { text: t('productCategory.drink'), value: 'drink' },
-  { text: t('productCategory.music'), value: 'music' },
-  { text: t('productCategory.phone'), value: 'phone' },
+  { text: t('postCategory.food'), value: 'food' },
+  { text: t('postCategory.drink'), value: 'drink' },
+  { text: t('postCategory.music'), value: 'music' },
+  { text: t('postCategory.phone'), value: 'phone' },
 ])
 
 const fileAgent = ref(null)
@@ -219,7 +219,7 @@ const submit = handleSubmit(async (values) => {
   if (fileRecords.value[0]?.error) return
   if (dialog.value.id.length === 0 && fileRecords.value.length === 0) {
     createSnackbar({
-      text: t('api.productImageRequired'),
+      text: t('api.postImageRequired'),
       snackbarProps: {
         color: 'red'
       }
@@ -240,15 +240,15 @@ const submit = handleSubmit(async (values) => {
     }
 
     if (dialog.value.id.length > 0) {
-      await apiAuth.patch('/product/' + dialog.value.id, fd)
+      await apiAuth.patch('/post/' + dialog.value.id, fd)
     } else {
-      await apiAuth.post('/product', fd)
+      await apiAuth.post('/post', fd)
     }
 
-    products.splice(0, products.length)
-    getProducts()
+    posts.splice(0, posts.length)
+    getPosts()
     createSnackbar({
-      text: t(dialog.value.id.length > 0 ? 'adminProduct.editSuccess' : 'adminProduct.newSuccess'),
+      text: t(dialog.value.id.length > 0 ? 'adminPost.editSuccess' : 'adminPost.newSuccess'),
       snackbarProps: {
         color: 'green'
       }
@@ -271,5 +271,5 @@ const submit = handleSubmit(async (values) => {
     layout: admin
     login: true
     admin: true
-    title: 'nav.adminProducts'
+    title: 'nav.adminPosts'
   </route>

@@ -1,7 +1,11 @@
 <template>
   <v-navigation-drawer permanent>
     <v-list>
-      <v-list-item :prepend-avatar="user.avatar" :title="user.account"></v-list-item>
+      <v-list-item :title="user.account">
+        <template #prepend>
+          <Avatar :variant="pixel" :name="user.account" style="margin-right:10px;"/>
+        </template>
+      </v-list-item>
     </v-list>
     <v-divider></v-divider>
     <v-list>
@@ -16,16 +20,15 @@
 <script setup>
 import { computed } from 'vue';
 import { useUserStore } from '@/stores/user';
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+import Avatar from "vue-boring-avatars";
 
 const user = useUserStore()
-
+console.log(user.avatar)
 const navs = computed(() => {
   return [
-  { to: '/admin/products', text: t('nav.adminProducts'), icon: 'mdi-shopping' },
-    { to: '/admin/orders', text: t('nav.adminOrders'), icon: 'mdi-format-list-bulleted' },
-    { to: '/', text: t('nav.home'), icon: 'mdi-home' },
+    { to: '/admin/post', text: '卡片管理', icon: 'mdi-card-bulleted-outline' },
+    { to: '/admin/users', text: '會員管理', icon: 'mdi-format-list-bulleted' },
+    { to: '/', text: '首頁', icon: 'mdi-home' },
   ]
 })
 </script>

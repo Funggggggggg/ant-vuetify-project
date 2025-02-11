@@ -20,10 +20,6 @@ export const useUserStore = defineStore('user', () => {
     return role.value === UserRole.ADMIN
   })
 
-  const avatar = computed(() => {
-    return `https://api.multiavatar.com/${account.value}.png`
-  })
-
   // 6. (再放進 login)
   const login = (data) => {
     // 如果有 token 就換 token ，沒有就不換
@@ -49,7 +45,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     token, account, role,
     collectedPosts, createdPosts,
-    isLoggedIn, isAdmin, avatar, login, logout
+    isLoggedIn, isAdmin, login, logout
   }
 }, {
   // Pinia 的 persist 插件可以自動幫助我們將 狀態 (state) 保存到 localStorage 或 sessionStorage

@@ -2,11 +2,11 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1 class="text-center">{{ $t('nav.adminOrders') }}</h1>
+        <h1 class="text-center">{{ $t('nav.adminAllUsers') }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12">
-        <v-data-table :items="orders" :headers="headers">
+        <v-data-table :items="allUsers" :headers="headers">
           <template #[`item.cart`]="data">
             <ul>
               <li v-for="item in data.item.cart" :key="item._id">
@@ -30,16 +30,16 @@ const { apiAuth } = useAxios()
 const { t } = useI18n()
 const createSnackbar = useSnackbar()
 
-const orders = ref([])
+const allUsers = ref([])
 
 const headers = computed(() => {
   return [
     { title: 'ID', key: '_id' },
-    { title: t('order.account'), key: 'user.account' },
-    { title: t('order.createdAt'), key: 'createdAt', value: item => new Date(item.createdAt).toLocaleString() },
-    { title: t('order.cart'), key: 'cart', sortable: false },
+    { title: t('allUsers.account'), key: 'user.account' },
+    { title: t('allUsers.createdAt'), key: 'createdAt', value: item => new Date(item.createdAt).toLocaleString() },
+    { title: t('allUsers.cart'), key: 'cart', sortable: false },
     {
-      title: t('order.price'),
+      title: t('allUsers.price'),
       key: 'price',
       value: item => {
         return item.cart.reduce((acc, cur) => acc + cur.product.price * cur.quantity, 0)
@@ -47,12 +47,12 @@ const headers = computed(() => {
     }
 ]})
 // 向後端 API 發送請求獲取訂單資料。
-// 如果請求成功，將訂單資料賦值給 orders.value，並更新應用的狀態。
+// 如果請求成功，將訂單資料賦值給 allUsers.value，並更新應用的狀態。
 // 如果請求失敗，顯示錯誤訊息並用 createSnackbar 顯示一個錯誤通知。
-const getOrders = async () => {
+const getAllUsers = async () => {
   try {
-    const { data } = await apiAuth.get('/order/all')
-    orders.value = data.result
+    const { data } = await apiAuth.get('/allUsers/all')
+    allUsers.value = data.result
   } catch (error) {
     console.log(error)
     createSnackbar({
@@ -63,11 +63,11 @@ const getOrders = async () => {
     })
   }
 }
-getOrders()
+getAllUsers()
 </script>
 <route lang="yaml">
 meta:
   layout: admin
   login: true
-  title: 'nav.adminOrders'
+  title: 'nav.adminAllUsers'
 </route>
