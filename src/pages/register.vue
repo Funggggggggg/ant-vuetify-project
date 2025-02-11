@@ -138,5 +138,5 @@ const submit = handleSubmit(async (values) => {
 
 <route lang="yaml">
   meta:
-    title: 'nav.register'
+    title: '註冊'
   </route>

@@ -108,5 +108,5 @@ const submit = handleSubmit(async (values) => {
   meta:
     login: false
     admin: false
-    title: 'nav.login'
+    title: '登入'
   </route>

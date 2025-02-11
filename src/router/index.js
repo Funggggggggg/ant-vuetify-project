@@ -42,6 +42,7 @@ router.beforeEach(async (to, from, next) => {
   // => 4. 如果以上條件都不成立，則執行 next()，允許路由正常進行，讓用戶可以繼續訪問目標頁面。操作：這是路由守衛的默認情況，表示不需要做任何跳轉，讓用戶繼續操作。
   if (user.isLoggedIn && ['/login', '/register'].includes(to.path)) {
     next('/')
+    // next({ path: '/' })
   } else if (to.meta.login && !user.isLoggedIn) {
     next('/login')
   } else if (to.meta.admin && !user.isAdmin) {
