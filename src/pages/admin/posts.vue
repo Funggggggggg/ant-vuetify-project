@@ -16,6 +16,7 @@
             </v-toolbar>
           </template>
           <!-- # => v-slot 插件 -->
+          <!-- 插槽名稱有 . ，不能直接用 #，要用 #[``] -->
           <template #[`item.image`]="{ value }">
             <v-img :src="value" width="80"></v-img>
           </template>
@@ -35,7 +36,10 @@
             <v-icon v-if="value" icon="mdi-check"></v-icon>
           </template>
           <!-- 虛擬欄位 -->
-          <!--喜歡 虛擬欄位 -->
+          <!--喜歡 虛擬欄位計算 -->
+          <template #[`item.like`]="{ value }">
+            <v-icon v-if="value === '0'" icon="mdi-heart"></v-icon>
+          </template>
           <template #[`item.edit`]="{ item }">
             <v-btn icon="mdi-pencil" variant="text" @click="openDialog(item)"></v-btn>
           </template>
@@ -44,11 +48,20 @@
     </v-row>
   </v-container>
   <!-- 對話框 -->
+  <!-- persistent => 點擊外框時不會關閉 -->
   <v-dialog v-model="dialog.open" persistent>
     <v-form :disabled="isSubmitting" @submit.prevent="submit">
       <v-card>
-        <v-card-title>{{ dialog.id ? '編輯卡片' : '新增卡片'}}</v-card-title>
+        <!-- 有 id 即編輯，否則新增 -->
+        <v-card-title style="margin: 10px;">{{ dialog.id ? '編輯卡片' : '新增卡片'}}</v-card-title>
         <v-card-text>
+          <!-- FIXME 要取到使用者資料 -->
+          <!-- <v-text-field
+            v-model="headers.user.value.value.account"
+            :label="headers.user.value.value.account || '未提供使用者名稱'"
+            :error-messages="user.errorMessage.value"
+            disabled
+            ></v-text-field> -->
           <v-text-field
             v-model="title.value.value"
             :label="'標題'"
@@ -58,7 +71,7 @@
             v-model="category.value.value"
             :error-messages="category.errorMessage.value"
             :items="categoryOptions"
-            :label="'卡片分類'"
+            :label="'分類'"
             item-title="text"
             item-value="value"
           ></v-select>
@@ -97,7 +110,7 @@ import { useAxios } from '@/composables/axios';
 import { useSnackbar } from 'vuetify-use-dialog'
 import { reactive, computed, ref } from 'vue';
 import { useForm, useField } from 'vee-validate'
-import * as yup from 'yup'
+import * as yup from 'yup' //登入註冊
 
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
@@ -108,6 +121,7 @@ const search = ref('')
 const headers = computed(() => {
   return [
     { title: 'ID', key: '_id', sortable: true },
+    { title: '發布者', key: 'user', sortable: true },
     { title: '圖片', key: 'image', sortable: false },
     { title: '分類', key: 'category', sortable: true },
     { title: '標題', key: 'title', sortable: true },
@@ -139,6 +153,8 @@ const getPosts = async () => {
 getPosts()
 
 // 表單
+// open: false => 平常處於關閉狀態，藉由 v-model 將它開啟
+// 編輯時將 id 放進來編輯，空值表示要新增東西
 const dialog = ref({
   open: false,
   id: ''
@@ -147,13 +163,18 @@ const dialog = ref({
 const openDialog = (item) => {
   if (item) {
     dialog.value.id = item._id
+    user.value.value = item.user.name
+    // user.value.value = {
+    //   account: item.user.account,
+    // };
     title.value.value = item.title
     content.value.value = item.content
     category.value.value = item.category
     isPrivate.value.value = item.isPrivate
-    like.value.value = item.like
+    // like.value.value = item.like
   }
   dialog.value.open = true
+
 }
 
 const closeDialog = () => {
@@ -174,7 +195,7 @@ const schema = yup.object({
     .string()
     .required('api.卡片說明必填')
     .min(10, '文字說明過少')
-    .max(100,'文字說明過長'),
+    .max(200,'文字說明過長'),
   category: yup
     .string()
     .required('api.卡片分類必填')
@@ -182,6 +203,10 @@ const schema = yup.object({
   isPrivate: yup
     .boolean()
     .required('api.私人與否必填'),
+  like: yup
+    .number()
+    .default(0)
+    .notRequired(),  // like 可存在，但不驗證用戶輸入
 })
 const { handleSubmit, isSubmitting, resetForm  } = useForm({
   validationSchema: schema,
@@ -194,10 +219,11 @@ const { handleSubmit, isSubmitting, resetForm  } = useForm({
   }
 })
 const title = useField('title')
+const user = useField('user')
 const content = useField('content')
 const category = useField('category')
 const isPrivate = useField('isPrivate')
-const like = useField('like')
+// const like = useField('like')
 const categoryOptions = computed(() => [
   { text: '紀念繪畫', value: '紀念繪畫' },
   { text: '回憶拼貼', value: '回憶拼貼' },
@@ -227,11 +253,12 @@ const submit = handleSubmit(async (values) => {
   try {
     const fd = new FormData()
     // fd.append(key, value)
+    fd.append('user', values.user)
     fd.append('title', values.title)
     fd.append('content', values.content)
     fd.append('category', values.category)
     fd.append('isPrivate', values.isPrivate)
-    fd.append('like', values.like)
+    // fd.append('like', values.like)
     if (fileRecords.value.length > 0) {
       fd.append('image', fileRecords.value[0].file)
     }
@@ -254,6 +281,7 @@ const submit = handleSubmit(async (values) => {
   } catch (error) {
     console.log(error)
     createSnackbar({
+      // FIXME 無法編輯 =>  400 (Bad Request) 錯誤通常是因為後端預期的資料結構或格式不符合
       text: 'api.' + (error?.response?.data?.message || '未知錯誤'),
       snackbarProps: {
         color: 'red'
@@ -277,5 +305,5 @@ function truncate(text, length) {
     layout: admin
     login: true
     admin: true
-    title: 'nav.adminPosts'
+    title: '卡片管理'
   </route>

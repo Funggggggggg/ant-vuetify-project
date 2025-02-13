@@ -63,5 +63,5 @@ apiAuth.interceptors.response.use(res => res, async error => {
 // 匯出給其他地方使用
 // useAxios => 配合組合式語法用 use 開頭，Axios 這個檔案名
 export const useAxios = () => {
-    return { api, apiAuth  }
+    return { api, apiAuth }
 }
