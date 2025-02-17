@@ -14,7 +14,8 @@
       <v-spacer />
       <v-btn v-if="user.isLoggedIn" icon="mdi-chat-processing"></v-btn>
       <template v-for="nav of navs" :key="nav.to">
-        <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon">
+        <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon" rounded>
+          <v-list-item-title>{{ nav.text }}</v-list-item-title>
           <!-- 訊息通知顯現 -->
           <v-badge v-if="user.isLoggedIn && user.notifications > 0" :content="user.notifications" floating color="red"></v-badge>
         </v-btn>
@@ -43,16 +44,16 @@ const router = useRouter()
 // 導覽列項目
 const navs = computed(() => {
   return [
-    { to: '/about', icon: 'mdi-information', show: true},
-    { to: '/register', icon: 'mdi-account-plus', show: !user.isLoggedIn },
-    { to: '/login', icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
-    { to: '/userPage', icon: 'mdi-account-box', show: user.isLoggedIn },
-    { to: '/admin', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
-    // { to: '/about', text: '關於', icon: 'mdi-information', show: true},
-    // { to: '/register', text: '註冊', icon: 'mdi-account-plus', show: !user.isLoggedIn },
-    // { to: '/login', text: '登入', icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
-    // { to: '/userPage', text: '個人頁面', icon: 'mdi-account', show: user.isLoggedIn },
-    // { to: '/admin', text: '後台管理', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
+    // { to: '/about', icon: 'mdi-information', show: true},
+    // { to: '/register', icon: 'mdi-account-plus', show: !user.isLoggedIn },
+    // { to: '/login', icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
+    // { to: '/userPage', icon: 'mdi-account-box', show: user.isLoggedIn },
+    // { to: '/admin', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
+    { to: '/about', text: '關於', icon: 'mdi-information', show: true},
+    { to: '/register', text: '註冊', icon: 'mdi-account-plus', show: !user.isLoggedIn },
+    { to: '/login', text: '登入', icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
+    { to: '/userPage', text: '個人頁面', icon: 'mdi-account', show: user.isLoggedIn },
+    { to: '/admin', text: '後台管理', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
   ]
 })
 
@@ -77,3 +78,9 @@ const logout = async () => {
   router.push('/')
 }
 </script>
+
+<style>
+  v-btn {
+    margin-left: 10px;
+  }
+</style>

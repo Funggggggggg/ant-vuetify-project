@@ -2,10 +2,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue' // pinia 的 setup 寫法，另一種是  option寫法 (番茄5鐘使用state, actions, getters)
 import UserRole from '@/enums/UserRole'
+import axios from 'axios' // 引入 axios 用於發送 HTTP 請求
 
 export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const account = ref('')
+  const introduce = ref('')
   const role = ref(UserRole.USER)
   const collectedPosts = ref([]) // 收藏的文章清單 (postId 陣列)
   const createdPosts = ref([]) // 發佈過的文章清單 (postId 陣列)
@@ -29,6 +31,7 @@ export const useUserStore = defineStore('user', () => {
     }
     account.value = data.account
     role.value = data.role
+    introduce.value = data.introduce
     collectedPosts.value = data.collected || []  // 從後端同步收藏清單
     createdPosts.value = data.created || []  // 從後端同步發佈清單
   }
@@ -37,15 +40,38 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     token.value = ''
     account.value = ''
+    introduce.value = ''
     role.value = UserRole.USER
     collectedPosts.value = [] // 清空收藏文章
     createdPosts.value = [] // 清空發佈文章
   }
 
+// 新增 fetchUserData 函數
+  const fetchUserData = async () => {
+  console.log('fetchUserData called') // 添加這行來查看函數是否被調用
+  try {
+    const response = await axios.get('/api/user', {
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      },
+      cache: 'no-store' // 強制請求最新資料
+    })
+    console.log('User data fetched:', response.data) // 添加這行來查看響應數據
+    account.value = response.data.account
+    introduce.value = response.data.introduce
+    role.value = response.data.role
+    collectedPosts.value = response.data.collected || []
+    createdPosts.value = response.data.created || []
+  } catch (error) {
+    console.error('Failed to fetch user data:', error)
+  }
+}
+
   return {
-    token, account, role,
+    token, account, role, introduce,
     collectedPosts, createdPosts,
-    isLoggedIn, isAdmin, login, logout
+    isLoggedIn, isAdmin, login, logout,
+    fetchUserData
   }
 }, {
   // Pinia 的 persist 插件可以自動幫助我們將 狀態 (state) 保存到 localStorage 或 sessionStorage

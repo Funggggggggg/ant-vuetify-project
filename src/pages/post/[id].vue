@@ -55,7 +55,7 @@ const post = ref({
   image: '',
   category: '' ,// 分類
   isPrivate: false,
-  like: 0,
+  like: false,
 })
 // 取資料
 const getPost = async () => {

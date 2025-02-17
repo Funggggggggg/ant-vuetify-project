@@ -56,12 +56,12 @@
         <v-card-title style="margin: 10px;">{{ dialog.id ? '編輯卡片' : '新增卡片'}}</v-card-title>
         <v-card-text>
           <!-- FIXME 要取到使用者資料 -->
-          <!-- <v-text-field
-            v-model="headers.user.value.value.account"
-            :label="headers.user.value.value.account || '未提供使用者名稱'"
+          <v-text-field
+            v-model="user1.account"
+            :label="user1.account || '未提供使用者名稱'"
             :error-messages="user.errorMessage.value"
             disabled
-            ></v-text-field> -->
+            ></v-text-field>
           <v-text-field
             v-model="title.value.value"
             :label="'標題'"
@@ -110,21 +110,23 @@ import { useAxios } from '@/composables/axios';
 import { useSnackbar } from 'vuetify-use-dialog'
 import { reactive, computed, ref } from 'vue';
 import { useForm, useField } from 'vee-validate'
+import { useUserStore } from '@/stores/user';
 import * as yup from 'yup' //登入註冊
 
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
+const user1 = useUserStore()
 
 const posts = reactive([])
 const search = ref('')
 // 卡片資料欄位
 const headers = computed(() => {
   return [
-    { title: 'ID', key: '_id', sortable: true },
+    // { title: 'ID', key: '_id', sortable: true },
+    { title: '標題', key: 'title', sortable: true },
     { title: '發布者', key: 'user', sortable: true },
     { title: '圖片', key: 'image', sortable: false },
     { title: '分類', key: 'category', sortable: true },
-    { title: '標題', key: 'title', sortable: true },
     { title: '說明', key: 'content', sortable: true },
     { title: '創建日期', key: 'createdAt', sortable: true },
     { title: '修改日期', key: 'updatedAt', sortable: true },
@@ -163,15 +165,11 @@ const dialog = ref({
 const openDialog = (item) => {
   if (item) {
     dialog.value.id = item._id
-    user.value.value = item.user.name
-    // user.value.value = {
-    //   account: item.user.account,
-    // };
+    user.value.value = item.user
     title.value.value = item.title
     content.value.value = item.content
     category.value.value = item.category
     isPrivate.value.value = item.isPrivate
-    // like.value.value = item.like
   }
   dialog.value.open = true
 
@@ -202,10 +200,11 @@ const schema = yup.object({
     .oneOf(['紀念繪畫', '回憶拼貼', '故事攝影', '物品改造', '其他'], 'api.卡片分類不符'),
   isPrivate: yup
     .boolean()
+    .default(false)
     .required('api.私人與否必填'),
   like: yup
-    .number()
-    .default(0)
+    .boolean()
+    .default(false)
     .notRequired(),  // like 可存在，但不驗證用戶輸入
 })
 const { handleSubmit, isSubmitting, resetForm  } = useForm({
@@ -215,7 +214,7 @@ const { handleSubmit, isSubmitting, resetForm  } = useForm({
     content: '',
     category: '紀念繪畫',
     isPrivate: false,
-    like: 0,
+    like: false,
   }
 })
 const title = useField('title')

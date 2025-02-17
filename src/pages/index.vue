@@ -2,17 +2,17 @@
   <v-container>
     <v-row class="d-flex justify-center" style="height: 100px;">
       <!-- FIXME -->
-      <!-- <v-col cols="12" md="6" class="d-flex align-center justify-center" style="height: 80px;">
-          <v-text-field
+      <!-- <v-col cols="12" md="6" class="d-flex align-center justify-center" style="height: 80px;"> -->
+          <!-- <v-text-field
           v-model="search"
           prepend-inner-icon="mdi-magnify"
           class="custom-height"
           density="compact"
           style="max-width: 500px; width: 100%; height: 35px;"
-          ></v-text-field>
-      </v-col> -->
+          ></v-text-field> -->
+      <!-- </v-col> -->
       <v-col cols="12" class="d-flex align-center justify-center" style="height: 100px">
-        <v-btn v-for="cat in categories" :key="cat" class="mx-2" :class="{ 'v-btn--active': category === cat }" style="max-width: 500px; line-height: 35px;" @click="category = cat">
+        <v-btn v-for="cat in categories" :key="cat" class="mx-2" :class="{ 'v-btn--active': category === cat }" style="max-width: 500px; line-height: 35px;" @click="category = cat" >
           {{ cat }}
         </v-btn>
       </v-col>
