@@ -48,7 +48,7 @@ export const useUserStore = defineStore('user', () => {
 
 // 新增 fetchUserData 函數
   const fetchUserData = async () => {
-  console.log('fetchUserData called') // 添加這行來查看函數是否被調用
+  console.log('fetchUserData calleddd') // 添加這行來查看函數是否被調用
   try {
     const response = await axios.get('/api/user/profile', {
       headers: {
