@@ -2,12 +2,12 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1 class="text-center">{{ $t('nav.cart') }}</h1>
+        <h1 class="text-center">{{ $t('nav.card') }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12">
         <v-list lines="two">
-          <template v-for="(item, i) in cart" :key="item._id">
+          <template v-for="(item, i) in card" :key="item._id">
             <v-list-item
               :title="item.product.name"
               :subtitle="item.product.price"
@@ -20,12 +20,12 @@
                 </v-avatar>
               </template>
               <template #append>
-                <v-btn color="red" icon="mdi-minus" size="small" class="ml-2" @click="editCart(item.product._id, -1)"></v-btn>
+                <v-btn color="red" icon="mdi-minus" size="small" class="ml-2" @click="editCard(item.product._id, -1)"></v-btn>
                 {{ item.quantity }}
-                <v-btn color="green" icon="mdi-plus" size="small" class="mr-2" @click="editCart(item.product._id, 1)"></v-btn>
+                <v-btn color="green" icon="mdi-plus" size="small" class="mr-2" @click="editCard(item.product._id, 1)"></v-btn>
               </template>
             </v-list-item>
-            <v-divider v-if="i < cart.length - 1"></v-divider>
+            <v-divider v-if="i < card.length - 1"></v-divider>
           </template>
         </v-list>
       </v-col>
@@ -33,7 +33,7 @@
       <v-col cols="12" class="text-center">
         <p>{{ total }}</p>
         <!-- 不能結帳的判斷 -->
-        <v-btn color="primary" :disabled="!canCheckout" @click="checkout">{{ $t('cart.checkout') }}</v-btn>
+        <v-btn color="primary" :disabled="!canCheckout" @click="checkout">{{ $t('card.checkout') }}</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -55,32 +55,32 @@ const createSnackbar = useSnackbar()
 const { t } = useI18n()
 
 
-const cart = ref([])
+const card = ref([])
 
-const getCart = async () => {
+const getCard = async () => {
   try {
-    const { data } = await apiAuth.get('/user/cart')
-    cart.value = data.result
+    const { data } = await apiAuth.get('/user/card')
+    card.value = data.result
   } catch (error) {
     console.log(error)
   }
 }
-getCart()
+getCard()
 
 const total = computed(() => {
-  return cart.value.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+  return card.value.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
 })
 
 // 不能結帳的判斷
 const canCheckout = computed(() => {
-  return cart.value.length > 0 && cart.value.every(item => item.product.sell)
+  return card.value.length > 0 && card.value.every(item => item.product.sell)
 })
 
-const editCart = async (product, quantity) => {
+const editCard = async (product, quantity) => {
   try {
-    const { data } = await apiAuth.patch('/user/cart', { product, quantity })
-    user.cart = data.result
-    getCart()
+    const { data } = await apiAuth.patch('/user/card', { product, quantity })
+    user.card = data.result
+    getCard()
   } catch (error) {
     console.log(error)
   }
@@ -88,7 +88,7 @@ const editCart = async (product, quantity) => {
 const checkout = async () => {
   try {
     await apiAuth.post('/order')
-    user.cart = 0
+    user.card = 0
     router.push('/order')
   } catch (error) {
     console.log(error)
@@ -105,5 +105,5 @@ const checkout = async () => {
 <route lang="yaml">
   meta:
     login: true
-    title: 'nav.cart'
+    title: 'nav.card'
   </route>

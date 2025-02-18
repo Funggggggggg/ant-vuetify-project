@@ -35,6 +35,6 @@ const user = useUserStore()
 
 onMounted(() => {
   user.fetchUserData();
-  console.log('User store:', user); // 添加這行來查看 user 狀態
+  // console.log('User store:', user); // 添加這行來查看 user 狀態
 });
 </script>

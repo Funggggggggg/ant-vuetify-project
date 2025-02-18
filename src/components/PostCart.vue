@@ -2,23 +2,24 @@
   <!-- FIXME 加裝飾線條 顏色跟標籤一起變化 -->
   <!-- FIXME 愛心位置變化 -->
   <v-card class="card">
-    <div class="picMask">
-      <v-img :src="image" height="200" cover>
-        <template #placeholder>
-        </template>
+    <!-- {{ userStore.account }} -->
+      <v-img  class="picMask" :src="image" height="200" cover>
+        <!-- <template #placeholder>
+        </template> -->
       </v-img>
-    </div>
-    <v-card-title style="line-height: 55px; font-size: 20px;">
-      <router-link :to="'/post/' + _id" style="color: inherit; text-decoration: none;">{{ title }}</router-link>
-    </v-card-title>
-    <v-card-subtitle>
-      <v-row>
-        <v-col cols="9">{{ category }}</v-col>
-        <!-- 綁定按鈕 按了可以放進收藏清單-->
-        <v-col cols="3" class="d-flex align-center">
-          <v-icon style="color:#F1D87F;" left class="ms-1" @click="toggleFavorite">{{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
-        </v-col>
-      </v-row>
+    <v-row class="info">
+      <v-col col="9" class="cardTitle">
+        <v-card-title>
+          <router-link :to="'/post/' + _id" style="color: inherit; text-decoration: none;">{{ title }}</router-link>
+        </v-card-title>
+      </v-col>
+      <!-- 綁定按鈕 按了可以放進收藏清單-->
+      <v-col cols="3" class="d-flex align-center">
+        <v-icon style="color:#F1D87F;" left class="ms-1" @click="toggleFavorite">{{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+      </v-col>
+    </v-row>
+    <v-card-subtitle class="subtitle">
+      {{ category }}
     </v-card-subtitle>
     <!-- <v-card-text>{{ content }}</v-card-text> -->
     <v-card-text>{{ truncatedContent }}</v-card-text>
@@ -26,8 +27,10 @@
 </template>
 
 <script setup>
-import { ref,computed } from 'vue'
+import { ref, computed } from 'vue'
+// import { useUserStore } from '@/stores/user.js'
 
+// const userStore = useUserStore()
 const props = defineProps({
   // eslint-disable-next-line vue/prop-name-casing
   _id: {
@@ -72,14 +75,34 @@ const truncatedContent = computed(() => {
 
 <style scoped>
 
-.card:hover {
-  box-shadow: 0px 0px 1px 0.32px #ede5d2;
+/* .img:hover {
+  box-shadow: 0px 0px 1px 0.32px #ede5d2 !important;
   transition: 0.2s;
+} */
+.info {
+  position: relative;
+  /* background-color: #f1d87f; */
+  z-index: 2;
+  margin-top: -10px; /* 控制與圖片的距離 */
+}
+
+.cardTitle {
+  /* background-color: #F1D87F; */
+  line-height: 25px;
+  font-size: 20px;
+  padding: 15px 15px 0px 10px;
+}
+
+.subtitle {
+  position: relative;
+  /* background-color: red;; */
+  z-index: 2;
+  margin-top: 12px;
 }
 
 .card {
   border-radius: 0px 30px 0px 30px;
-  padding: 10px;
+  padding: 15px;
   color: #ede5d2;
 }
 

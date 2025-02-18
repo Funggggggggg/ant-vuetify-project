@@ -1,6 +1,6 @@
 // Utilities
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue' // pinia 的 setup 寫法，另一種是  option寫法 (番茄5鐘使用state, actions, getters)
+import { ref, computed } from 'vue' // pinia 的 setup 寫法，另一種是  option寫法 (番茄鐘使用state, actions, getters)
 import UserRole from '@/enums/UserRole'
 import axios from 'axios' // 引入 axios 用於發送 HTTP 請求
 
@@ -50,7 +50,7 @@ export const useUserStore = defineStore('user', () => {
   const fetchUserData = async () => {
   console.log('fetchUserData called') // 添加這行來查看函數是否被調用
   try {
-    const response = await axios.get('/api/user', {
+    const response = await axios.get('/api/user/profile', {
       headers: {
         Authorization: `Bearer ${token.value}`
       },

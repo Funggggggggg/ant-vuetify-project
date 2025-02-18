@@ -210,6 +210,7 @@ const schema = yup.object({
 const { handleSubmit, isSubmitting, resetForm  } = useForm({
   validationSchema: schema,
   initialValues: {
+    user:'',
     title: '',
     content: '',
     category: '紀念繪畫',
@@ -252,6 +253,7 @@ const submit = handleSubmit(async (values) => {
   try {
     const fd = new FormData()
     // fd.append(key, value)
+    console.log(values.user)
     fd.append('user', values.user)
     fd.append('title', values.title)
     fd.append('content', values.content)
@@ -265,6 +267,7 @@ const submit = handleSubmit(async (values) => {
     if (dialog.value.id.length > 0) {
       await apiAuth.patch('/post/' + dialog.value.id, fd)
     } else {
+      console.log(fd)
       await apiAuth.post('/post', fd)
     }
 
