@@ -1,8 +1,9 @@
 <template>
   <v-app-bar style="height: 75px;" class="d-flex align-center justify-center">
     <v-container class="d-flex align-center">
-      <router-link to="/" :active="false">
-        <img src="/antlogo.ico" alt="Logo" style="height: 40px; margin-top: 5px;">
+      <router-link to="/" :active="false" class="d-flex align-center" style="text-decoration: none;">
+        <img src="/antlogo.ico" alt="Logo" style="height: 40px;">
+        <v-title> Memorial Nest </v-title>
       </router-link>
       <v-menu v-if="user.isLoggedIn || !user.isLoggedIn" offset-y>
         <v-list v-if="nav.show">
@@ -12,7 +13,7 @@
         </v-list>
       </v-menu>
       <v-spacer />
-      <v-btn v-if="user.isLoggedIn" icon="mdi-chat-processing"></v-btn>
+      <v-btn v-if="user.isLoggedIn" icon="mdi-chat-processing" style="color: #F1D87F"></v-btn>
       <template v-for="nav of navs" :key="nav.to">
         <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon" rounded>
           <v-list-item-title>{{ nav.text }}</v-list-item-title>
@@ -82,5 +83,12 @@ const logout = async () => {
 <style>
   v-btn {
     margin-left: 10px;
+  }
+
+  v-title {
+    color: #F1D87F;
+    font-size: 24px;
+    /* font-weight: bold; */
+    margin-left: 15px;
   }
 </style>

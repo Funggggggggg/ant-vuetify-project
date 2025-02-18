@@ -3,10 +3,7 @@
   <!-- FIXME 愛心位置變化 -->
   <v-card class="card">
     <!-- {{ userStore.account }} -->
-      <v-img  class="picMask" :src="image" height="200" cover>
-        <!-- <template #placeholder>
-        </template> -->
-      </v-img>
+      <v-img class="picMask" :src="image" height="200" cover></v-img>
     <v-row class="info">
       <v-col col="9" class="cardTitle">
         <v-card-title>
@@ -75,10 +72,6 @@ const truncatedContent = computed(() => {
 
 <style scoped>
 
-/* .img:hover {
-  box-shadow: 0px 0px 1px 0.32px #ede5d2 !important;
-  transition: 0.2s;
-} */
 .info {
   position: relative;
   /* background-color: #f1d87f; */
@@ -95,15 +88,34 @@ const truncatedContent = computed(() => {
 
 .subtitle {
   position: relative;
-  /* background-color: red;; */
   z-index: 2;
   margin-top: 12px;
+
 }
 
 .card {
   border-radius: 0px 30px 0px 30px;
   padding: 15px;
   color: #ede5d2;
+  width: 100%;
+  height: 100%;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 1px;
+  top: 277px;
+  left: 100px;
+  background-color: #ede5d282 !important;
+  z-index: 3 !important;
+}
+
+.card:hover::before {
+  content: '';
+  background-color: #ede5d200 !important;
+  transition: 0.5s;
 }
 
 .picMask {
