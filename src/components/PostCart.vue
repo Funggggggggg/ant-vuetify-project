@@ -1,11 +1,11 @@
 <template>
   <!-- FIXME 加裝飾線條 顏色跟標籤一起變化 -->
   <!-- FIXME 愛心位置變化 -->
-  <v-card class="card">
+  <v-card class="card" @mouseenter="hightlight = true " @mouseleave="hightlight = false">
     <!-- {{ userStore.account }} -->
-      <v-img class="picMask" :src="image" height="200" cover></v-img>
+      <v-img class="picMask" :class="{ 'hightlight': hightlight }" :src="image" height="200" cover ></v-img>
     <v-row class="info">
-      <v-col col="9" class="cardTitle">
+      <v-col col="9">
         <v-card-title>
           <router-link :to="'/post/' + _id" style="color: inherit; text-decoration: none;">{{ title }}</router-link>
         </v-card-title>
@@ -19,13 +19,14 @@
       {{ category }}
     </v-card-subtitle>
     <!-- <v-card-text>{{ content }}</v-card-text> -->
-    <v-card-text>{{ truncatedContent }}</v-card-text>
+    <v-card-text class="content">{{ truncatedContent }}</v-card-text>
   </v-card>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 // import { useUserStore } from '@/stores/user.js'
+const hightlight = ref(false)
 
 // const userStore = useUserStore()
 const props = defineProps({
@@ -64,7 +65,7 @@ const toggleFavorite = () => {
 
 // 計算屬性限制 content 顯示字數，最多顯示 100 字
 const truncatedContent = computed(() => {
-  const maxLength = 60
+  const maxLength = 40
   return props.content.length > maxLength ? props.content.slice(0, maxLength) + '...' : props.content
 })
 
@@ -74,23 +75,18 @@ const truncatedContent = computed(() => {
 
 .info {
   position: relative;
-  /* background-color: #f1d87f; */
   z-index: 2;
-  margin-top: -10px; /* 控制與圖片的距離 */
-}
-
-.cardTitle {
-  /* background-color: #F1D87F; */
-  line-height: 25px;
+  margin-top: 0px; /* 控制與圖片的距離 */
+  padding: 10px 10px 0px 0px;
   font-size: 20px;
-  padding: 15px 15px 0px 10px;
+  /* background-color: #f1d87f6b; */
 }
 
 .subtitle {
   position: relative;
   z-index: 2;
   margin-top: 12px;
-
+  color: #59a0ab;
 }
 
 .card {
@@ -104,26 +100,39 @@ const truncatedContent = computed(() => {
 .card::before {
   content: '';
   position: absolute;
-  width: 150px;
-  height: 1px;
-  top: 277px;
-  left: 100px;
-  background-color: #ede5d282 !important;
+  width: 175px;
+  height: 6px;
+  top: 268px;
+  left: 20px;
   z-index: 3 !important;
+  /* background-color: #ede5d23d !important; */
 }
 
 .card:hover::before {
   content: '';
-  background-color: #ede5d200 !important;
+  background-color: #3b6c7361 !important;
   transition: 0.5s;
 }
 
 .picMask {
-  mask: radial-gradient(circle, rgb(255, 169, 56, 1), rgba(255, 169, 56, 0.5)) !important;
--webkit-mask: radial-gradient(circle, rgba(255, 169, 56, 1), rgba(255, 169, 56, 0.5)) !important;
+  mask: radial-gradient(circle, rgb(255, 169, 56, 0.7), rgba(255, 169, 56, 0.5)) !important;
+  -webkit-mask: radial-gradient(circle, rgba(255, 169, 56, 0.7), rgba(255, 169, 56, 0.5)) !important;
   height: 100%;
   width: 100%;
   border-radius: 0px 30px 0px 30px;
+  transition: all 0.3s ease;
 }
+
+.content {
+  color: #EDE5D2;
+  line-height: 1.7;
+}
+
+.hightlight {
+  mask: radial-gradient(circle, rgb(255, 169, 56, 1), rgba(255, 169, 56, 0.5)) !important;
+  -webkit-mask: radial-gradient(circle, rgba(255, 169, 56, 1), rgba(255, 169, 56, 0.5)) !important;
+  filter: brightness(1.2);
+}
+
 </style>
 

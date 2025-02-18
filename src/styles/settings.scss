@@ -4,7 +4,36 @@
  * Configures SASS variables and Vuetify overwrites
  */
 
-// https://vuetifyjs.com/features/sass-variables/`
-// @use 'vuetify/settings' with (
-//   $color-pack: false
-// );
+// https://vuetifyjs.com/features/sass-variables/
+@use 'vuetify' with (
+  $typography: (
+    'h1': (
+      'size': 6rem,
+      'weight': 300,
+      'line-height': 6rem,
+      'letter-spacing': 0.15em,
+      'font-family': 'Roboto'
+    ),
+    'h2': (
+      'size': 3.75rem,
+      'weight': 300,
+      'line-height': 3.75rem,
+      'letter-spacing': 0.1em,
+      'font-family': 'Roboto'
+    ),
+    'body-1': (
+      'size': 1rem,
+      'weight': 400,
+      'line-height': 1.5rem,
+      'letter-spacing': 0.05em,
+      'font-family': 'Roboto'
+    ),
+    'body-2': (
+      'size': 0.875rem,
+      'weight': 400,
+      'line-height': 1.25rem,
+      'letter-spacing': 0.05em,
+      'font-family': 'Roboto'
+    )
+  )
+);

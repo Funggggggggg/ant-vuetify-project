@@ -3,7 +3,7 @@
     <v-container class="d-flex align-center">
       <router-link to="/" :active="false" class="d-flex align-center" style="text-decoration: none;">
         <img src="/antlogo.ico" alt="Logo" style="height: 40px;">
-        <v-title> Memorial Nest </v-title>
+        <v-toolbar-title class="custom-title">Memorial Nest</v-toolbar-title>
       </router-link>
       <v-menu v-if="user.isLoggedIn || !user.isLoggedIn" offset-y>
         <v-list v-if="nav.show">
@@ -81,14 +81,14 @@ const logout = async () => {
 </script>
 
 <style>
-  v-btn {
-    margin-left: 10px;
-  }
+.custom-title {
+  font-family: "Abril Fatface", serif;
+  color: #F1D87F;
+  font-size: 24px;
+  margin-left: 15px;
+}
 
-  v-title {
-    color: #F1D87F;
-    font-size: 24px;
-    /* font-weight: bold; */
-    margin-left: 15px;
-  }
+v-btn {
+  margin-left: 10px;
+}
 </style>
