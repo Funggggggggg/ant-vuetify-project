@@ -1,29 +1,62 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-center" style="height: 100px;">
-      <!-- FIXME -->
+      <!-- FIXME 滑鼠靠近會拉開來-->
+        <!-- class="custom-height" -->
+        <!-- density="compact" -->
+          <!-- style="max-width: 500px; width: 100%; height: 35px;" -->
       <!-- <v-col cols="12" md="6" class="d-flex align-center justify-center" style="height: 80px;"> -->
           <!-- <v-text-field
           v-model="search"
-          prepend-inner-icon="mdi-magnify"
+          prepend-inner-icon=""
           class="custom-height"
           density="compact"
           style="max-width: 500px; width: 100%; height: 35px;"
           ></v-text-field> -->
       <!-- </v-col> -->
-      <v-col cols="12" class="d-flex align-center justify-center" style="height: 100px">
-        <v-btn v-for="cat in categories" :key="cat" class="mx-2" :class="{ 'v-btn--active': category === cat }" style="max-width: 500px; line-height: 35px;" @click="category = cat" >
+      <!-- 分類 -->
+      <v-col cols="10" class="d-flex align-center justify-center" style="height: 100px; background-color: #F1D87F;">
+        <v-btn v-for="cat in categories" :key="cat" class="mx-2 text-body-2" :class="{ 'v-btn--active': category === cat }" style="max-width: 500px; line-height: 5px;" @click="category = cat" >
           {{ cat }}
         </v-btn>
+        <v-fab
+          v-model="search"
+          class="d-flex align-center justify-center"
+          icon="mdi-magnify"
+          variant="flat"
+          style="height: 100px;background-color: aqua;"
+        ></v-fab>
       </v-col>
+      <!-- <v-col cols="2">
+      </v-col> -->
       <!-- 卡片區 -->
       <v-col v-for="post of filteredPosts" :key="post._id" cols="12" md="6" lg="3" >
         <post-cart v-bind="post"></post-cart>
       </v-col>
     </v-row>
     <div ref="loadMoreTrigger" class="load-more-trigger"></div>
+
+    <!-- :active="!hidden" -->
+          <v-fab
+            class="ms-4"
+            icon="mdi-plus"
+            location="bottom end"
+            size="small"
+            absolute
+            offset
+            color="#C04759"
+            ></v-fab>
+            <!-- variant="outlined" -->
+
+            <v-fab
+            icon="mdi-arrow-up"
+            location="bottom right"
+            size="small"
+            variant="outlined"
+            ></v-fab>
   </v-container>
 </template>
+
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useAxios } from '@/composables/axios'
