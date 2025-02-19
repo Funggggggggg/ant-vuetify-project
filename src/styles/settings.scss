@@ -4,36 +4,65 @@
  * Configures SASS variables and Vuetify overwrites
  */
 
+// 先定義字型變數
+$abril-font: "Abril Fatface", serif;
+
 // https://vuetifyjs.com/features/sass-variables/
-@use 'vuetify' with (
+@use 'vuetify/settings' with (
   $typography: (
     'h1': (
       'size': 6rem,
       'weight': 300,
       'line-height': 6rem,
-      'letter-spacing': 0.15em,
-      'font-family': 'Roboto'
+      'letter-spacing': 0.2em,
+      'font-family': $abril-font  // 使用變數
     ),
     'h2': (
       'size': 3.75rem,
       'weight': 300,
       'line-height': 3.75rem,
-      'letter-spacing': 0.1em,
+      'letter-spacing': 0.2em,
+      'font-family': $abril-font
+    ),
+    'h3': (
+      'size': 2.5rem,
+      'weight': 300,
+      'line-height': 3.2rem,
+      'letter-spacing': 0.2em,
+      'font-family': 'Roboto'
+    ),
+    'h4': (
+      'size': 2rem,
+      'weight': 300,
+      'line-height': 2.6rem,
+      'letter-spacing': 0.2em,
+      'font-family': 'Roboto'
+    ),
+    'h5': (
+      'size': 1.5rem,
+      'weight': 400,
+      'line-height': 2rem,
+      'letter-spacing': 0.2em,
       'font-family': 'Roboto'
     ),
     'body-1': (
       'size': 1rem,
       'weight': 400,
       'line-height': 1.5rem,
-      'letter-spacing': 0.05em,
+      'letter-spacing': 0.2em,
       'font-family': 'Roboto'
     ),
     'body-2': (
       'size': 0.875rem,
-      'weight': 400,
+      'weight': 300,
       'line-height': 1.25rem,
-      'letter-spacing': 0.05em,
+      'letter-spacing': 0.2em,
       'font-family': 'Roboto'
     )
   )
 );
+
+// 添加全域字型設定
+:root {
+  --abril-font: #{$abril-font};
+}

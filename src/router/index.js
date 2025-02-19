@@ -23,6 +23,19 @@ router.beforeEach(async (to, from, next) => {
   const { apiAuth } = useAxios()
   const user = useUserStore()
 
+  // 檢查是否已登入但需要重新獲取用戶資料
+  if (user.isLoggedIn && !user.account) {
+    try {
+      const { data } = await apiAuth.get('/user/profile')
+      user.login(data.result)
+    } catch (error) {
+      console.log('重新獲取用戶資料失敗:', error)
+      user.logout()
+      next('/login')
+      return
+    }
+  }
+
   // 若是初始導航且有 jwt 才去呼叫
   // 6. 進到這取資料 => isLoggedIn、login、logout 是取 stores/user 的 useUserStore 的 computed
   if (from === START_LOCATION && user.isLoggedIn) {
