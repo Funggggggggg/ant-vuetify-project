@@ -1,59 +1,58 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center" style="height: 100px;">
-      <!-- FIXME 滑鼠靠近會拉開來-->
-        <!-- class="custom-height" -->
-        <!-- density="compact" -->
-          <!-- style="max-width: 500px; width: 100%; height: 35px;" -->
-      <!-- <v-col cols="12" md="6" class="d-flex align-center justify-center" style="height: 80px;"> -->
-          <!-- <v-text-field
-          v-model="search"
-          prepend-inner-icon=""
-          class="custom-height"
-          density="compact"
-          style="max-width: 500px; width: 100%; height: 35px;"
-          ></v-text-field> -->
-      <!-- </v-col> -->
-      <!-- 分類 -->
-      <v-col cols="10" class="d-flex align-center justify-center" style="height: 100px; background-color: #F1D87F;">
-        <v-btn v-for="cat in categories" :key="cat" class="mx-2 text-body-2" :class="{ 'v-btn--active': category === cat }" style="max-width: 500px; line-height: 5px;" @click="category = cat" >
+    <v-row class="d-flex justify-center align-center" style="width: 100%; gap: 5px;">
+      <v-text-field
+        v-model="search"
+        prepend-inner-icon="mdi-magnify"
+        color="#EDE5D2"
+        variant="default"
+        class="text-body-2 d-flex align-center justify-center search-bar"
+      ></v-text-field>
+      <v-col cols="8" class="d-flex align-center justify-center" style="height: 100px;">
+        <v-btn
+          v-for="cat in categories"
+          :key="cat"
+          class="mx-2 text-body-2 search-container"
+          :class="{ 'v-btn--active': category === cat }"
+          style="max-width: 500px; line-height: 5px; color: #EDE5D2;"
+          variant="default"
+          @click="category = cat"
+        >
           {{ cat }}
         </v-btn>
-        <v-fab
-          v-model="search"
-          class="d-flex align-center justify-center"
-          icon="mdi-magnify"
-          variant="flat"
-          style="height: 100px;background-color: aqua;"
-        ></v-fab>
       </v-col>
-      <!-- <v-col cols="2">
-      </v-col> -->
+
       <!-- 卡片區 -->
-      <v-col v-for="post of filteredPosts" :key="post._id" cols="12" md="6" lg="3" >
+      <v-col v-for="post of filteredPosts" :key="post._id" cols="12" md="6" lg="3">
         <post-cart v-bind="post"></post-cart>
       </v-col>
     </v-row>
+
+    <!-- 載入更多觸發器 -->
     <div ref="loadMoreTrigger" class="load-more-trigger"></div>
 
-    <!-- :active="!hidden" -->
-          <v-fab
-            class="ms-4"
-            icon="mdi-plus"
-            location="bottom end"
-            size="small"
-            absolute
-            offset
-            color="#C04759"
-            ></v-fab>
-            <!-- variant="outlined" -->
+    <!-- 功能按鈕區 -->
+    <v-fab
+      class="ms-4 custom-fab-plus"
+      icon="mdi-plus"
+      location="top end"
+      size="x-large"
+      color="#F1D87F"
+      variant="outlined"
+      ></v-fab>
 
-            <v-fab
-            icon="mdi-arrow-up"
-            location="bottom right"
-            size="small"
-            variant="outlined"
-            ></v-fab>
+      <!-- size="large" -->
+    <v-fab
+      icon="mdi-arrow-up"
+      location="bottom right"
+      variant="outlined"
+      absolute
+      color="#3B6C73"
+      class="custom-fab-up"
+      style="margin: 16px;"
+      @click="scrollToTop"
+      ></v-fab>
+      <!-- color="#C04759" -->
   </v-container>
 </template>
 
@@ -107,6 +106,7 @@ const getPosts = async () => {
   loading = false
 }
 
+// 監聽滾動事件
 const handleScroll = () => {
   // 只有當 category 的值為 '全部' 時才會觸發 getPosts 函數來加載更多資料。
   if (category.value !== '全部') return
@@ -114,23 +114,69 @@ const handleScroll = () => {
   if (trigger && trigger.getBoundingClientRect().top <= window.innerHeight) {
     getPosts()
   }
+  // 控制回到頂部按鈕的顯示/隱藏
+  showScrollTop.value = window.scrollY > 300
 }
 
 const loadMoreTrigger = ref(null)
 
+// 這是一個生命週期鉤子，當組件被掛載時，我們需要監聽滾動事件。
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   getPosts() // 初始加載
 })
 
+// 這是一個生命週期鉤子，當組件被卸載時，我們需要移除事件監聽器。
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
+
+// 控制回到頂部按鈕的顯示
+const showScrollTop = ref(false)
+
+// 回到頂部功能
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
 </script>
 
-<style>
+<style scoped>
 .load-more-trigger {
   height: 1px;
+}
+
+.search-bar {
+  max-width: 250px;  /* 縮小搜尋欄 */
+  /* width: 100%; */
+  flex-grow: 0;  /* 防止搜尋欄擴張 */
+  /* background-color: aqua; */
+  /* font-size: 20px; */
+  /* line-height: 0px; */
+  color: #EDE5D2;
+}
+
+/* 或者為按鈕添加自定義類別 */
+.custom-fab-up {
+  position: fixed !important;
+  bottom: 10px !important;
+  left: 200px !important;
+  z-index: 999 !important;
+}
+
+.custom-fab-plus {
+  position: fixed !important;
+  top: 185px !important;
+  right: 343px !important;
+  z-index: 999 !important;
+  scale: 1.3 !important;
+}
+
+.search-container {
+  margin-left: 0px !important;
 }
 
 </style>

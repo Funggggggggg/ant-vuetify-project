@@ -7,17 +7,17 @@
       </router-link>
       <v-spacer /> <!--是個用來在佈局中創建空間的組件。它會自動佔據可用的空間，通常用於在佈局中分隔其他元素，使它們之間保持一定的距離。 -->
       <!-- 訊息通知 -->
-      <v-btn v-if="user.isLoggedIn" icon="mdi-chat-processing" class="text-body-2"></v-btn>
+      <v-btn v-if="user.isLoggedIn" icon="mdi-chat-processing" class="text-body-2" style="color: #EDE5D2;"></v-btn>
       <!-- 導航選單 -->
       <template v-for="nav of navs" :key="nav.to">
-        <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon" class="text-body-2" rounded>
+        <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon" class="text-body-2" rounded  style="color: #EDE5D2;">
           {{ nav.text }}
           <!-- 訊息通知顯現 -->
           <v-badge v-if="user.isLoggedIn && user.notifications > 0" :content="user.notifications" floating color="red"></v-badge>
         </v-btn>
       </template>
       <!-- 登出按鈕 跑完迴圈後再跑登出 (tr作法) -->
-      <v-btn v-if="user.isLoggedIn" prepend-icon="mdi-account-arrow-right" rounded @click="logout">{{ '登出' }}</v-btn>
+      <v-btn v-if="user.isLoggedIn" prepend-icon="mdi-account-arrow-right" rounded style="color: #EDE5D2;" @click="logout">{{ '登出' }}</v-btn>
     </v-container>
   </v-app-bar>
   <v-main>
