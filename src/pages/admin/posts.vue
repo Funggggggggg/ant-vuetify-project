@@ -192,22 +192,22 @@ const closeDialog = () => {
 const schema = yup.object({
   title: yup
     .string()
-    .required('api.卡片標題必填')
-    .min(1, '卡片標題過少')
-    .max(15,'卡片標題過長'),
+    .required('卡片標題必填')
+    .min(1, '標題過少')
+    .max(8,'標題過長'),
   content: yup
     .string()
-    .required('api.卡片說明必填')
-    .min(10, '文字說明過少')
-    .max(200,'文字說明過長'),
+    .required('卡片內容必填')
+    .min(10, '文字內容過少')
+    .max(300,'文字內容過長'),
   category: yup
     .string()
-    .required('api.卡片分類必填')
+    .required('卡片分類必填')
     .oneOf(['紀念繪畫', '回憶拼貼', '故事攝影', '物品改造', '其他'], 'api.卡片分類不符'),
   isPrivate: yup
     .boolean()
     .default(false)
-    .required('api.私人與否必填'),
+    .required('私人與否必填'),
   like: yup
     .boolean()
     .default(false)

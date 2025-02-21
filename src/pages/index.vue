@@ -98,15 +98,15 @@ const getPosts = async () => {
   try {
     const { data } = await api.get('/post', {
       params: {
-        offset: posts.value.length,
-        limit: ITEMS_PER_LOAD
+        offset: posts.value.length, // 從 posts 的長度開始加載
+        limit: ITEMS_PER_LOAD // 加載 ITEMS_PER_LOAD 筆資料
       }
     })
-    posts.value.push(...data.result)
+    posts.value.push(...data.result) // 將獲取到的資料添加到 posts 中
   } catch (error) {
     console.log(error)
   }
-  loading = false
+  loading = false // 結束加載狀態
 }
 
 // 監聽滾動事件

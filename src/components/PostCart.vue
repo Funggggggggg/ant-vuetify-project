@@ -13,7 +13,14 @@
       </v-col>
       <!-- 綁定按鈕 按了可以放進收藏清單-->
       <v-col cols="3" class="d-flex align-center">
-        <v-icon style="color:#F1D87F; font-size: 25px;" left class="ms-1" @click="toggleFavorite">{{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+        <v-icon
+            :style="{ color: isFavorite ? '#C04759' : '#F1D87F', fontSize: '25px' }"
+            left
+            class="ms-1"
+            @click="toggleFavorite"
+        >
+          {{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
+        </v-icon>
       </v-col>
     </v-row>
     <v-card-subtitle class="subtitle">
