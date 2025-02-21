@@ -1,6 +1,4 @@
 <template>
-  <!-- FIXME 加裝飾線條 顏色跟標籤一起變化 -->
-  <!-- FIXME 愛心位置變化 -->
   <v-card class="card" @mouseenter="hightlight = true " @mouseleave="hightlight = false">
     {{ CardStore.user }}
       <v-img class="picMask" :class="{ 'hightlight': hightlight }" :src="image" height="200" cover ></v-img>
@@ -92,12 +90,20 @@ const truncatedContent = computed(() => {
 }
 
 .card {
-  border-radius: 0px 30px 0px 30px;
+  border-radius: 0px 30px 30px 30px;
   padding: 15px;
   color: #ede5d2;
   width: 100%;
   height: 100%;
+  background-color: #312E2B;
+  /* background-color: #403D3A; */
+  border: 0.5px solid #EDE5D288;
+  /* border: 2px dotted #EDE5D288; */
 }
+/* <!-- color="#3B6C73" -->
+      <!-- color="#C04759" -->
+      <!-- color="#3B6C73" -->
+      <!-- color="#7D5A2C" --> */
 
 .card::before {
   content: '';

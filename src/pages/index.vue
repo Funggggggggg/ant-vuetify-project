@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center align-center" style="width: 100%; gap: 5px;">
+    <v-row class="d-flex justify-center" style="width: 100%; gap: 5px; margin-top: 20px;">
       <v-text-field
         v-model="search"
         prepend-inner-icon="mdi-magnify"
@@ -34,6 +34,7 @@
     <!-- 功能按鈕區 -->
     <v-fab
       class="ms-4 custom-fab-plus"
+      :scroll-behavior="hide"
       icon="mdi-plus"
       location="top end"
       size="x-large"
@@ -47,12 +48,15 @@
       location="bottom right"
       variant="outlined"
       absolute
-      color="#3B6C73"
       class="custom-fab-up"
       style="margin: 16px;"
+      color="#3B6C73"
       @click="scrollToTop"
       ></v-fab>
+      <!-- color="#3B6C73" -->
       <!-- color="#C04759" -->
+      <!-- color="#3B6C73" -->
+      <!-- color="#7D5A2C" -->
   </v-container>
 </template>
 
@@ -169,8 +173,8 @@ const scrollToTop = () => {
 
 .custom-fab-plus {
   position: fixed !important;
-  top: 185px !important;
-  right: 343px !important;
+  top: 190px !important;
+  right: 250px !important;
   z-index: 999 !important;
   scale: 1.3 !important;
 }

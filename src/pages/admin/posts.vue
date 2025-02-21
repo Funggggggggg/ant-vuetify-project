@@ -17,6 +17,9 @@
           </template>
           <!-- # => v-slot 插件 -->
           <!-- 插槽名稱有 . ，不能直接用 #，要用 #[``] -->
+          <template #[`item.account`]="{ value }">
+            {{ value }}
+          </template>
           <template #[`item.image`]="{ value }">
             <v-img :src="value" width="80"></v-img>
           </template>
@@ -57,8 +60,8 @@
         <v-card-text>
           <!-- FIXME 要取到使用者資料 -->
           <v-text-field
-            v-model="user1.account"
-            :label="user1.account || '未提供使用者名稱'"
+            v-model="user.value.value"
+            :label="cardUser.user || '未提供使用者名稱'"
             :error-messages="user.errorMessage.value"
             disabled
             ></v-text-field>
@@ -110,12 +113,12 @@ import { useAxios } from '@/composables/axios';
 import { useSnackbar } from 'vuetify-use-dialog'
 import { reactive, computed, ref } from 'vue';
 import { useForm, useField } from 'vee-validate'
-import { useUserStore } from '@/stores/user';
+import { useCardStore } from '@/stores/card';
 import * as yup from 'yup' //登入註冊
 
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
-const user1 = useUserStore()
+const cardUser = useCardStore()
 
 const posts = reactive([])
 const search = ref('')
@@ -124,7 +127,7 @@ const headers = computed(() => {
   return [
     // { title: 'ID', key: '_id', sortable: true },
     { title: '標題', key: 'title', sortable: true },
-    { title: '發布者', key: 'user', sortable: true },
+    { title: '發布者', key: 'account', sortable: true },
     { title: '圖片', key: 'image', sortable: false },
     { title: '分類', key: 'category', sortable: true },
     { title: '說明', key: 'content', sortable: true },
@@ -165,11 +168,14 @@ const dialog = ref({
 const openDialog = (item) => {
   if (item) {
     dialog.value.id = item._id
-    user.value.value = item.user
+    user.value.value = cardUser.account
     title.value.value = item.title
     content.value.value = item.content
     category.value.value = item.category
     isPrivate.value.value = item.isPrivate
+  } else {
+    // 新增時使用目前登入的用戶資料
+    user.value.value = cardUser.account
   }
   dialog.value.open = true
 
@@ -210,7 +216,8 @@ const schema = yup.object({
 const { handleSubmit, isSubmitting, resetForm  } = useForm({
   validationSchema: schema,
   initialValues: {
-    user:'',
+    user: '',
+    account: '',
     title: '',
     content: '',
     category: '紀念繪畫',
@@ -299,6 +306,8 @@ function truncate(text, length) {
   }
   return text
 }
+
+// 如果 posts 取到的使用者 id 跟 user.id 一樣，則顯示使用者名稱
 
 </script>
 

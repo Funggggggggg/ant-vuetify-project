@@ -3,7 +3,7 @@
     <v-list>
       <v-list-item :title="user.account">
         <template #prepend>
-          <Avatar :variant="pixel" :name="user.account" style="margin-right:10px;"/>
+          <Avatar :size="25" variant="beam" :name="user.account" :title="true" :color="colors" style="margin-right:10px;"/>
         </template>
       </v-list-item>
     </v-list>

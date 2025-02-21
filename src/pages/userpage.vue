@@ -3,7 +3,7 @@
     <div class="ma-8">
       <v-row class=" d-flex justify-center align-center">
         <v-col cols="3">
-          <Avatar size="200" :variant="bauhaus" :name="user.account" style="margin-right:10px;"/>
+          <Avatar size="200" variant="beam" :name="user.account" :title="true" :color="colors" style="margin-right:10px;"/>
         </v-col>
         <v-col cols="5" style="margin-left: 50px;">
           <v-card variant="outlined" class="d-flex flex-column text-h5 content">

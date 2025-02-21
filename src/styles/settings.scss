@@ -4,65 +4,73 @@
  * Configures SASS variables and Vuetify overwrites
  */
 
-// 先定義字型變數
+// 定義變數
 $abril-font: "Abril Fatface", serif;
+$Roboto-font: "Roboto", "Noto Sans TC", sans-serif;
+$snow-color: #EDE5D2;
 
-// https://vuetifyjs.com/features/sass-variables/
 @use 'vuetify/settings' with (
+  $color-pack: true,
   $typography: (
     'h1': (
       'size': 6rem,
       'weight': 300,
       'line-height': 6rem,
-      'letter-spacing': 0.2em,
-      'font-family': $abril-font  // 使用變數
+      'letter-spacing': 0.2em
     ),
     'h2': (
       'size': 3.75rem,
       'weight': 300,
       'line-height': 3.75rem,
-      'letter-spacing': 0.2em,
-      'font-family': $abril-font
+      'letter-spacing': 0.2em
     ),
     'h3': (
       'size': 2.5rem,
       'weight': 300,
       'line-height': 3.2rem,
-      'letter-spacing': 0.2em,
-      'font-family': 'Roboto'
-    ),
-    'h4': (
-      'size': 2rem,
-      'weight': 300,
-      'line-height': 2.6rem,
-      'letter-spacing': 0.2em,
-      'font-family': 'Roboto'
-    ),
-    'h5': (
-      'size': 1.5rem,
-      'weight': 400,
-      'line-height': 2rem,
-      'letter-spacing': 0.2em,
-      'font-family': 'Roboto'
+      'letter-spacing': 0.2em
     ),
     'body-1': (
       'size': 1rem,
       'weight': 400,
       'line-height': 1.5rem,
-      'letter-spacing': 0.2em,
-      'font-family': 'Roboto'
+      'letter-spacing': 0.2em
     ),
     'body-2': (
       'size': 0.875rem,
       'weight': 300,
       'line-height': 1.25rem,
-      'letter-spacing': 0.2em,
-      'font-family': 'Roboto'
+      'letter-spacing': 0.2em
     )
   )
 );
 
-// 添加全域字型設定
+// 全域設定
 :root {
   --abril-font: #{$abril-font};
+  --roboto-font: #{$Roboto-font};
+  --snow-color: #{$snow-color};
+}
+
+// 全域類別
+.text-abril {
+  font-family: var(--abril-font);
+}
+
+.text-roboto {
+  font-family: var(--roboto-font);
+}
+
+.text-snow {
+  color: var(--snow-color);
+}
+
+// 預設樣式
+body {
+  font-family: var(--roboto-font);
+  color: var(--snow-color);
+}
+
+h1, h2, h3 {
+  font-family: var(--abril-font);
 }

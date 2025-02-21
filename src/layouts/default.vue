@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar style="height: 75px;" class="d-flex align-center justify-center">
+  <v-app-bar elevation="0" scroll-behavior="hide" style="height: 75px; background-color: #383431" class="d-flex align-center justify-center">
     <v-container class="d-flex align-center">
-      <router-link to="/" :active="false" class="d-flex align-center" style="text-decoration: none;">
+      <router-link to="/welcome" :active="false" class="d-flex align-center" style="text-decoration: none;">
         <img src="/antlogo.ico" alt="Logo" style="height: 40px;">
         <v-toolbar-title class="custom-title ">Memorial Nest</v-toolbar-title>
       </router-link>
@@ -10,7 +10,7 @@
       <v-btn v-if="user.isLoggedIn" icon="mdi-chat-processing" class="text-body-2" style="color: #EDE5D2;"></v-btn>
       <!-- 導航選單 -->
       <template v-for="nav of navs" :key="nav.to">
-        <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon" class="text-body-2" rounded  style="color: #EDE5D2;">
+        <v-btn v-if="nav.show" :to="nav.to" :prepend-icon="nav.icon" class="text-body-2" variant="text" style="color: #EDE5D2;">
           {{ nav.text }}
           <!-- 訊息通知顯現 -->
           <v-badge v-if="user.isLoggedIn && user.notifications > 0" :content="user.notifications" floating color="red"></v-badge>
@@ -45,10 +45,11 @@ const navs = computed(() => {
     // { to: '/login', icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
     // { to: '/userPage', icon: 'mdi-account-box', show: user.isLoggedIn },
     // { to: '/admin', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
-    { to: '/about', text: '關於', icon: 'mdi-information', show: true},
-    { to: '/register', text: '註冊', icon: 'mdi-account-plus', show: !user.isLoggedIn },
-    { to: '/login', text: '登入', icon: 'mdi-account-arrow-left', show: !user.isLoggedIn },
-    { to: '/userPage', text: '個人頁面', icon: 'mdi-account', show: user.isLoggedIn },
+    { to: '/', text: '首頁', show: true},
+    { to: '/about', text: '關於', show: true},
+    { to: '/register', text: '註冊', show: !user.isLoggedIn },
+    { to: '/login', text: '登入', show: !user.isLoggedIn },
+    { to: '/userPage', text: '個人頁面', show: user.isLoggedIn },
     { to: '/admin', text: '後台管理', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
   ]
 })

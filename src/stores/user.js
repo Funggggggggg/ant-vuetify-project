@@ -7,9 +7,11 @@ export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const account = ref('')
   const introduce = ref('')
+  // const profile = ref('')
   const role = ref(UserRole.USER)
   const collectedPosts = ref([]) // 收藏的文章清單 (postId 陣列)
   const createdPosts = ref([]) // 發佈過的文章清單 (postId 陣列)
+  // const locked = ref(false) // 發佈過的文章清單 (postId 陣列)
 
   // 檢查是否登入
   // 6. (isLoggedIn 來源)
