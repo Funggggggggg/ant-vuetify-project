@@ -8,6 +8,7 @@
 $abril-font: "Abril Fatface", serif;
 $Roboto-font: "Roboto", "Noto Sans TC", sans-serif;
 $snow-color: #EDE5D2;
+$dark-background: #383431;
 
 @use 'vuetify/settings' with (
   $color-pack: true,
@@ -50,6 +51,7 @@ $snow-color: #EDE5D2;
   --abril-font: #{$abril-font};
   --roboto-font: #{$Roboto-font};
   --snow-color: #{$snow-color};
+  --dark-background: #{$dark-background};
 }
 
 // 全域類別
@@ -65,10 +67,15 @@ $snow-color: #EDE5D2;
   color: var(--snow-color);
 }
 
+.background-dark{
+  background-color: var(--dark-background);
+}
+
 // 預設樣式
 body {
   font-family: var(--roboto-font);
   color: var(--snow-color);
+  background-color: var(--dark-background);
 }
 
 h1, h2, h3 {

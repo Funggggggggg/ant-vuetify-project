@@ -63,7 +63,6 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useAxios } from '@/composables/axios'
-import PostCart from '@/components/PostCart.vue'
 
 const { api } = useAxios()
 

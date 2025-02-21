@@ -1,7 +1,10 @@
 <template>
   <v-card class="card" @mouseenter="hightlight = true " @mouseleave="hightlight = false">
-    {{ CardStore.user }}
-      <v-img class="picMask" :class="{ 'hightlight': hightlight }" :src="image" height="200" cover ></v-img>
+    <div class="d-flex align-center mb-4">
+      <Avatar :size="30" variant="beam" :name="props.account" :title="true" :color="colors"/>
+      <div class="ms-4">{{ props.account }}</div>
+    </div>
+        <v-img class="picMask" :class="{ 'hightlight': hightlight }" :src="image" height="200" cover ></v-img>
     <v-row class="info">
       <v-col col="9">
         <v-card-title>
@@ -23,13 +26,18 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useCardStore } from '@/stores/card.js'
+import Avatar from "vue-boring-avatars";
+// import { useCardStore } from '@/stores/card.js'
 const hightlight = ref(false)
 
-const CardStore = useCardStore()
+// const CardStore = useCardStore()
 const props = defineProps({
   // eslint-disable-next-line vue/prop-name-casing
   _id: {
+    type: String,
+    default: ''
+  },
+  account: {
     type: String,
     default: ''
   },
@@ -74,9 +82,8 @@ const truncatedContent = computed(() => {
 .info {
   position: relative;
   z-index: 2;
-  margin-top: 0px; /* 控制與圖片的距離 */
-  padding: 10px 10px 0px 0px;
-  font-size: 20px;
+  padding: 10px 10px 10px 0px;
+  /* font-size: 20px; */
   /* background-color: #f1d87f6b; */
 }
 
@@ -90,14 +97,17 @@ const truncatedContent = computed(() => {
 }
 
 .card {
-  border-radius: 0px 30px 30px 30px;
-  padding: 15px;
+  /* border-radius: 30px 0px 0px 0px; */
+  border-radius: 30px 30px 30px 30px;
+  padding: 17px;
   color: #ede5d2;
   width: 100%;
   height: 100%;
-  background-color: #312E2B;
-  /* background-color: #403D3A; */
-  border: 0.5px solid #EDE5D288;
+  /* background-color: #312E2B; */
+  background-color: #403D3A;
+  /* border: 0.5px solid #3B6C73; */
+  border: 0.5px solid #F1D87F77;
+  /* border: 0.5px solid #EDE5D288; */
   /* border: 2px dotted #EDE5D288; */
 }
 /* <!-- color="#3B6C73" -->
@@ -108,16 +118,11 @@ const truncatedContent = computed(() => {
 .card::before {
   content: '';
   position: absolute;
-  /* width: 1.5px; */
-  /* width: 165px; */
   width:500px;
-  /* height: 200px; */
-  height: 1px;
   border-radius: 10px;
-  /* top: 245px; */
-  /* top: 220px; */
-  top: 280px;
-  /* left: 15px; */
+  height: 1px;
+  top: 325px;
+  /* top: 270px; */
   left: 30px;
   z-index: 3 !important;
   /* background-color: #ede5d23d !important; */
@@ -129,8 +134,8 @@ const truncatedContent = computed(() => {
   /* background-color: #C04759 !important; */
   /* background-color: #366269 !important; */
   /* background-color: #F1D87F !important; */
-  background-color: #f1d87faf !important;
-  /* background-color: #f1d87f72 !important; */
+  /* background-color: #f1d87faf !important; */
+  background-color: #f1d87f72 !important;
   transition: 0.7s;
 }
 
@@ -139,7 +144,7 @@ const truncatedContent = computed(() => {
   -webkit-mask: radial-gradient(circle, rgba(255, 169, 56, 1), rgba(255, 169, 56, 0.5)) !important;
   height: 100%;
   width: 100%;
-  border-radius: 0px 30px 0px 0px;
+  border-radius: 15px 15px 15px 15px;
   transition: all 0.3s ease;
 }
 

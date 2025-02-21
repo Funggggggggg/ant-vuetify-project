@@ -26,6 +26,9 @@ const vuetify = createVuetify({
         colors: {
           snow: '#EDE5D2',
         },
+        background: {
+          dark: '#383431',
+        }
       },
     },
   },
