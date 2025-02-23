@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="text-abril text-snow mt-8">
       <v-col cols="12">
-        <h1 class="text-center">{{ '登入' }}</h1>
+        <h1 class="text-center text-h4">{{ '登入' }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="12">
@@ -25,7 +25,7 @@
             counter
           />
           <div class="text-center">
-            <v-btn :loading="isSubmitting" type="submit" color="primary">{{ $t('login.submit') }}</v-btn>
+            <v-btn :loading="isSubmitting" type="submit" color="#3B6C73">{{ $t('login.submit') }}</v-btn>
           </div>
         </v-form>
       </v-col>
@@ -52,20 +52,20 @@ const schema = yup.object({
     // 資料型態是文字
     .string()
     // 必填
-    .required('api.使用者帳號必填')
+    .required('使用者帳號必填')
     // 最短長度
-    .min(4, 'api.使用者帳號太短')
+    .min(4, '使用者帳號太短')
     // 最長長度
-    .max(20, 'api.使用者帳號太長')
+    .max(20, '使用者帳號太長')
     // 自訂驗證(自訂驗證名稱, 錯誤訊息, function)
-    .test('isAlphanumeric','api.使用者帳號格式不符', (value) =>
+    .test('isAlphanumeric','使用者帳號格式不符', (value) =>
       validator.isAlphanumeric(value),
     ),
   password: yup
     .string()
-    .required('api.使用者密碼必填')
-    .min(4,'api.使用者密碼太短')
-    .max(20, 'api.使用者密碼太長'),
+    .required('使用者密碼必填')
+    .min(4,'使用者密碼太短')
+    .max(20, '使用者密碼太長'),
 })
 
 // 建立表單
@@ -88,7 +88,7 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: '登入成功',
       snackbarProps: {
-        color: 'green'
+        color: '#3B6C73'
       }
     })
     router.push('/')
@@ -97,7 +97,7 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: error?.response?.data?.message || '未知錯誤',
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }

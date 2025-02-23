@@ -27,7 +27,7 @@ const user = useUserStore()
 const navs = computed(() => {
   return [
     { to: '/admin/posts', text: '卡片管理', icon: 'mdi-card-bulleted-outline' },
-    { to: '/admin/allusers', text: '會員管理', icon: 'mdi-format-list-bulleted' },
+    // { to: '/admin/allusers', text: '會員管理', icon: 'mdi-format-list-bulleted' },
     { to: '/', text: '首頁', icon: 'mdi-home' },
   ]
 })

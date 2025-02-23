@@ -100,7 +100,7 @@ const submit = handleSubmit(async () => {
     createSnackbar({
       text: '成功加入卡片',
       snackbarProps: {
-        color: 'green'
+        color: '#3B6C73'
       }
     })
   } catch (error) {
@@ -108,7 +108,7 @@ const submit = handleSubmit(async () => {
     createSnackbar({
       text: 'api.' + (error?.response?.data?.message || '未知錯誤'),
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }

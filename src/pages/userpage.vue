@@ -20,10 +20,20 @@
         <!-- 卡片區 -->
       <v-row v-if="posts.length > 0" class="d-flex justify-center">
         <v-col cols="12" class="d-flex justify-center align-center">
-          <v-btn text="已建立" class="text-body-2 me-4 font-weight-bold rounded-lg" variant="outlined" color="#F1D87F"></v-btn>
-          <!-- <v-btn text="已建立" class="text-body-2 me-4 font-weight-bold rounded-lg" variant="outlined" color="#3B6C73"></v-btn> -->
-          <!-- <v-btn text="已建立" class="text-body-2 me-4 font-weight-bold rounded-lg" variant="outlined" color="#78b6bf"></v-btn> -->
-          <v-btn text="已收藏" class="text-body-2 ms-4 font-weight-bold rounded-lg" variant="outlined" color="#C04759"></v-btn>
+          <v-btn
+            text="已建立"
+            class="text-body-2 me-4 font-weight-bold rounded-lg"
+            :variant="displayType === 'created' ? 'flat' : 'outlined'"
+            :color="displayType === 'created' ? '#F1D87F' : '#F1D87F'"
+            @click="displayType = 'created'"
+          ></v-btn>
+          <v-btn
+            text="已收藏"
+            class="text-body-2 ms-4 font-weight-bold rounded-lg"
+            :variant="displayType === 'favorite' ? 'flat' : 'outlined'"
+            :color="displayType === 'favorite' ? '#C04759' : '#C04759'"
+            @click="displayType = 'favorite'"
+          ></v-btn>
         </v-col>
         <v-col v-for="post of filteredPosts" :key="post._id" cols="12" md="6" lg="3" class="mt-4">
           <post-cart
@@ -70,48 +80,59 @@ import { useAxios } from '@/composables/axios'
 const { api } = useAxios()
 
 const ITEMS_PER_PAGE = 16 // 每頁顯示 16 筆資料
-const currentPage = ref(1)
+const currentPage = ref(1) // 預設當前頁碼為 1
 const totalPage = computed(() => Math.ceil(posts.value.length / ITEMS_PER_PAGE))
 
-const user = useUserStore()
-const router = useRouter()
+const user = useUserStore() // 使用者資料
+const router = useRouter() // 獲取路由實例
 
 const loading = ref(false) // 預設為 false，表示沒有載入中
 const error = ref(null) // 預設為 null，表示沒有錯誤
-const posts = ref([])
-const search = ref('')
+const posts = ref([]) // 文章列表
+const search = ref('') // 搜尋關鍵字
+
+// 添加 顯示類型 的狀態
+const displayType = ref('created') // 'created' 為已建立, 'favorite' 為已收藏
+
 // 資料過濾：
 const filteredPosts = computed(() => {
-  return posts.value
-  .filter(post => post.title.toLowerCase().includes(search.value.toLowerCase()))
-    // .slice(開始索引，結束索引)
-    // 不包含結束索引
+  // 先過濾文章類型
+  const typeFilteredPosts = posts.value.filter(post => {
+    if (displayType.value === 'created') {
+      return post.user === user._id  // 顯示使用者建立的文章
+    } else {
+      return post.favorite  // 顯示收藏的文章
+    }
+  })
+  // 再過濾搜尋關鍵字
+  return typeFilteredPosts
+    .filter(post => post.title.toLowerCase().includes(search.value.toLowerCase()))
     .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
 })
 
 // 添加獲取文章的方法
 const getPosts = async () => {
-  loading.value = true // 開始載入狀態
-  error.value = null // 清空錯誤訊息
+  loading.value = true
+  error.value = null
 
   try {
-    const { data } = await api.get('/post', {
-      params: {
-        offset: posts.value.length, // 從 posts 的長度開始加載
-        limit: ITEMS_PER_PAGE // 加載 ITEMS_PER_PAGE 筆資料
-      }
-    })
-    if (!data?.result) { // 若沒有 result 屬性，則拋出錯誤
+    // 根據顯示類型獲取不同的文章列表
+    const endpoint = displayType.value === 'created'
+      ? '/post/user/' + user._id  // 獲取使用者建立的文章
+      : '/post/favorite/' + user._id  // 獲取使用者收藏的文章
+
+    const { data } = await api.get(endpoint)
+    if (!data?.result) {
       throw new Error('無效的回應格式')
     }
-    posts.value = data.result // 將獲取到的資料添加到 posts 中
+    posts.value = data.result
     console.log('獲取的文章:', posts.value)
   } catch (error) {
     console.error('獲取文章失敗:', error)
     error.value = '無法取得文章資料'
-    posts.value = [] // 若獲取失敗，則清空 posts
+    posts.value = []
   } finally {
-    loading.value = false // 不論成功失敗，都結束載入狀態
+    loading.value = false
   }
 }
 
@@ -120,6 +141,12 @@ watch(() => user.isLoggedIn, (newValue) => {
   if (!newValue) {
     router.push('/login')  // 若登出則導向登入頁
   }
+})
+
+// 監聽顯示類型的變化
+watch(displayType, () => {
+  currentPage.value = 1  // 切換類型時重置頁碼
+  getPosts()  // 重新獲取文章
 })
 
 // 監聽當前頁碼

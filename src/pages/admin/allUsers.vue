@@ -58,7 +58,7 @@ const getAllUsers = async () => {
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }

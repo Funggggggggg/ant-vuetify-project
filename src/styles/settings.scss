@@ -7,7 +7,7 @@
 // 定義變數
 $abril-font: "Abril Fatface", serif;
 $Roboto-font: "Roboto", "Noto Sans TC", sans-serif;
-$snow-color: #EDE5D2;
+$snow-color: #F1D87F;
 $dark-background: #383431;
 
 @use 'vuetify/settings' with (
@@ -29,6 +29,12 @@ $dark-background: #383431;
       'size': 2.5rem,
       'weight': 300,
       'line-height': 3.2rem,
+      'letter-spacing': 0.2em
+    ),
+    'h4': (
+      'size': 1.8rem,
+      'weight': 300,
+      'line-height': 2.8rem,
       'letter-spacing': 0.2em
     ),
     'body-1': (
@@ -78,6 +84,6 @@ body {
   background-color: var(--dark-background);
 }
 
-h1, h2, h3 {
+h1, h2, h3,h4 {
   font-family: var(--abril-font);
 }

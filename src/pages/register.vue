@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="text-abril text-snow mt-8">
       <v-col cols="12">
-        <h1 class="text-center"> {{ '註冊' }} </h1>
+        <h1 class="text-center text-h4"> {{ '註冊' }} </h1>
         <!-- 第二種寫法 <h1 v-t="'nav.register'"></h1> -->
       </v-col>
       <v-divider></v-divider>
@@ -37,7 +37,7 @@
           />
           <div class="text-center">
             <!-- 送出中就顯示 loading (轉圈圈的東西)-->
-            <v-btn :loading="isSubmitting" type="submit" color="primary">{{ '建立帳號'}}</v-btn>
+            <v-btn :loading="isSubmitting" type="submit" color="#3B6C73">{{ '建立帳號'}}</v-btn>
           </div>
         </v-form>
       </v-col>
@@ -65,34 +65,34 @@ const schema = yup.object({
     //資料型態是文字
     .string()
     // 必填
-    .required('api.使用者帳號必填')
+    .required('使用者帳號必填')
     // 最短長度
-    .min(4, 'api.使用者帳號太短')
+    .min(4, '使用者帳號太短')
     // 最長長度
-    .max(20, 'api.使用者帳號太長')
+    .max(20, '使用者帳號太長')
     // 自訂驗證(自訂驗證名稱, 錯誤訊息, function)
     .test(
-      'isAlphanumeric' ,'api.使用者帳號格式不符',
+      'isAlphanumeric' ,'使用者帳號格式不符',
       value => validator.isAlphanumeric(value)
   ),
   email: yup
     .string()
-    .required('api.使用者信箱必填')
+    .required('使用者信箱必填')
     .test(
-      'isEmail', 'api.使用者信箱格式不符',
+      'isEmail', '使用者信箱格式不符',
       value => validator.isEmail(value)
   ),
   password: yup
     .string()
-    .required('api.使用者密碼必填')
-    .min(4, 'api.使用者密碼太短')
-    .max(20, 'api.使用者密碼太長'),
+    .required('使用者密碼必填')
+    .min(4, '使用者密碼太短')
+    .max(20, '使用者密碼太長'),
   passwordConfirm: yup
     .string()
     // .oneOf(陣列, 訊息)  必須要是陣列內其中一個值
     // .ref(欄位名稱)      取得欄位的值
     // .ref('password')   password 欄位的值
-    .oneOf([yup.ref('password')], 'api.密碼不符')
+    .oneOf([yup.ref('password')], '密碼不符')
 })
 
 // 建立表單( 一定要先 useForm 才能 useField)
@@ -119,7 +119,7 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: '註冊成功',
       snackbarProps: {
-        color: 'green'
+        color: '#3B6C73'
       }
     })
     router.push('/login')
@@ -129,7 +129,7 @@ const submit = handleSubmit(async (values) => {
       // 所有錯誤一起處理
       text: error?.response?.data?.message || '未知錯誤',
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }

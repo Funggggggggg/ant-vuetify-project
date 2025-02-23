@@ -6,7 +6,7 @@
         prepend-inner-icon="mdi-magnify"
         color="#EDE5D2"
         variant="default"
-        class="text-body-2 d-flex align-center justify-center search-bar"
+        class="text-body-1 d-flex align-center justify-center search-bar"
       ></v-text-field>
       <v-col cols="8" class="d-flex align-center justify-center" style="height: 100px;">
         <v-btn
@@ -50,7 +50,7 @@
       absolute
       class="custom-fab-up"
       style="margin: 16px;"
-      color="#3B6C73"
+      color="#F1D87F"
       @click="scrollToTop"
       ></v-fab>
       <!-- color="#3B6C73" -->

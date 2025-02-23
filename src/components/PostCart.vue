@@ -1,5 +1,5 @@
 <template>
-  <v-card class="card" @mouseenter="hightlight = true " @mouseleave="hightlight = false">
+  <v-card class="card text-abril" @mouseenter="hightlight = true " @mouseleave="hightlight = false">
     <div class="d-flex align-center mb-4">
       <Avatar :size="30" variant="beam" :name="props.account" :title="true" :color="colors"/>
       <div class="ms-4">{{ props.account }}</div>
@@ -8,7 +8,7 @@
     <v-row class="info">
       <v-col col="9">
         <v-card-title>
-          <router-link :to="'/post/' + _id" style="color: #F1D87F; text-decoration: none; font-weight:500 !important;" class="text-body-1">{{ title }}</router-link>
+          <router-link :to="'/post/' + _id" style=" text-decoration: none ; font-weight:500 !important;" class="text-body-1 text-snow">{{ title }}</router-link>
         </v-card-title>
       </v-col>
       <!-- 綁定按鈕 按了可以放進收藏清單-->
@@ -90,8 +90,6 @@ const truncatedContent = computed(() => {
   position: relative;
   z-index: 2;
   padding: 10px 10px 10px 0px;
-  /* font-size: 20px; */
-  /* background-color: #f1d87f6b; */
 }
 
 .subtitle {
@@ -113,8 +111,8 @@ const truncatedContent = computed(() => {
   /* background-color: #312E2B; */
   background-color: #403D3A;
   /* border: 0.5px solid #3B6C73; */
-  border: 0.5px solid #F1D87F77;
-  /* border: 0.5px solid #EDE5D288; */
+  /* border: 0.5px solid #F1D87F77; */
+  border: 0.5px solid #EDE5D288;
   /* border: 2px dotted #EDE5D288; */
 }
 /* <!-- color="#3B6C73" -->
@@ -127,7 +125,7 @@ const truncatedContent = computed(() => {
   position: absolute;
   width:500px;
   border-radius: 10px;
-  height: 1px;
+  height: 0.5px;
   top: 325px;
   /* top: 270px; */
   left: 30px;
@@ -142,7 +140,7 @@ const truncatedContent = computed(() => {
   /* background-color: #366269 !important; */
   /* background-color: #F1D87F !important; */
   /* background-color: #f1d87faf !important; */
-  background-color: #f1d87f72 !important;
+  background-color: #EDE5D288 !important;
   transition: 0.7s;
 }
 

@@ -79,25 +79,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // const fetchUserData = async () => {
-  //   try {
-  //     const response = await apiAuth.get('/api/user/profile', {
-  //       headers: {
-  //         Authorization: `Bearer ${token.value}`
-  //       },
-  //       cache: 'no-store' // 強制請求最新資料
-  //     })
-  //     console.log('User data fetched:', response.data) // 添加這行來查看響應數據
-  //     account.value = response.data.account
-  //     introduce.value = response.data.introduce
-  //     role.value = response.data.role
-  //     collectedPosts.value = response.data.collected || []
-  //     createdPosts.value = response.data.created || []
-  //   } catch (error) {
-  //     console.error('Failed to fetch user data:', error)
-  //         }
-  // }
-
   return {
     token, account, role, introduce,
     collectedPosts, createdPosts,

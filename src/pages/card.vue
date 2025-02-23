@@ -22,7 +22,7 @@
               <template #append>
                 <v-btn color="red" icon="mdi-minus" size="small" class="ml-2" @click="editCard(item.product._id, -1)"></v-btn>
                 {{ item.quantity }}
-                <v-btn color="green" icon="mdi-plus" size="small" class="mr-2" @click="editCard(item.product._id, 1)"></v-btn>
+                <v-btn color="#3B6C73" icon="mdi-plus" size="small" class="mr-2" @click="editCard(item.product._id, 1)"></v-btn>
               </template>
             </v-list-item>
             <v-divider v-if="i < card.length - 1"></v-divider>
@@ -95,7 +95,7 @@ const checkout = async () => {
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }

@@ -61,7 +61,7 @@
           <!-- FIXME 要取到使用者資料 -->
           <v-text-field
             v-model="user.value.value"
-            :label="cardUser.user || '未提供使用者名稱'"
+            :label="userStore.account || '未提供使用者名稱'"
             :error-messages="user.errorMessage.value"
             disabled
             ></v-text-field>
@@ -113,12 +113,12 @@ import { useAxios } from '@/composables/axios';
 import { useSnackbar } from 'vuetify-use-dialog'
 import { reactive, computed, ref } from 'vue';
 import { useForm, useField } from 'vee-validate'
-import { useCardStore } from '@/stores/card';
+import { useUserStore } from '@/stores/user';
 import * as yup from 'yup' //登入註冊
 
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
-const cardUser = useCardStore()
+const userStore = useUserStore()
 
 const posts = reactive([])
 const search = ref('')
@@ -149,7 +149,7 @@ const getPosts = async () => {
     createSnackbar({
       text: 'api.' + (error?.response?.data?.message || '未知錯誤'),
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }
@@ -166,16 +166,17 @@ const dialog = ref({
 })
 
 const openDialog = (item) => {
+  // 修改時將資料填入表單
   if (item) {
     dialog.value.id = item._id
-    user.value.value = cardUser.account
+    user.value.value = userStore.account
     title.value.value = item.title
     content.value.value = item.content
     category.value.value = item.category
     isPrivate.value.value = item.isPrivate
   } else {
     // 新增時使用目前登入的用戶資料
-    user.value.value = cardUser.account
+    user.value.value = userStore.account
   }
   dialog.value.open = true
 
@@ -189,7 +190,7 @@ const closeDialog = () => {
     fileAgent.value.deleteFileRecord()
 }
 
-const schema = yup.object({
+const schema = yup.object({ // 資料驗證
   title: yup
     .string()
     .required('卡片標題必填')
@@ -213,7 +214,7 @@ const schema = yup.object({
     .default(false)
     .notRequired(),  // like 可存在，但不驗證用戶輸入
 })
-const { handleSubmit, isSubmitting, resetForm  } = useForm({
+const { handleSubmit, isSubmitting, resetForm  } = useForm({ // 使用 useForm
   validationSchema: schema,
   initialValues: {
     user: '',
@@ -227,6 +228,7 @@ const { handleSubmit, isSubmitting, resetForm  } = useForm({
 })
 const title = useField('title')
 const user = useField('user')
+// const account = useField('account')
 const content = useField('content')
 const category = useField('category')
 const isPrivate = useField('isPrivate')
@@ -251,49 +253,50 @@ const submit = handleSubmit(async (values) => {
     createSnackbar({
       text: '卡片圖片必填',
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
     return
   }
 
   try {
-    const fd = new FormData()
+    const fd = new FormData() // 建立 FormData 物件來傳送檔案
     // fd.append(key, value)
-    console.log(values.user)
-    fd.append('user', values.user)
+    // console.log(values.account)
+    fd.append('user', 'aaaa')
+    fd.append('account', userStore.account)
     fd.append('title', values.title)
     fd.append('content', values.content)
     fd.append('category', values.category)
     fd.append('isPrivate', values.isPrivate)
     // fd.append('like', values.like)
-    if (fileRecords.value.length > 0) {
+    if (fileRecords.value.length > 0) { // 有圖片才加入
       fd.append('image', fileRecords.value[0].file)
     }
 
     if (dialog.value.id.length > 0) {
-      await apiAuth.patch('/post/' + dialog.value.id, fd)
+      await apiAuth.patch('/post/' + dialog.value.id, fd) // 編輯
     } else {
-      console.log(fd)
-      await apiAuth.post('/post', fd)
+      // console.log(fd)
+      await apiAuth.post('/post', fd) // 新增
     }
 
-    posts.splice(0, posts.length)
-    getPosts()
-    createSnackbar({
+    posts.splice(0, posts.length) // 清空 posts 陣列
+    getPosts() // 重新取得資料
+    createSnackbar({ // 顯示成功訊息
       text: dialog.value.id.length > 0 ? '編輯成功' : '新增成功',
       snackbarProps: {
-        color: 'green'
+        color: '#3B6C73'
       }
     })
-    closeDialog()
+    closeDialog() // 關閉對話框
   } catch (error) {
     console.log(error)
     createSnackbar({
       // FIXME 無法編輯 =>  400 (Bad Request) 錯誤通常是因為後端預期的資料結構或格式不符合
       text: 'api.' + (error?.response?.data?.message || '未知錯誤'),
       snackbarProps: {
-        color: 'red'
+        color: '#C04759'
       }
     })
   }
