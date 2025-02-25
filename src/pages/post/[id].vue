@@ -1,33 +1,42 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class=" d-flex justify-center align-center">
       <v-col cols="12">
-        <h1 class="text-center">{{ post.title }}</h1>
+        <h1 class="text-center text-snow text-h3 mt-4 mb-4 ">{{ post.title }}</h1>
       </v-col>
       <v-divider></v-divider>
-      <v-col cols="12" md="6">
-        <v-img :src="post.image"></v-img>
+      <v-col cols="5" md="6" class="mt-8">
+        <div  class="border pa-3 rounded-xl">
+          <v-img :src="post.image" class=" rounded-xl"></v-img>
+        </div>
       </v-col>
-      <v-col cols="12" md="6">
-        <p>{{ '分類：'+ post.category }}</p>
-        <p>{{ '發布者：'+ post.user }}</p>
+      <v-col cols="7" md="6" class="text-snow text-body-2 mt-4">
+        <div class="d-flex align-center mb-4 text-abril">
+          <Avatar :size="30" variant="beam" :name="post.account" :title="true"/>
+          <div class="ms-4" style="font-size: x-large;">{{ post.account }}</div>
+        </div>
+        <p class="mb-4 text-body-1 ">{{ '分類：'+ post.category }}</p>
         <!-- <p>{{ post.like }}</p> -->
-        <p>{{ post.content }}</p>
+        <p class="mb-4 text-body-2 text-abril">{{ post.content }}</p>
         <!-- 購物車數量 -->
-        <v-form :disabled="isSubmitting" @submit.prevent="submit">
-          <!-- Vuetify 中的文本框元件，用來顯示和處理用戶的輸入。 -->
-          <!-- v-model 是 Vue 的雙向數據綁定語法。.number 修飾符會強制將輸入框的值轉換為數字類型。 -->
-          <!-- type="number" 指定輸入框的類型為數字輸入，這樣瀏覽器會針對數字提供適當的界面和驗證，例如只允許輸入數字。 -->
-          <!-- FIXME <v-text-field v-model.number="quantity.value.value" type="number" :error-messages="quantity.errorMessage.value"></v-text-field> -->
-          <v-btn type="submit" prepend-icon="mdi-heart" :loading="isSubmitting">{{ '收藏' }}</v-btn>
-          <!-- 如果是送出中就有載入的動畫 -->
+        <v-form :disabled="isSubmitting" class="w-100 d-flex align-center justify-end" @submit.prevent="submit">
+          <v-btn type="submit" :loading="isSubmitting" variant="text">
+            <v-icon
+                :style="{ color: isFavorite ? '#C04759' : '#F1D87F', fontSize: '25px' }"
+                left
+                class="ms-1"
+                @click.stop="toggleFavorite"
+                >
+              {{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}
+            </v-icon>
+          </v-btn>
         </v-form>
       </v-col>
     </v-row>
   </v-container>
   <!--商品下架有提示 => overlays  -->
   <v-overlay :model-value="post.isPrivate" class="align-center justify-center" scrim="black" opacity="0.8" persistent>
-    <h1 class="text-center">{{ 'api.私人卡片' }}</h1>
+    <h1 class="text-center">'私人卡片'</h1>
   </v-overlay>
 </template>
 
@@ -35,11 +44,10 @@
 import { ref } from 'vue'
 import { useAxios } from '@/composables/axios'
 import { useRoute, useRouter } from 'vue-router' // 沒有 R取路由資訊 有 R做挑轉資訊
-import { useForm } from 'vee-validate'
-// import { useForm, useField } from 'vee-validate'
-// import * as yup from 'yup'
+// import { useForm } from 'vee-validate'
 import { useUserStore } from '@/stores/user'
 import { useSnackbar } from 'vuetify-use-dialog'
+import Avatar from "vue-boring-avatars";
 
 const { api, apiAuth } = useAxios()
 const route = useRoute()
@@ -50,6 +58,7 @@ const createSnackbar = useSnackbar()
 const post = ref({
   _id: '',
   // user: '',
+  account: '',
   title: '',
   content: '',
   image: '',
@@ -57,12 +66,19 @@ const post = ref({
   isPrivate: false,
   like: false,
 })
-// 取資料
+
+// 取得文章
 const getPost = async () => {
   try {
     const { data } = await api.get('/post/' + route.params.id)
     post.value = data.result
-    document.title = post.value.title + ' | 購物網站'
+    document.title = post.value.title + ' | 紀念巢'
+
+    // 檢查是否已收藏
+    if (user.isLoggedIn) {
+      isFavorite.value = user.collected.some(
+        item => item.post.toString() === post.value._id)
+    }
   } catch (error) {
     console.log(error)
     router.push('/') //有問題丟回首頁
@@ -70,35 +86,23 @@ const getPost = async () => {
 }
 getPost()
 
-// const schema = yup.object({
-//   quantity: yup
-//     .number()
-//     .typeError(t('post.addCardQuantityInvalid'))
-//     .required(t('post.addCardQuantityInvalid'))
-//     .positive(t('post.addCardQuantityInvalid'))
-//     .integer(t('post.addCardQuantityInvalid'))
-// })
-const { handleSubmit, isSubmitting } = useForm({
-  // validationSchema: schema,
-  initialValues: {
-    quantity: 1
-  }
-})
-// const quantity = useField('quantity')
+// 追蹤收藏狀態
+const isFavorite = ref(false)
 
-const submit = handleSubmit(async () => {
+const submit = async () => {
   if (!user.isLoggedIn) {
     router.push('/login')
     return
   }
   try {
-    const { data } = await apiAuth.patch('/user/card', {
+    const { data } = await apiAuth.patch('/user/collected', {
       post: post.value._id,
-      // quantity: values.quantity
     })
-    user.card = data.result
+    console.log(post.value._id)
+    user.collected = data.result.collected
+    isFavorite.value = !isFavorite.value // 切換收藏狀態
     createSnackbar({
-      text: '成功加入卡片',
+      text: isFavorite.value ? '成功加入收藏' : '已取消收藏',
       snackbarProps: {
         color: '#3B6C73'
       }
@@ -112,11 +116,25 @@ const submit = handleSubmit(async () => {
       }
     })
   }
-})
+}
+
 </script>
+
+<style scoped>
+
+.pic {
+  border: 0.5px solid #EDE5D288;
+}
+
+.pic img {
+  border: 5px solid #fff;
+}
+
+</style>
 
 <!-- 修改路由 -->
 <route lang="yaml">
   meta:
   title: '發布文章'
 </route>
+

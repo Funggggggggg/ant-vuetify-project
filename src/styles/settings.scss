@@ -10,7 +10,7 @@ $Roboto-font: "Roboto", "Noto Sans TC", sans-serif;
 $snow-color: #F1D87F;
 $dark-background: #383431;
 
-@use 'vuetify/settings' with (
+@use 'vuetify/styles' with (
   $color-pack: true,
   $typography: (
     'h1': (

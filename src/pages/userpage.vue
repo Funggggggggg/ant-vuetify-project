@@ -3,9 +3,9 @@
     <div class="ma-8">
       <v-row class=" d-flex justify-center align-center text-snow">
         <v-col cols="2">
-          <Avatar size="200" variant="beam" :name="user.account" :title="true" :color="colors" style="margin-right:10px;"/>
+          <Avatar :size="200" variant="beam" :name="user.account" :title="true" style="margin-right:10px;"/>
         </v-col>
-        <v-col cols="6" style="margin-left: 50px;">
+        <v-col cols="6" style="margin-left: 50px;" class="text-snow">
           <v-card variant="text" class="d-flex flex-column text-h5 content">
             <v-card-title style=" margin-top: 10px;" class="usrAccount">
               <h2>{{ user.account }}</h2>
@@ -36,19 +36,17 @@
           ></v-btn>
         </v-col>
         <v-col v-for="post of filteredPosts" :key="post._id" cols="12" md="6" lg="3" class="mt-4">
-          <post-cart
+          <post-card
             v-bind="post"
             :account="user.account"
-          ></post-cart>
+          ></post-card>
         </v-col>
         <v-col cols="12">
           <v-pagination v-model="currentPage" :length="totalPage"></v-pagination>
         </v-col>
       </v-row>
-      <v-row v-else>
-        <v-col cols="12" class="text-center">
-          <p>尚無文章</p>
-        </v-col>
+      <v-row v-else class="d-flex justify-center text-center text-snow text-body-2">
+        <p> 尚無文章 </p>
       </v-row>
     </div>
 
@@ -75,8 +73,8 @@ import { onMounted, watch, computed, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router'
 import Avatar from "vue-boring-avatars";
-import PostCart from '@/components/PostCart.vue'
 import { useAxios } from '@/composables/axios'
+
 const { api } = useAxios()
 
 const ITEMS_PER_PAGE = 16 // 每頁顯示 16 筆資料
@@ -85,6 +83,9 @@ const totalPage = computed(() => Math.ceil(posts.value.length / ITEMS_PER_PAGE))
 
 const user = useUserStore() // 使用者資料
 const router = useRouter() // 獲取路由實例
+
+// 新增這一行進行除錯
+console.log('user._id:', user._id)
 
 const loading = ref(false) // 預設為 false，表示沒有載入中
 const error = ref(null) // 預設為 null，表示沒有錯誤
@@ -112,15 +113,21 @@ const filteredPosts = computed(() => {
 
 // 添加獲取文章的方法
 const getPosts = async () => {
+  if (!user._id) {
+    console.error('無法獲取用戶 ID，請確認用戶是否已正確登錄')
+    return
+  }
+
   loading.value = true
   error.value = null
 
   try {
     // 根據顯示類型獲取不同的文章列表
     const endpoint = displayType.value === 'created'
-      ? '/post/user/' + user._id  // 獲取使用者建立的文章
-      : '/post/favorite/' + user._id  // 獲取使用者收藏的文章
+      ? '/post/userposts/' + user._id  // 獲取使用者建立的文章
+      : '/post/collected/' + user._id  // 獲取使用者收藏的文章
 
+      console.log('API 請求路徑:', endpoint) // 確認請求路徑是否正確
     const { data } = await api.get(endpoint)
     if (!data?.result) {
       throw new Error('無效的回應格式')
@@ -137,17 +144,46 @@ const getPosts = async () => {
 }
 
 // 監聽登入狀態
-watch(() => user.isLoggedIn, (newValue) => {
-  if (!newValue) {
-    router.push('/login')  // 若登出則導向登入頁
-  }
-})
+// watch(() => user.isLoggedIn, async (newValue) => {
+//   if (!newValue) {
+//     router.push('/login')  // 若登出則導向登入頁
+//   } else {
+//     await user.fetchUserData()
+//     if (user._id) {
+//       await getPosts()
+//     } else {
+//       console.error('用戶 ID 未加載，無法獲取文章')
+//     }
+//   }
+// })
 
 // 監聽顯示類型的變化
-watch(displayType, () => {
-  currentPage.value = 1  // 切換類型時重置頁碼
-  getPosts()  // 重新獲取文章
+// watch(displayType, () => {
+//   currentPage.value = 1  // 切換類型時重置頁碼
+//   getPosts()  // 重新獲取文章
+// })
+// -------------------------------- watch 合併 ------------------------------
+// 合併登入狀態與顯示類型的監聽器
+watch([() => user.isLoggedIn, displayType], async ([isLoggedIn]) => {
+  if (!isLoggedIn) {
+    // 當使用者登出，跳轉至登入頁面
+    router.push('/login')
+    return
+  }
+
+  // 確認用戶 ID 是否存在
+  if (!user._id) {
+    console.error('用戶 ID 未加載，無法獲取文章')
+    return
+  }
+
+  // 切換顯示類型時重置頁碼
+  currentPage.value = 1
+
+  // 重新獲取文章，確保根據當前的顯示類型 (created or favorite)
+  await getPosts()
 })
+
 
 // 監聽當前頁碼
 onMounted(async () => {
@@ -159,6 +195,11 @@ onMounted(async () => {
   try {
     await user.fetchUserData() // 獲取用戶資料
     await getPosts()  // 添加這行
+    if (user._id) {
+      await getPosts()
+    } else {
+      console.error('用戶 ID 未加載，無法獲取文章')
+    }
   } catch (error) {
     console.error('初始化失敗:', error)
   }

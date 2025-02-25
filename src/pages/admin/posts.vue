@@ -58,13 +58,6 @@
         <!-- 有 id 即編輯，否則新增 -->
         <v-card-title style="margin: 10px;">{{ dialog.id ? '編輯卡片' : '新增卡片'}}</v-card-title>
         <v-card-text>
-          <!-- FIXME 要取到使用者資料 -->
-          <v-text-field
-            v-model="user.value.value"
-            :label="userStore.account || '未提供使用者名稱'"
-            :error-messages="user.errorMessage.value"
-            disabled
-            ></v-text-field>
           <v-text-field
             v-model="title.value.value"
             :label="'標題'"
@@ -114,11 +107,13 @@ import { useSnackbar } from 'vuetify-use-dialog'
 import { reactive, computed, ref } from 'vue';
 import { useForm, useField } from 'vee-validate'
 import { useUserStore } from '@/stores/user';
+//import { useCardStore } from '@/stores/card';
 import * as yup from 'yup' //登入註冊
 
 const { apiAuth } = useAxios()
 const createSnackbar = useSnackbar()
 const userStore = useUserStore()
+//const cardStore = useCardStore()
 
 const posts = reactive([])
 const search = ref('')
@@ -263,7 +258,7 @@ const submit = handleSubmit(async (values) => {
     const fd = new FormData() // 建立 FormData 物件來傳送檔案
     // fd.append(key, value)
     // console.log(values.account)
-    fd.append('user', 'aaaa')
+    fd.append('user', userStore.$id)
     fd.append('account', userStore.account)
     fd.append('title', values.title)
     fd.append('content', values.content)

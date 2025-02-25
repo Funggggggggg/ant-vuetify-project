@@ -12,31 +12,16 @@ import { createApp } from 'vue'
 import './styles/settings.scss'
 
 // Vuetify
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
+// import 'vuetify/styles'
+// 直接從 plugins/vuetify.js 導入 vuetify 實例
+import vuetify from '@/plugins/vuetify'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
 
-const vuetify = createVuetify({
-  theme: {
-    defaultTheme: 'dark',
-    themes: {
-      dark: {
-        colors: {
-          snow: '#EDE5D2',
-        },
-        background: {
-          dark: '#383431',
-        }
-      },
-    },
-  },
-})
-
 const app = createApp(App)
 
 // 修改插件註冊順序
-registerPlugins(app)
 app.use(vuetify)
+registerPlugins(app)
 app.mount('#app')

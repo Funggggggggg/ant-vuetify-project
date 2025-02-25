@@ -3,9 +3,9 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import Fonts from 'unplugin-fonts/vite'
 import Layouts from 'vite-plugin-vue-layouts'
-import Vue from '@vitejs/plugin-vue'
-import VueRouter from 'unplugin-vue-router/vite'
-import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import vue from '@vitejs/plugin-vue'
+import vueRouter from 'unplugin-vue-router/vite'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -16,13 +16,13 @@ export default defineConfig({
   base: './', //儲存庫名字 ./ 是通用
   // 設定自動打包 => 複製.github/workflows/deploy
   plugins: [
-    VueRouter(),
+    vueRouter(),
     Layouts(),
-    Vue({
+    vue({
       template: { transformAssetUrls }
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
-    Vuetify({
+    vuetify({
       autoImport: true,
       styles: {
         configFile: 'src/styles/settings.scss',
@@ -70,6 +70,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern',
+        additionalData: `@use "sass:math";`, // 確保與新版本 Dart Sass 相容
       },
     },
   },

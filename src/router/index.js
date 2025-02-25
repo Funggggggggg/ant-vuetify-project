@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
   const { apiAuth } = useAxios()
   const user = useUserStore()
 
-  // 檢查是否已登入但需要重新獲取用戶資料
+  // 若是已經登入但沒有帳號資料，則重新取得用戶資料
   if (user.isLoggedIn && !user.account) {
     try {
       const { data } = await apiAuth.get('/user/profile')

@@ -6,6 +6,7 @@ import axios from 'axios'
 
 export const useCardStore = defineStore('card', () => {
     const user = ref('')
+    const account = ref('')
     const title = ref('')
     const category = ref('')
     const content = ref()
@@ -31,7 +32,7 @@ export const useCardStore = defineStore('card', () => {
     }
 
     return {
-      user, title, category, content, image, isPrivate, like, createdAt, updatedAt, cards,
+      user,account, title, category, content, image, isPrivate, like, createdAt, updatedAt, cards,
       fetchUserCards // ✅ 暴露 fetchUserCards 來獲取資料
     }
 })
