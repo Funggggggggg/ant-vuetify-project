@@ -71,7 +71,9 @@
 <script setup>
 import { onMounted, watch, computed, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+// useRoute：用來取得當前路由的資訊，例如路由參數、查詢字串以及路由的其他屬性。
+// useRouter 獲取 Vue Router 的實例，從而進行程式化導航（例如使用 router.push() 跳轉頁面）
 import Avatar from "vue-boring-avatars";
 import { useAxios } from '@/composables/axios'
 
@@ -83,9 +85,7 @@ const totalPage = computed(() => Math.ceil(posts.value.length / ITEMS_PER_PAGE))
 
 const user = useUserStore() // 使用者資料
 const router = useRouter() // 獲取路由實例
-
-// 新增這一行進行除錯
-console.log('user._id:', user._id)
+const route = useRoute() // 獲取當前路由
 
 const loading = ref(false) // 預設為 false，表示沒有載入中
 const error = ref(null) // 預設為 null，表示沒有錯誤
@@ -100,7 +100,7 @@ const filteredPosts = computed(() => {
   // 先過濾文章類型
   const typeFilteredPosts = posts.value.filter(post => {
     if (displayType.value === 'created') {
-      return post.user === user._id  // 顯示使用者建立的文章
+      return post.user === route.params.id  // 顯示當前頁面使用者建立的文章
     } else {
       return post.favorite  // 顯示收藏的文章
     }
@@ -113,7 +113,7 @@ const filteredPosts = computed(() => {
 
 // 添加獲取文章的方法
 const getPosts = async () => {
-  if (!user._id) {
+  if (!route.params.id) {
     console.error('無法獲取用戶 ID，請確認用戶是否已正確登錄')
     return
   }
@@ -124,8 +124,8 @@ const getPosts = async () => {
   try {
     // 根據顯示類型獲取不同的文章列表
     const endpoint = displayType.value === 'created'
-      ? '/post/userposts/' + user._id  // 獲取使用者建立的文章
-      : '/post/collected/' + user._id  // 獲取使用者收藏的文章
+      ? '/post/userposts/' + route.params.id  // 獲取使用者建立的文章
+      : '/post/collected/' + route.params.id  // 獲取使用者收藏的文章
 
       console.log('API 請求路徑:', endpoint) // 確認請求路徑是否正確
     const { data } = await api.get(endpoint)
@@ -143,59 +143,16 @@ const getPosts = async () => {
   }
 }
 
-// 監聽登入狀態
-// watch(() => user.isLoggedIn, async (newValue) => {
-//   if (!newValue) {
-//     router.push('/login')  // 若登出則導向登入頁
-//   } else {
-//     await user.fetchUserData()
-//     if (user._id) {
-//       await getPosts()
-//     } else {
-//       console.error('用戶 ID 未加載，無法獲取文章')
-//     }
-//   }
-// })
-
 // 監聽顯示類型的變化
-// watch(displayType, () => {
-//   currentPage.value = 1  // 切換類型時重置頁碼
-//   getPosts()  // 重新獲取文章
-// })
-// -------------------------------- watch 合併 ------------------------------
-// 合併登入狀態與顯示類型的監聽器
-watch([() => user.isLoggedIn, displayType], async ([isLoggedIn]) => {
-  if (!isLoggedIn) {
-    // 當使用者登出，跳轉至登入頁面
-    router.push('/login')
-    return
-  }
-
-  // 確認用戶 ID 是否存在
-  if (!user._id) {
-    console.error('用戶 ID 未加載，無法獲取文章')
-    return
-  }
-
-  // 切換顯示類型時重置頁碼
-  currentPage.value = 1
-
-  // 重新獲取文章，確保根據當前的顯示類型 (created or favorite)
-  await getPosts()
+watch(displayType, () => {
+  currentPage.value = 1  // 切換類型時重置頁碼
+  getPosts()  // 重新獲取文章
 })
-
 
 // 監聽當前頁碼
 onMounted(async () => {
-  if (!user.isLoggedIn) {
-    router.push('/login') // 若未登入則導向登入頁
-    return
-  }
-
   try {
-    await user.fetchUserData() // 獲取用戶資料
-    await getPosts()  // 添加這行
-    if (user._id) {
+    if (route.params._id) {
       await getPosts()
     } else {
       console.error('用戶 ID 未加載，無法獲取文章')

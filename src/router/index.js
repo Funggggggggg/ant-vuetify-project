@@ -11,9 +11,24 @@ import { routes } from 'vue-router/auto-routes'
 import { useAxios } from '@/composables/axios'
 import { useUserStore } from '@/stores/user'
 
+// 手動覆蓋自動生成的路由配置
+const customRoutes = [
+  {
+    path: '/post/:id',
+    name: 'PostDetail',
+    component: () => import('@/pages/post/[id].vue'),
+    props: true, // 🟢 確保路由參數 id 作為 props 傳入
+    meta: {
+      title: '文章詳情',
+      login: false, // 是否需要登入
+    }
+  }
+]
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: setupLayouts(routes),
+  routes: setupLayouts([...routes, ...customRoutes]), // 合併路由
+  // routes: setupLayouts(routes),
 })
 
 // beforeEach 進入每頁之前執行 function

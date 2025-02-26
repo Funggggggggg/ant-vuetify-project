@@ -1,21 +1,29 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-center" style="width: 100%; gap: 5px; margin-top: 20px;">
-      <v-text-field
-        v-model="search"
-        prepend-inner-icon="mdi-magnify"
-        color="#EDE5D2"
-        variant="default"
-        class="text-body-1 d-flex align-center justify-center search-bar"
-      ></v-text-field>
-      <v-col cols="8" class="d-flex align-center justify-center" style="height: 100px;">
+      <v-col cols="12" class="d-flex align-center justify-center" style="height: 100px;">
+        <v-text-field
+          v-model="search"
+          prepend-inner-icon="mdi-magnify"
+          density="comfortable"
+          hide-details
+          single-line
+          color="#EDE5D2"
+          :style="{
+            width: search.length > 0 ? '350px' : '100px',
+            transition: 'width 0.3s ease-in-out',
+            textAlign: 'left',
+            marginLeft: search.length > 0 ? '20px' : '0px' // 讓它往右移動
+          }"
+          class="text-body-1 text-snow d-flex align-center me-4 search-bar"
+        ></v-text-field>
         <v-btn
           v-for="cat in categories"
           :key="cat"
-          class="mx-2 text-body-2 search-container"
+          class="mx-2 text-body-2 ms-0"
           :class="{ 'v-btn--active': category === cat }"
           style="max-width: 500px; line-height: 5px; color: #EDE5D2;"
-          variant="default"
+          variant="tonal"
           @click="category = cat"
         >
           {{ cat }}
@@ -42,10 +50,9 @@
       variant="outlined"
       ></v-fab>
 
-      <!-- size="large" -->
     <v-fab
       icon="mdi-arrow-up"
-      location="bottom right"
+      location="bottom left"
       variant="outlined"
       absolute
       class="custom-fab-up"
@@ -53,10 +60,6 @@
       color="#F1D87F"
       @click="scrollToTop"
       ></v-fab>
-      <!-- color="#3B6C73" -->
-      <!-- color="#C04759" -->
-      <!-- color="#3B6C73" -->
-      <!-- color="#7D5A2C" -->
   </v-container>
 </template>
 
@@ -160,20 +163,21 @@ const scrollToTop = () => {
 }
 
 .search-bar {
-  max-width: 250px;  /* 縮小搜尋欄 */
-  /* width: 100%; */
-  flex-grow: 0;  /* 防止搜尋欄擴張 */
-  /* background-color: aqua; */
-  /* font-size: 20px; */
-  /* line-height: 0px; */
-  color: #EDE5D2;
+  max-width: 150px;  /* 縮小搜尋欄 */
+  min-width: 100px; /* 設定最小寬度 */
+  transition: width 0.3s ease-in-out;
+  /* flex-grow: 0;  防止搜尋欄擴張 */
+}
+
+.search-bar ::v-deep .v-input__control {
+  width: 100% !important;
 }
 
 /* 或者為按鈕添加自定義類別 */
 .custom-fab-up {
   position: fixed !important;
-  bottom: 10px !important;
-  left: 200px !important;
+  top: -50px !important;
+  left: 160px !important;
   z-index: 999 !important;
 }
 
@@ -183,10 +187,6 @@ const scrollToTop = () => {
   right: 250px !important;
   z-index: 999 !important;
   scale: 1.3 !important;
-}
-
-.search-container {
-  margin-left: 0px !important;
 }
 
 </style>

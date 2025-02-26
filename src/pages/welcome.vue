@@ -7,6 +7,11 @@
           <p class="text-body-1 text-abril">A place to remember your loved ones</p>
         </div>
       </v-col>
+      <v-col>
+        <div>
+
+        </div>
+      </v-col>
     </v-row>
   </v-container>
   <v-footer
