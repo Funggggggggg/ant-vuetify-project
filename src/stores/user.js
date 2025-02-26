@@ -27,10 +27,11 @@ export const useUserStore = defineStore('user', () => {
 
   // 6. (再放進 login)
   const login = async (data) => {
-    if (data.token) {
-      token.value = data.token
-    }
-    // console.log('Before setting account:', account.value) // 檢查設置前
+    try {
+      if (data.token) {
+        token.value = data.token
+      }
+      // console.log('Before setting account:', account.value) // 檢查設置前
     account.value = data.account
     role.value = data.role
     introduce.value = data.introduce
@@ -47,7 +48,18 @@ export const useUserStore = defineStore('user', () => {
       _id: _id.value  // 🟢 確認打印 ID 是否正常
     })
     console.log('Storage after login:', localStorage.getItem('ant-user'))
-  }
+    } catch (error) {
+      console.error('Login failed:', error)
+        // 清空用戶狀態
+        token.value = ''
+        account.value = ''
+        introduce.value = ''
+        role.value = UserRole.USER
+        collected.value = [] // 清空收藏文章
+        _id.value = ''
+        localStorage.removeItem('ant-user')
+      }
+    }
 
   // 6. (出錯即登出)
   const logout = () => {

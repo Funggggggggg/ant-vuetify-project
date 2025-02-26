@@ -36,12 +36,14 @@ import { ref, computed } from 'vue'
 // import { ref, computed,onMounted } from 'vue'
 import Avatar from "vue-boring-avatars";
 import { useUserStore } from '@/stores/user'
+import { useUserCollectStore } from '@/stores/userCollect'
 import { useAxios } from '@/composables/axios'
 import { useSnackbar } from 'vuetify-use-dialog'
 import { useRouter } from 'vue-router'
 
 const { apiAuth } = useAxios()
 const user = useUserStore()
+const userCollectStore = useUserCollectStore()
 const createSnackbar = useSnackbar()
 const hightlight = ref(false)
 const router = useRouter()
@@ -50,7 +52,6 @@ const router = useRouter()
 const props = defineProps({
   // eslint-disable-next-line vue/prop-name-casing
   _id: {
-    // user: {
     type: String,
     default: ''
   },
@@ -79,13 +80,13 @@ const props = defineProps({
     default: ''
   },
 })
-console.log('PostCard props:', props)
+// console.log('PostCard props:', props)
 
 // const isFavorite = ref(false)
 const isFavorite = computed(() => { // 計算屬性，判斷是否已收藏
-  if (!user.isLoggedIn || !user.collected) return false // 未登入或收藏清單為空，返回 false
-  return user.collected.some(item => // 判斷收藏清單是否有這篇文章，有則返回 true
-    item.post && item.post.toString() === props._id.toString() // 文章 ID 相同，返回 true
+  if (!user.isLoggedIn || !userCollectStore.collectedPosts) return false // 未登入或收藏清單為空，返回 false
+  return userCollectStore.collectedPosts.some(item => // 判斷收藏清單是否有這篇文章，有則返回 true
+    item.toString() === props._id.toString() // 文章 ID 相同，返回 true
   )
 })
 
@@ -98,15 +99,15 @@ const toggleFavorite = async (event) => { // 點擊收藏按鈕
     return
   }
   try {
-    const { data } = await apiAuth.patch('/user/collected', { // 發送收藏請求
+    const { data } = await apiAuth.patch('/userCollect/uncollect', { // 發送收藏請求
       post: props._id
     })
     // 更新使用者的收藏清單
     if (data.success) {
-      user.collected = data.result.collected // 確保更新收藏狀態
+      await userCollectStore.fetchCollectedPosts() // 更新收藏狀態
 
       // 根據實際的收藏狀態顯示訊息
-      const isNowFavorite = user.collected.some(item =>
+      const isNowFavorite = userCollectStore.collectedPosts.some(item =>
         item.post.toString() === props._id.toString()
       )
 

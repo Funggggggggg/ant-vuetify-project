@@ -26,7 +26,7 @@ export const useUserCollectStore = defineStore('userCollect', () => {
       throw new Error('用戶未登入')
     }
     try {
-      const { data } = await apiAuth.patch('/userCollect/collected', { post: postId })
+      const { data } = await apiAuth.patch('/userCollect/uncollected', { post: postId })
       collectedPosts.value = data.result || []
     } catch (error) {
       console.error('更新收藏狀態失敗:', error)

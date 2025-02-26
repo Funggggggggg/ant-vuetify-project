@@ -35,7 +35,7 @@
             @click="displayType = 'favorite'"
           ></v-btn>
         </v-col>
-        <v-col v-for="post of filteredPosts" :key="post._id" cols="12" md="6" lg="3" class="mt-4">
+        <v-col v-for="post of filteredPosts" :key="post.id" cols="12" md="6" lg="3" class="mt-4">
           <post-card
             v-bind="post"
             :account="user.account"
@@ -103,7 +103,7 @@ const filteredPosts = computed(() => {
     if (displayType.value === 'created') {
       return post.user === route.params.id  // 顯示當前頁面使用者建立的文章
     } else {
-      return userCollectStore.collectedPosts.includes(post._id)  // 顯示收藏的文章
+      return userCollectStore.collectedPosts.includes(post.id)  // 顯示收藏的文章
     }
   })
   // 再過濾搜尋關鍵字
@@ -126,7 +126,7 @@ const getPosts = async () => {
     // 根據顯示類型獲取不同的文章列表
     const endpoint = displayType.value === 'created'
       ? '/post/userposts/' + route.params.id  // 獲取使用者建立的文章
-      : '/user/collected/' + route.params.id  // 獲取使用者收藏的文章
+      : '/userCollect/collected/' + route.params.id  // 獲取使用者收藏的文章
 
       console.log('API 請求路徑:', endpoint) // 確認請求路徑是否正確
     const { data } = await api.get(endpoint)
@@ -153,7 +153,7 @@ watch(displayType, () => {
 // 監聽當前頁碼
 onMounted(async () => {
   try {
-    if (route.params._id) {
+    if (route.params.id) {
       await getPosts()
       await userCollectStore.fetchCollectedPosts() // 獲取收藏的文章
     } else {
