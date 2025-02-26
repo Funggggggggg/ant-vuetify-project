@@ -27,12 +27,6 @@ export const useUserStore = defineStore('user', () => {
 
   // 6. (再放進 login)
   const login = async (data) => {
-    await initialize() // 在登入時呼叫初始化函數
-    // console.log('執行 login，設定用戶資料...')
-    // console.log('Storage before login:', localStorage.getItem('ant-user'))
-    // 如果有 token 就換 token ，沒有就不換
-    // 4. 將取到的資料放到 pinia 裡面 (再到安全性 => 最下方保存 token)
-    // console.log('Login data received:', data) // 檢查收到的數據
     if (data.token) {
       token.value = data.token
     }
@@ -94,32 +88,12 @@ export const useUserStore = defineStore('user', () => {
       logout()  // 確保錯誤時會登出
     }
   }
-  // 新增初始化函數
-  const initialize = async () => {
-    if (isLoggedIn.value) {
-      await fetchUserData() // 🟢 直接使用 fetchUserData 進行初始化
-    }
-  }
-
-  // 新增檢查登入狀態的功能
-  const checkLogin = async () => {
-    if (token.value.length > 0) {
-      try {
-        await initialize()
-        // const { data } = await apiAuth.get('/user/profile')
-        // collected.value = data.result.collected || []
-        console.log('載入的收藏資料:', collected.value) // 偵錯用
-      } catch (error) {
-        console.error('載入收藏資料失敗:', error)
-      }
-    }
-  }
 
   return {
     token, account, role, introduce,
     collected, _id,
     isLoggedIn, isAdmin, login, logout,
-    fetchUserData, initialize, checkLogin
+    fetchUserData
     // collectedPosts, createdPosts,
   }
 }, {

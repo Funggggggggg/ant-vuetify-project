@@ -6,7 +6,6 @@
           v-model="search"
           prepend-inner-icon="mdi-magnify"
           density="comfortable"
-          hide-details
           single-line
           color="#EDE5D2"
           :style="{
@@ -42,7 +41,6 @@
     <!-- 功能按鈕區 -->
     <v-fab
       class="ms-4 custom-fab-plus"
-      :scroll-behavior="hide"
       icon="mdi-plus"
       location="top end"
       size="x-large"

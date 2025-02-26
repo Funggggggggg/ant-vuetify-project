@@ -32,7 +32,8 @@
 </template>
 
 <script setup>
-import { ref, computed,onMounted } from 'vue'
+import { ref, computed } from 'vue'
+// import { ref, computed,onMounted } from 'vue'
 import Avatar from "vue-boring-avatars";
 import { useUserStore } from '@/stores/user'
 import { useAxios } from '@/composables/axios'
@@ -86,12 +87,6 @@ const isFavorite = computed(() => { // 計算屬性，判斷是否已收藏
   return user.collected.some(item => // 判斷收藏清單是否有這篇文章，有則返回 true
     item.post && item.post.toString() === props._id.toString() // 文章 ID 相同，返回 true
   )
-})
-// 在組件掛載時檢查收藏狀態
-onMounted(async () => {
-  if (user.isLoggedIn && (!user.collected || user.collected.length === 0)) {
-    await user.checkLogin()
-  }
 })
 
 // 收藏文章

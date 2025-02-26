@@ -71,7 +71,8 @@
 <script setup>
 import { onMounted, watch, computed, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
+import { useUserCollectStore } from '@/stores/userCollect';
 // useRoute：用來取得當前路由的資訊，例如路由參數、查詢字串以及路由的其他屬性。
 // useRouter 獲取 Vue Router 的實例，從而進行程式化導航（例如使用 router.push() 跳轉頁面）
 import Avatar from "vue-boring-avatars";
@@ -84,7 +85,7 @@ const currentPage = ref(1) // 預設當前頁碼為 1
 const totalPage = computed(() => Math.ceil(posts.value.length / ITEMS_PER_PAGE))
 
 const user = useUserStore() // 使用者資料
-const router = useRouter() // 獲取路由實例
+const userCollectStore = useUserCollectStore() // 收藏資料
 const route = useRoute() // 獲取當前路由
 
 const loading = ref(false) // 預設為 false，表示沒有載入中
@@ -102,7 +103,7 @@ const filteredPosts = computed(() => {
     if (displayType.value === 'created') {
       return post.user === route.params.id  // 顯示當前頁面使用者建立的文章
     } else {
-      return post.favorite  // 顯示收藏的文章
+      return userCollectStore.collectedPosts.includes(post._id)  // 顯示收藏的文章
     }
   })
   // 再過濾搜尋關鍵字
@@ -125,7 +126,7 @@ const getPosts = async () => {
     // 根據顯示類型獲取不同的文章列表
     const endpoint = displayType.value === 'created'
       ? '/post/userposts/' + route.params.id  // 獲取使用者建立的文章
-      : '/post/collected/' + route.params.id  // 獲取使用者收藏的文章
+      : '/user/collected/' + route.params.id  // 獲取使用者收藏的文章
 
       console.log('API 請求路徑:', endpoint) // 確認請求路徑是否正確
     const { data } = await api.get(endpoint)
@@ -154,6 +155,7 @@ onMounted(async () => {
   try {
     if (route.params._id) {
       await getPosts()
+      await userCollectStore.fetchCollectedPosts() // 獲取收藏的文章
     } else {
       console.error('用戶 ID 未加載，無法獲取文章')
     }

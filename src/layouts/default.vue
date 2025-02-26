@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar elevation="0" scroll-behavior="hide" style="height: 75px; background-color: #383431" class="d-flex align-center justify-center">
+  <v-app-bar elevation="0" style="height: 75px; background-color: #383431" class="d-flex align-center justify-center">
     <v-container class="d-flex align-center">
       <router-link to="/welcome" class="d-flex align-center" style="text-decoration: none;">
         <img src="/antlogo.ico" alt="Logo" style="height: 40px;">
