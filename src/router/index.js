@@ -1,10 +1,3 @@
-/**
- * router/index.ts
- *
- * Automatic routes for `./src/pages/*.vue`
- */
-
-// Composables
 import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
@@ -35,9 +28,12 @@ const customRoutes = [
   }
 ]
 
+const allRoutes = [...(routes || []), ...customRoutes] // 確保 routes 為陣列
+console.log('合併後的路由:', allRoutes)
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: setupLayouts([...routes, ...customRoutes]), // 合併路由
+  routes: setupLayouts(allRoutes), // 合併路由
   // routes: setupLayouts(routes),
 })
 

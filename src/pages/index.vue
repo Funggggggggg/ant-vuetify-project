@@ -104,7 +104,7 @@ const getPosts = async () => {
       }
     })
     if (data && data.result) {
-      console.log('獲取的文章:', data.result)
+      // console.log('獲取的文章:', data.result)
       posts.value.push(...data.result) // 將獲取到的資料添加到 posts 中
       // console.log('當前文章列表:', posts.value)
     } else {
