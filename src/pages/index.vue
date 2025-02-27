@@ -89,7 +89,7 @@ const filteredPosts = computed(() => {
       })
     // .filter(post => post.title.toLowerCase().includes(search.value.toLowerCase()))
     // .filter(post => category.value === '全部' || post.category === category.value) // 根據分類過濾
-  console.log('過濾後的文章:', filtered)
+  // console.log('過濾後的文章:', filtered)
   return filtered
 })
 
@@ -104,16 +104,17 @@ const getPosts = async () => {
       }
     })
     if (data && data.result) {
-      console.log('獲取的文章:', data.result) // 添加這行
+      console.log('獲取的文章:', data.result)
       posts.value.push(...data.result) // 將獲取到的資料添加到 posts 中
-      console.log('當前文章列表:', posts.value) // 添加這行
+      // console.log('當前文章列表:', posts.value)
     } else {
       console.error('無效的回應格式', data)
     }
   } catch (error) {
     console.log(error)
+  } finally {
+    loading = false // 確保在請求結束時設置 loading 為 false
   }
-  loading = false // 結束加載狀態
 }
 
 // 監聽滾動事件
@@ -167,7 +168,7 @@ const scrollToTop = () => {
   /* flex-grow: 0;  防止搜尋欄擴張 */
 }
 
-.search-bar ::v-deep .v-input__control {
+.search-bar :deep(...) .v-input__control {
   width: 100% !important;
 }
 

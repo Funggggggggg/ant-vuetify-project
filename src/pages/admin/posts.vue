@@ -117,6 +117,9 @@ const userStore = useUserStore()
 
 const posts = reactive([])
 const search = ref('')
+const loading = ref(false) // 預設為 false，表示沒有載入中
+const error = ref(null) // 預設為 null，表示沒有錯誤
+
 // 卡片資料欄位
 const headers = computed(() => {
   return [
@@ -136,6 +139,10 @@ const headers = computed(() => {
 })
 
 const getPosts = async () => {
+  if (loading.value) return // 避免重複請求
+  loading.value = true
+  error.value = null
+
   try {
     const { data } = await apiAuth.get('/post/all')
     posts.push(...data.result)
@@ -147,8 +154,9 @@ const getPosts = async () => {
         color: '#C04759'
       }
     })
+  } finally {
+    loading.value = false // 確保在請求結束時設置 loading 為 false
   }
-
 }
 getPosts()
 
@@ -288,7 +296,6 @@ const submit = handleSubmit(async (values) => {
   } catch (error) {
     console.log(error)
     createSnackbar({
-      // FIXME 無法編輯 =>  400 (Bad Request) 錯誤通常是因為後端預期的資料結構或格式不符合
       text: 'api.' + (error?.response?.data?.message || '未知錯誤'),
       snackbarProps: {
         color: '#C04759'

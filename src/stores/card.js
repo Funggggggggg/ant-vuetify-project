@@ -17,12 +17,12 @@ export const useCardStore = defineStore('card', () => {
     const updatedAt = ref('')
     const cards = ref([]) // ✅ 用來存放取得的卡片資料
 
-    // ✅ 從 `userStore` 取得 `createdPosts`，然後從 API 取回卡片詳細資料
+    // ✅ 獲取用戶卡片的方法
     const fetchUserCards = async () => {
       const userStore = useUserStore()
       if (!userStore.token) return // 沒登入就不請求
       try {
-        const response = await axios.get('/api/cards', {
+        const response = await axios.get(`/post/userposts/${userStore._id}`, {
           headers: { Authorization: `Bearer ${userStore.token}` }
         })
         cards.value = response.data.result // 儲存卡片資料

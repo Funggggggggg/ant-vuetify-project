@@ -15,6 +15,8 @@ export const useUserCollectStore = defineStore('userCollect', () => {
     try {
       const { data } = await apiAuth.get('/userCollect/collected')
       collectedPosts.value = data.result || []
+      // ✅
+      // console.log('獲取收藏文章:', collectedPosts.value)
     } catch (error) {
       console.error('獲取收藏文章失敗:', error)
     }

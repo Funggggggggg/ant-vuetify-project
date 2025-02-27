@@ -22,6 +22,16 @@ const customRoutes = [
       title: '文章詳情',
       login: false, // 是否需要登入
     }
+  },
+  {
+    path: '/user/:id',
+    name: 'UserPage',
+    component: () => import('@/pages/userpage.vue'),
+    props: true, // 🟢 確保路由參數 id 作為 props 傳入
+    meta: {
+      title: '用戶頁面',
+      login: true, // 是否需要登入
+    }
   }
 ]
 

@@ -4,16 +4,12 @@ import { ref, computed } from 'vue' // pinia 的 setup 寫法，另一種是  op
 import UserRole from '@/enums/UserRole'
 
 export const useUserStore = defineStore('user', () => {
-  const collected = ref([])  // 確保初始化為空陣列
+  // const collected = ref([])  // 確保初始化為空陣列
   const token = ref('')
   const account = ref('')
   const introduce = ref('')
   const role = ref(UserRole.USER)
   const _id = ref('') // 新增 _id 屬性
-  // const profile = ref('')
-  // const collectedPosts = ref([]) // 收藏的文章清單 (postId 陣列)
-  // const createdPosts = ref([]) // 發佈過的文章清單 (postId 陣列)
-  // const locked = ref(false) // 發佈過的文章清單 (postId 陣列)
 
   // 檢查是否登入
   // 6. (isLoggedIn 來源)
@@ -35,19 +31,19 @@ export const useUserStore = defineStore('user', () => {
     account.value = data.account
     role.value = data.role
     introduce.value = data.introduce
-    collected.value = data.collected || []  // 從後端同步收藏清單
+    // collected.value = data.collected || []  // 從後端同步收藏清單
     _id.value = data._id  // 🟢 確保在這裡設置用戶 ID
     // console.log('After setting account:', account.value)  // 檢查設置後
     // collectedPosts.value = data.collected || []  // 從後端同步收藏清單
     // createdPosts.value = data.created || []  // 從後端同步發佈清單
-    console.log('Final user state:', {
-      token: token.value,
-      account: account.value,
-      role: role.value,
-      introduce: introduce.value,
-      _id: _id.value  // 🟢 確認打印 ID 是否正常
-    })
-    console.log('Storage after login:', localStorage.getItem('ant-user'))
+    // console.log('Final user state:', {
+    //   token: token.value,
+    //   account: account.value,
+    //   role: role.value,
+    //   introduce: introduce.value,
+    //   _id: _id.value  // 🟢 確認打印 ID 是否正常
+    // })
+    // console.log('Storage after login:', localStorage.getItem('ant-user'))
     } catch (error) {
       console.error('Login failed:', error)
         // 清空用戶狀態
@@ -55,7 +51,7 @@ export const useUserStore = defineStore('user', () => {
         account.value = ''
         introduce.value = ''
         role.value = UserRole.USER
-        collected.value = [] // 清空收藏文章
+        // collected.value = [] // 清空收藏文章
         _id.value = ''
         localStorage.removeItem('ant-user')
       }
@@ -67,7 +63,7 @@ export const useUserStore = defineStore('user', () => {
     account.value = ''
     introduce.value = ''
     role.value = UserRole.USER
-    collected.value = [] // 清空收藏文章
+    // collected.value = [] // 清空收藏文章
     localStorage.removeItem('ant-user')
     // collectedPosts.value = [] // 清空收藏文章
     // createdPosts.value = [] // 清空發佈文章
@@ -88,7 +84,7 @@ export const useUserStore = defineStore('user', () => {
         account.value = data.result.account
         role.value = data.result.role
         introduce.value = data.result.introduce
-        collected.value = data.result.collected || []
+        // collected.value = data.result.collected || []
         _id.value = data.result._id
         // collectedPosts.value = data.result.collected || []
         // createdPosts.value = data.result.created || []
@@ -103,7 +99,7 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     token, account, role, introduce,
-    collected, _id,
+    // collected, _id,
     isLoggedIn, isAdmin, login, logout,
     fetchUserData
     // collectedPosts, createdPosts,

@@ -16,9 +16,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-      </v-row>
-        <!-- 卡片區 -->
-      <v-row v-if="posts.length > 0" class="d-flex justify-center">
+        <!-- 按鈕區 -->
         <v-col cols="12" class="d-flex justify-center align-center">
           <v-btn
             text="已建立"
@@ -35,18 +33,22 @@
             @click="displayType = 'favorite'"
           ></v-btn>
         </v-col>
+      </v-row>
+        <!-- 卡片區 -->
+      <v-row v-if="filteredPosts.length > 0" class="d-flex justify-center">
         <v-col v-for="post of filteredPosts" :key="post.id" cols="12" md="6" lg="3" class="mt-4">
           <post-card
             v-bind="post"
             :account="user.account"
-          ></post-card>
-        </v-col>
+            ></post-card>
+          </v-col>
         <v-col cols="12">
           <v-pagination v-model="currentPage" :length="totalPage"></v-pagination>
         </v-col>
       </v-row>
       <v-row v-else class="d-flex justify-center text-center text-snow text-body-2">
         <p> 尚無文章 </p>
+        <!-- <p> 收藏的文章: {{ userCollectStore.collectedPosts }}</p> -->
       </v-row>
     </div>
 
@@ -64,12 +66,11 @@
     >
       {{ error }}
     </v-alert>
-
   </v-container>
 </template>
 
 <script setup>
-import { onMounted, watch, computed, ref } from 'vue';
+import { watch, computed, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRoute } from 'vue-router'
 import { useUserCollectStore } from '@/stores/userCollect';
@@ -77,6 +78,7 @@ import { useUserCollectStore } from '@/stores/userCollect';
 // useRouter 獲取 Vue Router 的實例，從而進行程式化導航（例如使用 router.push() 跳轉頁面）
 import Avatar from "vue-boring-avatars";
 import { useAxios } from '@/composables/axios'
+import PostCard from '@/components/PostCard.vue'
 
 const { api } = useAxios()
 
@@ -87,6 +89,7 @@ const totalPage = computed(() => Math.ceil(posts.value.length / ITEMS_PER_PAGE))
 const user = useUserStore() // 使用者資料
 const userCollectStore = useUserCollectStore() // 收藏資料
 const route = useRoute() // 獲取當前路由
+console.log('🛑 route.params:', route.params) // 查看 route 內容
 
 const loading = ref(false) // 預設為 false，表示沒有載入中
 const error = ref(null) // 預設為 null，表示沒有錯誤
@@ -96,14 +99,15 @@ const search = ref('') // 搜尋關鍵字
 // 添加 顯示類型 的狀態
 const displayType = ref('created') // 'created' 為已建立, 'favorite' 為已收藏
 
-// 資料過濾：
+// 資料過濾：-------------------------------------------------------------------
 const filteredPosts = computed(() => {
   // 先過濾文章類型
   const typeFilteredPosts = posts.value.filter(post => {
+    console.log('📝 文章:', post)
     if (displayType.value === 'created') {
-      return post.user === route.params.id  // 顯示當前頁面使用者建立的文章
+      return post.user.toString() === route.params.id  // 顯示當前頁面使用者建立的文章
     } else {
-      return userCollectStore.collectedPosts.includes(post.id)  // 顯示收藏的文章
+      return userCollectStore.collectedPosts.includes(post._id)  // 顯示收藏的文章
     }
   })
   // 再過濾搜尋關鍵字
@@ -112,13 +116,15 @@ const filteredPosts = computed(() => {
     .slice((currentPage.value - 1) * ITEMS_PER_PAGE, currentPage.value * ITEMS_PER_PAGE)
 })
 
-// 添加獲取文章的方法
+// 添加獲取文章的方法-------------------------------------------------------
 const getPosts = async () => {
+  console.log('route.params.id:', route.params.id) // 檢查 route.params.id 是否存在
   if (!route.params.id) {
-    console.error('無法獲取用戶 ID，請確認用戶是否已正確登錄')
+    console.error('❌ 無法獲取用戶 ID，請確認用戶是否已正確進入頁面')
     return
   }
 
+  if (loading.value) return // 避免重複請求
   loading.value = true
   error.value = null
 
@@ -128,21 +134,22 @@ const getPosts = async () => {
       ? '/post/userposts/' + route.params.id  // 獲取使用者建立的文章
       : '/userCollect/collected/' + route.params.id  // 獲取使用者收藏的文章
 
-      console.log('API 請求路徑:', endpoint) // 確認請求路徑是否正確
+      console.log('🚀 API 請求路徑:', endpoint) // 確認請求路徑是否正確
     const { data } = await api.get(endpoint)
     if (!data?.result) {
       throw new Error('無效的回應格式')
     }
     posts.value = data.result
-    console.log('獲取的文章:', posts.value)
+    console.log('✅ 獲取的文章:', posts.value)
   } catch (error) {
-    console.error('獲取文章失敗:', error)
+    console.error('❌ 獲取文章失敗:', error)
     error.value = '無法取得文章資料'
     posts.value = []
   } finally {
     loading.value = false
   }
 }
+// -------------------------------------------------------------------------
 
 // 監聽顯示類型的變化
 watch(displayType, () => {
@@ -150,20 +157,35 @@ watch(displayType, () => {
   getPosts()  // 重新獲取文章
 })
 
-// 監聽當前頁碼
-onMounted(async () => {
-  try {
-    if (route.params.id) {
-      await getPosts()
-      await userCollectStore.fetchCollectedPosts() // 獲取收藏的文章
-    } else {
-      console.error('用戶 ID 未加載，無法獲取文章')
-    }
-  } catch (error) {
-    console.error('初始化失敗:', error)
-  }
+// 監聽 collectedPosts 是否成功更新：
+watch(() => userCollectStore.collectedPosts, (newVal) => {
+  // ❌ 沒收到
+  console.log('收藏的文章更新:', newVal)
+}, { deep: true, immediate: true })
+
+watch(posts, (newVal) => {
+  console.log('posts 更新:', newVal)
 })
 
+// 初始化收藏文章
+const getUerCollectStore = async () => {
+  try {
+    const getValue = await userCollectStore.fetchCollectedPosts() // 獲取收藏的文章
+    console.log('收藏的文章:', getValue)
+    // posts.value = getValue
+  }catch (error) {
+    console.error('獲取文章失敗:', error)
+    error.value = '無法取得文章資料'
+    posts.value = []
+  }
+}
+getUerCollectStore()
+
+// 確保組件掛載後才請求數據，並且在收藏清單更新後重新獲取文章
+// onMounted(async () => {
+//   await userCollectStore.fetchCollectedPosts()
+//   console.log('收藏的文章 (onMounted):', userCollectStore.collectedPosts)
+// })
 </script>
 
 <style scoped>
@@ -185,3 +207,11 @@ onMounted(async () => {
   /* background-color: #3B6C73; */
 }
 </style>
+
+<route lang="yaml">
+  meta:
+    login: false
+    admin: false
+    title: '個人頁面'
+</route>
+
