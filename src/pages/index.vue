@@ -161,14 +161,7 @@ const scrollToTop = () => {
   height: 1px;
 }
 
-.search-bar {
-  max-width: 150px;  /* 縮小搜尋欄 */
-  min-width: 100px; /* 設定最小寬度 */
-  transition: width 0.3s ease-in-out;
-  /* flex-grow: 0;  防止搜尋欄擴張 */
-}
-
-.search-bar :deep(...) .v-input__control {
+.search-bar ::v-deep .v-input__control {
   width: 100% !important;
 }
 
