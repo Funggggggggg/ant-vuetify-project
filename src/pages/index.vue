@@ -46,6 +46,7 @@
       size="x-large"
       color="#F1D87F"
       variant="outlined"
+      @click="openDialog(item)"
       ></v-fab>
 
     <v-fab
@@ -59,12 +60,67 @@
       @click="scrollToTop"
       ></v-fab>
   </v-container>
+
+  <!-- 對話框 -->
+  <!-- persistent => 點擊外框時不會關閉 -->
+  <v-dialog v-model="dialog.open" persistent>
+    <v-form>
+      <v-card>
+        <!-- 有 id 即編輯，否則新增 -->
+        <v-card-title style="margin: 10px;">{{ dialog.id ? '編輯卡片' : '新增卡片'}}</v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="title.value.value"
+            :label="'標題'"
+            :error-messages="title.errorMessage.value"
+          ></v-text-field>
+          <v-select
+            v-model="dialogcategory.value.value"
+            :error-messages="dialogcategory.errorMessage.value"
+            :items="categoryOptions"
+            :label="'分類'"
+            item-title="text"
+            item-value="value"
+          ></v-select>
+          <v-textarea
+            v-model="content.value.value"
+            :label="'卡片說明'"
+            :error-messages="content.errorMessage.value"
+          ></v-textarea>
+          <VueFileAgent
+            ref="fileAgent" v-model="fileRecords"
+            v-model:raw-model-value="rawFileRecords"
+            accept="image/jpeg,image/png"
+            deletable
+            max-size="1MB"
+            :help-text="'點擊或拖曳檔案至此'"
+            :error-text="{ type:'檔案類型錯誤', size:'檔案大小超過限制' }"
+          ></VueFileAgent>
+          <v-checkbox
+            v-model="isPrivate.value.value"
+            :label="'私人'"
+            :error-messages="isPrivate.errorMessage.value"
+          ></v-checkbox>
+        </v-card-text>
+        <v-card-actions>
+          <!-- 取消送出按鈕 -->
+          <v-btn @click="closeDialog">{{ '取消' }}</v-btn>
+          <v-btn >{{ '送出' }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-form>
+  </v-dialog>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useAxios } from '@/composables/axios'
 import PostCard from '@/components/PostCard.vue'
+import { useUserStore } from '@/stores/user';
+import { useField } from 'vee-validate'
+
+
+const userStore = useUserStore()
 const { api } = useAxios()
 
 // ----------------------------分頁----------------------------------
@@ -78,6 +134,7 @@ const search = ref('')
 const category = ref('全部') // 分類變數，預設為'全部'
 const categories = ['全部','紀念繪畫', '回憶拼貼', '故事攝影', '物品改造', '其他'] // 分類選項
 const ITEMS_PER_LOAD = 4 // 每次加載的項目數量
+
 let loading = false // 加載狀態
 
 const filteredPosts = computed(() => {
@@ -152,6 +209,52 @@ const scrollToTop = () => {
     top: 0,
     behavior: 'smooth'
   })
+}
+// ---------------------------------------------------
+const dialog = ref({
+  open: false,
+  id: ''
+})
+
+const fileAgent = ref(null)
+
+const title = useField('title')
+const user = useField('user')
+// const account = useField('account')
+const content = useField('content')
+const dialogcategory = useField('dialogcategory')
+const isPrivate = useField('isPrivate')
+// const like = useField('like')
+const categoryOptions = computed(() => [
+  { text: '紀念繪畫', value: '紀念繪畫' },
+  { text: '回憶拼貼', value: '回憶拼貼' },
+  { text: '故事攝影', value: '故事攝影' },
+  { text: '物品改造', value: '物品改造' },
+  { text: '其他', value: '其他' },
+])
+
+const openDialog = (item) => {
+  // 修改時將資料填入表單
+  if (item) {
+    dialog.value.id = item._id
+    user.value.value = userStore.account
+    title.value.value = item.title
+    content.value.value = item.content
+    dialogcategory.value.value = item.dialogcategory
+    isPrivate.value.value = item.isPrivate
+  } else {
+    // 新增時使用目前登入的用戶資料
+    user.value.value = userStore.account
+  }
+  dialog.value.open = true
+
+}
+
+const closeDialog = () => {
+  // 關閉對話框時重設
+    dialog.value.id = ''
+    dialog.value.open = false
+    fileAgent.value.deleteFileRecord()
 }
 
 </script>
