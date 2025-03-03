@@ -3,54 +3,25 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
 import { useAxios } from '@/composables/axios'
 import { useUserStore } from '@/stores/user'
+import Welcome from '../pages/welcome.vue'
 // import { meta } from 'eslint-plugin-vue'
 // import Layout from 'vite-plugin-vue-layouts/dist/index.js'
 
-// 手動覆蓋自動生成的路由配置
-// const customRoutes =
-  // [
-  // {
-  //   path: '/post/:id',
-  //   name: 'PostDetail',
-  //   component: () => import('@/pages/post/[id].vue'),
-  //   props: true, // 🟢 確保路由參數 id 作為 props 傳入
-  //   meta: {
-  //     title: '文章詳情',
-  //     login: false, // 是否需要登入
-  //   }
-  // }
-  // {
-  //   path: '/user/:id',
-  //   name: 'UserPage',
-  //   component: () => import('@/pages/userpage.vue'),
-  //   props: true, // 🟢 確保路由參數 id 作為 props 傳入
-  //   meta: {
-  //     title: '用戶頁面',
-  //     login: true, // 是否需要登入
-  //   }
-  // }
-// ]
+const customRoutes = [
+  {
+    path: '/',
+    name: 'Welcome',
+    component: Welcome,
+    meta: { title: 'Welcome', layout: 'empty' }
+  },
+]
 
-// const welcomeRoutes = [
-//   {
-//     path: '/welcome',
-//     component: () => import("../layouts/empty.vue"),
-//     meta: { layout: 'empty'}
-//   }
-// ]
-
-// const allRoutes =
-  // [
-  // ...routes.filter(r => r.path !== '/welcome'), // 移除 /welcome 避免 layout 衝突
-  // ...welcomeRoutes, // 手動加入空白 layout 的 /welcome
-  // const allRoutes = [...(routes || []), ...customRoutes] // 確保 routes
-  // console.log('合併後的路由:', allRoutes)
-  // ]
+const allRoutes = [...routes, ...customRoutes]
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   // routes: setupLayouts(allRoutes), // 合併路由
-  routes: setupLayouts(routes),
+  routes: setupLayouts(allRoutes),
 })
 
 // beforeEach 進入每頁之前執行 function
@@ -91,6 +62,13 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach((to) => {
   document.title = to.meta.title + ' | 紀念巢'
+  // 移除 welcome 路由
+  if (to.path !== '/') {
+    const welcomeRouteIndex = router.getRoutes().findIndex(route => route.name === 'Welcome')
+    if (welcomeRouteIndex !== -1) {
+      router.removeRoute('Welcome')
+    }
+  }
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804

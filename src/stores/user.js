@@ -98,10 +98,10 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
-    token, account, role, introduce,
-    // collected, _id,
+    token, account, role, introduce, _id,
     isLoggedIn, isAdmin, login, logout,
     fetchUserData
+    // collected,
     // collectedPosts, createdPosts,
   }
 }, {

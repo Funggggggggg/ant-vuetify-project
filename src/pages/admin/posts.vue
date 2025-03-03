@@ -172,17 +172,19 @@ const openDialog = (item) => {
   // 修改時將資料填入表單
   if (item) {
     dialog.value.id = item._id
-    user.value.value = userStore.account
+    // user.value.value = userStore.$id
+    // user.value.value = userStore.account
+    user.value.value = userStore._id
     title.value.value = item.title
     content.value.value = item.content
     category.value.value = item.category
     isPrivate.value.value = item.isPrivate
   } else {
     // 新增時使用目前登入的用戶資料
-    user.value.value = userStore.account
+    user.value.value = userStore._id
+    // user.value.value = userStore.account
   }
   dialog.value.open = true
-
 }
 
 const closeDialog = () => {
@@ -266,7 +268,7 @@ const submit = handleSubmit(async (values) => {
     const fd = new FormData() // 建立 FormData 物件來傳送檔案
     // fd.append(key, value)
     // console.log(values.account)
-    fd.append('user', userStore.$id)
+    fd.append('user', userStore._id)
     fd.append('account', userStore.account)
     fd.append('title', values.title)
     fd.append('content', values.content)
@@ -275,6 +277,11 @@ const submit = handleSubmit(async (values) => {
     // fd.append('like', values.like)
     if (fileRecords.value.length > 0) { // 有圖片才加入
       fd.append('image', fileRecords.value[0].file)
+    }
+
+    // 打印 FormData 內容
+    for (let pair of fd.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]);
     }
 
     if (dialog.value.id.length > 0) {

@@ -14,7 +14,7 @@
           </h1>
           <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2500" >
             <span class="text-body-1 text-abril" style=" color: #C04759">
-              A place to remember your loved ones.
+              A secret base for collecting memories.
             </span>
           </div>
         </div>
@@ -31,16 +31,18 @@
   <v-container class="page-container" fluid>
     <div class="content-area text-center" justify="center" align="center" style="min-height: 1100px;">
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
-        <span style=" color: #C04759; font-weight: 100;">About</span>
+        <span style=" color: #C04759; font-weight: 100;">Secret</span>
       </div>
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-h4">
         紀念巢，<br>
-        是個存放回憶改造的秘密巢穴。<br>
-        像螞蟻蒐集著一塊塊記憶碎片，<br>
+        存放您回憶改造的秘密巢穴。<br>
+        如螞蟻蒐集著一塊塊記憶碎片，<br>
         步步築出自己的窩。<br>
         在這裡，<br>
-        交流與欣賞交織，<br>
-        讓您在分享中找回記憶的溫度。<br>
+        重新思考物與人的關係<br>
+        從日復一日的麻木日常中，<br>
+        重建生活意義，<br>
+        找回記憶的溫度。<br>
       </div>
     </div>
   </v-container>
@@ -48,22 +50,33 @@
   <v-container class="page-container" fluid>
     <div class="content-area text-center" justify="center" align="center" style="min-height: 1050px;">
       <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle text-abril text-snow">
-        <span style=" color: #C04759; font-weight: 100;">Story</span>
+        <span style=" color: #C04759; font-weight: 100;">Rebirth</span>
       </div>
       <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle-content text-abril text-h4">
-        重新思考物與人的關係<br>
-        建立生活意義<br>
-        藝術創作的精神昇華<br>
-        重生及轉化<br>
+        每一次紀念
+        將回憶去蕪存菁<br>
+        都是轉化的契機<br>
+        一場重生的過程<br>
+        透過繪畫、文字與影像，<br>
+        用藝術賦予生活更深刻的意義。<br>
+        讓記憶不再是過往，<br>
+        而是能持續的現在與未來。<br>
       </div>
       <!-- 用 Gsap 才可調進入動畫 -->
       <!-- <div data-aos="fade-down" data-aos-duration="1500" > -->
         <router-link to="/" class="d-flex align-center">
           <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
         </router-link>
-        <router-link to="/login/" class="d-flex align-center">
-          <v-toolbar-title class="btn-login text-abril">Login</v-toolbar-title>
-        </router-link>
+        <template v-if="!isLoggedIn">
+          <router-link to="/login/" class="d-flex align-center">
+            <v-toolbar-title class="btn-login text-abril">Login</v-toolbar-title>
+          </router-link>
+        </template>
+        <template v-else>
+          <div>
+            <img class="antimg" src="/ant.png">
+          </div>
+        </template>
       </div>
     <!-- </div> -->
   </v-container>
@@ -77,6 +90,7 @@
     ga-3"
     height="50">
 
+    <div> &nbsp;</div>
     <div>2025 Memorial Nest 紀念巢</div>
     <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
       <v-icon icon="mdi-instagram" ></v-icon>
@@ -84,10 +98,15 @@
     <a class="text-snow" href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
       <v-icon icon="mdi-email"></v-icon>
     </a>
-    <div>  &nbsp;</div>
   </v-footer>
-
 </template>
+
+<script setup>
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
+const isLoggedIn = userStore.isLoggedIn
+</script>
 
 <style scoped>
 .text-h4 {
@@ -174,12 +193,12 @@
 }
 
 .subtitle {
-  font-size: 6rem;
+  font-size: 7rem;
   font-weight: 700;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
   left: 8rem;
-  top: 22rem;
+  top: 23rem;
   z-index: 1;
   letter-spacing: 0.1em
   /* color: #C04759; */
@@ -194,7 +213,7 @@
   color: #3B6C73;
   text-align: center;
   width: 40rem;
-  top: 31rem;
+  top: 28rem;
   left: 28rem;
   z-index: 1;
   letter-spacing: 0.1em
@@ -202,12 +221,12 @@
 }
 
 .thirdtitle {
-  font-size: 6rem;
+  font-size: 7rem;
   font-weight: 700;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
   right: 8rem;
-  top: -1rem;
+  top: 1rem;
   z-index: 1;
   letter-spacing: 0.1em
   /* color: #C04759; */
@@ -221,8 +240,8 @@
   color: #3B6C73;
   text-align: center;
   width: 40rem;
-  top: 8rem;
-  left: 23rem;
+  top: 9rem;
+  left: 22rem;
   z-index: 1;
   /* background-color: red; */
 }
@@ -265,17 +284,15 @@
   transition: 0.3s;
 }
 
-/* ----------------------------------------------------- */
-/* .video img {
+.antimg {
   position: absolute;
   width: 10rem;
-  height: auto;
-  top: 0;
-  object-fit: cover;
-  animation: video-animation 10s infinite;
-  z-index: 99999;
-} */
+  left: 61rem;
+  top: 36rem;
+  z-index: 2;
+}
 
+/* ----------------------------------------------------- */
 .video {
   /* mask: url('/mask1.png') no-repeat center; */
   mask: url('/mask.png') no-repeat center;

@@ -21,7 +21,7 @@ export function registerPlugins (app) {
       snackbar: {
         // 不要顯示關閉按鈕，2秒後自動關閉
         showCloseButton: false,
-        snackbarPoprs: {
+        snackbarProps: {
           timeout: 2000
         }
       }
