@@ -7,20 +7,15 @@
   </v-app>
 </template>
 
-<script setup>
-// import { computed } from 'vue';
-// import { useRoute } from "vue-router";
-// import DefaultLayout from "@/layouts/default.vue";// 預設 Layout（含 Navbar）
-// import EmptyLayout from "@/layouts/empty.vue";// 無 Navbar Layout
+<script>
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
-// const route = useRoute();
-// const layout = computed(() => {
-  // if (route.meta.layout === 'empty') {
-    // return EmptyLayout;
-  // } else {
-    // return DefaultLayout;
-  // }
-// });
+export default {
+  mounted() {
+    AOS.init()
+  }
+}
 </script>
 
 <style>

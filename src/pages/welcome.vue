@@ -5,17 +5,23 @@
         <img src="/welcomeBackGround3.png" class="background-image" alt="background" />
       </div>
       <v-col cols="12">
-        <div class="text-overlay maintitle d-flex flex-column align-items-end text-end">
+        <div data-aos="fade-down" data-aos-duration="1500" class="text-overlay maintitle d-flex flex-column align-items-end text-end">
           <h1 class="text-abril d-flex flex-column" style="color: #3B6C73;">
-              <div> Memorial</div>
-              <div> Nest </div>
+              <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000" > Memorial</div>
+              <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500" > Nest </div>
+              <p data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" class="text-h4 mt-2" style="color: #C04759;">
+                紀念巢</p>
           </h1>
-          <div class="text-h4 mt-2 text-snow"> 紀念巢</div>
-          <p class="text-body-1 text-abril mt-2" style=" color: #C04759">A place to remember your loved ones.</p>
+          <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2500" >
+            <span class="text-body-1 text-abril" style=" color: #C04759">
+              A place to remember your loved ones.
+            </span>
+          </div>
         </div>
+        <!-- 用 Gsap 才可調進入動畫 -->
         <div class="video">
           <video autoplay loop muted>
-            <source src="/videos/video-2.mp4" type="video/mp4">
+            <source src="/videos/video-4.mp4" type="video/mp4">
         </video>
       </div>
       </v-col>
@@ -24,39 +30,74 @@
 
   <v-container class="page-container" fluid>
     <div class="content-area text-center" justify="center" align="center" style="min-height: 1100px;">
-      <div class="subtitle text-abril text-snow">About</div>
-      <div class="subtitle-content text-abril text-h4">Lorvagni incidunt ea eius? Conimi autem eveniet e rsequi animi ut quidem ullam iure dicta aspernatur, tempore consequuntur praesentium quod cum earumas at non necessitatibus minus! Obcaecati blanditiis illo laudantium tempore?</div>
-    </div>
-  </v-container>
-  <v-container class="page-container" fluid>
-    <div class="content-area text-center" justify="center" align="center" style="min-height: 1050px;">
-      <div class="thirdtitle text-abril text-snow">Story</div>
-      <div class="thirdtitle-content text-abril text-h4">Lorvagni inciautritatis. Voluptatibus atque repellat corrupti ex sapiente sequi animi ut quidem ullam iure dicta aspernatur, tempore consequuntur praesentium quod cum earumas at non necessitatibus minus! Obcaecati blanditiis illo laudantium tempore?</div>
-      <router-link to="/" class="d-flex align-center">
-        <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
-      </router-link>
-      <router-link to="/login/" class="d-flex align-center">
-        <v-toolbar-title class="btn-login text-abril">Login</v-toolbar-title>
-      </router-link>
+      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+        <span style=" color: #C04759; font-weight: 100;">About</span>
+      </div>
+      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-h4">
+        紀念巢，<br>
+        是個存放回憶改造的秘密巢穴。<br>
+        像螞蟻蒐集著一塊塊記憶碎片，<br>
+        步步築出自己的窩。<br>
+        在這裡，<br>
+        交流與欣賞交織，<br>
+        讓您在分享中找回記憶的溫度。<br>
+      </div>
     </div>
   </v-container>
 
+  <v-container class="page-container" fluid>
+    <div class="content-area text-center" justify="center" align="center" style="min-height: 1050px;">
+      <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle text-abril text-snow">
+        <span style=" color: #C04759; font-weight: 100;">Story</span>
+      </div>
+      <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle-content text-abril text-h4">
+        重新思考物與人的關係<br>
+        建立生活意義<br>
+        藝術創作的精神昇華<br>
+        重生及轉化<br>
+      </div>
+      <!-- 用 Gsap 才可調進入動畫 -->
+      <!-- <div data-aos="fade-down" data-aos-duration="1500" > -->
+        <router-link to="/" class="d-flex align-center">
+          <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
+        </router-link>
+        <router-link to="/login/" class="d-flex align-center">
+          <v-toolbar-title class="btn-login text-abril">Login</v-toolbar-title>
+        </router-link>
+      </div>
+    <!-- </div> -->
+  </v-container>
+
   <v-footer
-    class="text-body-2 d-flex justify-center background-dark text-snow text-abril antFooter ga-3" height="50">
-    <div> Contact: &nbsp;</div>
-    <v-icon icon="mdi-instagram"></v-icon>
-    <v-icon icon="mdi-email"></v-icon>
-    <div> Email:fung.8021@gmail.com &nbsp;</div>
+    class="text-body-2 d-flex justify-center
+    background-dark
+    text-snow
+    text-abril
+    antFooter
+    ga-3"
+    height="50">
+
     <div>2025 Memorial Nest 紀念巢</div>
+    <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
+      <v-icon icon="mdi-instagram" ></v-icon>
+    </a>
+    <a class="text-snow" href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
+      <v-icon icon="mdi-email"></v-icon>
+    </a>
+    <div>  &nbsp;</div>
   </v-footer>
 
 </template>
 
 <style scoped>
+.text-h4 {
+  font-size: 1.5rem !important;
+}
 
 .text-body-1 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.2em
+  letter-spacing: 0.2em;
+  margin-top: 0rem;
 }
 
 /* 頁面容器：填滿視窗高度 */
@@ -120,7 +161,7 @@
   font-size: 4rem;
   font-weight: 700;
   line-height: 1.0;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   /* 使用相對定位 */
   /* position: relative; */
   /* margin-right: 7rem; */
@@ -129,20 +170,20 @@
   position: absolute;
   right: 7rem;
   bottom: 3rem;
-  letter-spacing: 0.2em
+  letter-spacing: 0.1em
 }
 
 .subtitle {
   font-size: 6rem;
   font-weight: 700;
-  /* color: #C04759; */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
-  /* background-color: red; */
   left: 8rem;
-  top: 23rem;
+  top: 22rem;
   z-index: 1;
-  letter-spacing: 0.2em
+  letter-spacing: 0.1em
+  /* color: #C04759; */
+  /* background-color: red; */
 
 }
 
@@ -151,26 +192,25 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
   color: #3B6C73;
-  /* background-color: red; */
   text-align: center;
   width: 40rem;
-  top: 34rem;
-  left: 27rem;
+  top: 31rem;
+  left: 28rem;
   z-index: 1;
-  letter-spacing: 0.2em
+  letter-spacing: 0.1em
+  /* background-color: red; */
 }
 
 .thirdtitle {
   font-size: 6rem;
   font-weight: 700;
-  /* color: #C04759; */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   position: absolute;
   right: 8rem;
-  top: 0rem;
+  top: -1rem;
   z-index: 1;
-  letter-spacing: 0.2em
-
+  letter-spacing: 0.1em
+  /* color: #C04759; */
   /* background-color: red; */
 }
 
@@ -192,14 +232,18 @@
   line-height: 4rem;
   font-weight: 700;
   color: #C04759;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   position: absolute;
-  left: 38rem;
+  left: 37rem;
   top: 44rem;
   z-index: 2;
   text-decoration: none;
-  letter-spacing: 0.2em
-  /* background-color: red; */
+  letter-spacing: 0.1em;
+}
+
+.btn-explore:hover {
+  color: #3B6C73;
+  transition: 0.3s;
 }
 
 .btn-login {
@@ -207,14 +251,20 @@
   line-height: 4rem;
   font-weight: 700;
   color: #C04759;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   position: absolute;
   left: 61rem;
   top: 36rem;
   z-index: 2;
   text-decoration: none;
-  letter-spacing: 0.2em
+  letter-spacing: 0.1em;
 }
+
+.btn-login:hover {
+  color: #3B6C73;
+  transition: 0.3s;
+}
+
 /* ----------------------------------------------------- */
 /* .video img {
   position: absolute;
@@ -253,7 +303,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* background-color: #1a3a3e6d; */
+  background-color: #94a1cc6d;
   z-index: 1;
 }
 
