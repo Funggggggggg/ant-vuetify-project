@@ -8,7 +8,7 @@
     <v-row class="info">
       <v-col col="9">
         <v-card-title>
-          <router-link :to="'/post/' + _id" style=" text-decoration: none ; font-weight:500 !important;" class="text-body-1 text-snow">{{ title }}</router-link>
+          <router-link :to="'/post/' + _id" style=" text-decoration: none ; font-weight:500 !important;" class="text-body-1 text-snow text-klee-one">{{ title }}</router-link>
         </v-card-title>
       </v-col>
       <!-- 綁定按鈕 按了可以放進收藏清單-->
@@ -23,11 +23,11 @@
         </v-icon>
       </v-col>
     </v-row>
-    <v-card-subtitle class="subtitle">
+    <v-card-subtitle class="subtitle text-klee-one">
       {{ category }}
     </v-card-subtitle>
     <!-- <v-card-text>{{ content }}</v-card-text> -->
-    <v-card-text class="content">{{ truncatedContent }}</v-card-text>
+    <v-card-text class="content text-klee-one">{{ truncatedContent }}</v-card-text>
   </v-card>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center" style="width: 100%; gap: 5px; margin-top: 20px;">
+    <v-row class="d-flex justify-center " style="width: 100%; gap: 5px; margin-top: 20px;">
       <v-col cols="12" class="d-flex align-center justify-center" style="height: 100px;">
         <v-text-field
           v-model="search"
@@ -8,12 +8,12 @@
           density="comfortable"
           single-line
           color="#EDE5D2"
-          class="text-body-1 text-snow d-flex align-center me-4 search-bar"
+          class="text-body-1 text-snow text-klee-one d-flex align-center me-4 search-bar"
         ></v-text-field>
         <v-btn
           v-for="cat in categories"
           :key="cat"
-          class="mx-2 text-body-2 ms-0"
+          class="mx-2 text-body-2 ms-0 text-klee-one "
           :class="{ 'v-btn--active': category === cat }"
           style="max-width: 500px; line-height: 5px; color: #EDE5D2;"
           variant="tonal"

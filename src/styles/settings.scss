@@ -7,6 +7,7 @@
 // 定義變數
 $abril-font: "Abril Fatface", serif;
 $Roboto-font: "Roboto", "Noto Sans TC", sans-serif;
+$klee-one-font: "Klee One", cursive;
 $snow-color: #EDE5D2;
 $dark-background: #383431;
 
@@ -56,6 +57,7 @@ $dark-background: #383431;
 :root {
   --abril-font: #{$abril-font};
   --roboto-font: #{$Roboto-font};
+  --klee-one-font: #{$klee-one-font};
   --snow-color: #{$snow-color};
   --dark-background: #{$dark-background};
 }
@@ -67,6 +69,10 @@ $dark-background: #383431;
 
 .text-roboto {
   font-family: var(--roboto-font);
+}
+
+.text-klee-one {
+  font-family: var(--klee-one-font);
 }
 
 .text-snow {

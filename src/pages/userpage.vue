@@ -6,7 +6,7 @@
           <Avatar :size="200" variant="beam" :name="user?.account || 'Guest'" :title="true" style="margin-right:10px;"/>
         </v-col>
         <v-col cols="6" style="margin-left: 50px;" class="text-snow">
-          <v-card variant="text" class="d-flex flex-column text-h5 content">
+          <v-card variant="text" class="d-flex flex-column text-h5 content text-klee-one">
             <v-card-title style=" margin-top: 10px;" class="usrAccount">
               <h2>{{ user?.account || '未知用戶' }}</h2>
               <v-btn v-if="isCurrentUser" icon="mdi-pencil" variant="text" class="text-snow"></v-btn>
@@ -17,17 +17,17 @@
           </v-card>
         </v-col>
         <!-- 切換文章類型 -->
-        <v-col cols="12" class="d-flex justify-center align-center">
+        <v-col cols="12" class="d-flex justify-center align-center ">
           <v-btn
             text="已建立"
-            class="text-body-2 me-4 font-weight-bold rounded-lg"
+            class="text-body-2 me-4 font-weight-bold rounded-lg text-klee-one"
             :variant="displayType === 'created' ? 'flat' : 'outlined'"
             :color="displayType === 'created' ? '#F1D87F' : '#F1D87F'"
             @click="changeDisplayType('created')"
           ></v-btn>
           <v-btn
             text="已收藏"
-            class="text-body-2 ms-4 font-weight-bold rounded-lg"
+            class="text-body-2 ms-4 font-weight-bold rounded-lg text-klee-one"
             :variant="displayType === 'favorite' ? 'flat' : 'outlined'"
             :color="displayType === 'favorite' ? '#C04759' : '#C04759'"
             @click="changeDisplayType('favorite')"
@@ -48,7 +48,7 @@
       </v-row>
 
       <!-- 無文章顯示 -->
-      <v-row v-else class="d-flex justify-center text-center text-snow text-body-2 mt-8">
+      <v-row v-else class="d-flex justify-center text-center text-snow text-body-2 mt-8 text-klee-one">
         <p> 尚無文章 </p>
       </v-row>
     </div>

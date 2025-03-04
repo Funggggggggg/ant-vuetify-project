@@ -5,18 +5,22 @@
         <img src="/welcomeBackGround3.png" class="background-image" alt="background" />
       </div>
       <v-col cols="12">
-        <div data-aos="fade-down" data-aos-duration="1500" class="text-overlay maintitle d-flex flex-column align-items-end text-end">
+        <div class="text-overlay maintitle d-flex flex-column align-items-end text-end">
           <h1 class="text-abril d-flex flex-column" style="color: #3B6C73;">
-              <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000" > Memorial</div>
-              <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500" > Nest </div>
-              <p data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" class="text-h4 mt-2" style="color: #C04759;">
-                紀念巢</p>
-          </h1>
-          <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2500" >
-            <span class="text-body-1 text-abril" style=" color: #C04759">
+            <p data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
+            class="text-snow text-klee-one maintitle-chi">紀念巢
+            </p>
+            <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500" class="me-0"> Memorial</div>
+            <span class="text-body-1 text-abril " style="color: #3B6C73;"data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1700" >
+                A secret base for collecting memories.
+              </span>
+            <!-- &nbsp; -->
+            <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" class="mt-2"> Nest </div>
+            <!-- <span class="text-h4 text-abril text-snow" style="line-height: 1rem;"> -->
+            <!-- <span class="text-body-1 text-abril" style="color: #3B6C73;"data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" >
               A secret base for collecting memories.
-            </span>
-          </div>
+            </span> -->
+          </h1>
         </div>
         <!-- 用 Gsap 才可調進入動畫 -->
         <div class="video">
@@ -33,7 +37,7 @@
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
         <span style=" color: #C04759; font-weight: 100;">Secret</span>
       </div>
-      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-h4">
+      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-klee-one text-h4">
         紀念巢<br>
         存放您回憶改造的秘密巢穴<br>
         如螞蟻蒐集著一塊塊記憶碎片<br>
@@ -52,7 +56,7 @@
       <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle text-abril text-snow">
         <span style=" color: #C04759; font-weight: 100;">Rebirth</span>
       </div>
-      <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle-content text-abril text-h4">
+      <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle-content text-abril text-klee-one text-h4">
         每一次紀念
         將回憶去蕪存菁<br>
         都是轉化的契機<br>
@@ -89,7 +93,7 @@
     height="50">
 
     <div> &nbsp;</div>
-    <div>2025 Memorial Nest 紀念巢</div>
+    <div class="text-klee-one">2025 Memorial Nest 紀念巢</div>
     <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
       <v-icon icon="mdi-instagram" ></v-icon>
     </a>
@@ -140,7 +144,7 @@ onMounted(() => {
 }
 
 .text-body-1 {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   letter-spacing: 0.2em;
   margin-top: 0rem;
 }
@@ -208,25 +212,34 @@ onMounted(() => {
 /* ---------------------------------------------------------------------------- */
 
 .maintitle {
-  font-size: 4rem;
+  font-size: 4.7rem;
   font-weight: 700;
-  line-height: 1.0;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  /* 使用相對定位 */
-  /* position: relative; */
-  /* margin-right: 7rem; */
-  /* margin-top: 1rem; */
-  /* 使用絕對定位  */
+  line-height: 0.8;
   position: absolute;
-  right: 7rem;
-  bottom: 3rem;
-  letter-spacing: 0.1em
+  right: 5rem;
+  bottom: 7rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* letter-spacing: 0.1rem */
+}
+
+.maintitle-chi {
+  font-size: 5rem !important;
+  font-weight: normal;
+  position: absolute;
+  right: 0rem;
+  bottom: 19rem;
+}
+
+.maintitle-small {
+  position: absolute;
+  right: 0rem;
+  bottom: -2rem;
 }
 
 .subtitle {
   font-size: 7rem;
   font-weight: 700;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   position: absolute;
   left: 8rem;
   top: 23rem;
@@ -239,7 +252,7 @@ onMounted(() => {
 
 .subtitle-content {
   z-index: 1; /* 確保背景圖片在最底層 */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   position: absolute;
   color: #3B6C73;
   text-align: center;
@@ -254,7 +267,7 @@ onMounted(() => {
 .thirdtitle {
   font-size: 7rem;
   font-weight: 700;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   position: absolute;
   right: 8rem;
   top: 1rem;
@@ -266,7 +279,7 @@ onMounted(() => {
 
 .thirdtitle-content {
   z-index: 1; /* 確保背景圖片在最底層 */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   position: absolute;
   color: #3B6C73;
   text-align: center;
@@ -282,7 +295,7 @@ onMounted(() => {
   line-height: 4rem;
   font-weight: 700;
   color: #C04759;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
   position: absolute;
   left: 37rem;
   top: 44rem;
@@ -301,7 +314,7 @@ onMounted(() => {
   line-height: 4rem;
   font-weight: 700;
   color: #C04759;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
   position: absolute;
   left: 61rem;
   top: 36rem;
@@ -375,7 +388,7 @@ onMounted(() => {
   }
 
   .text-body-1 {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
     letter-spacing: 0.2em;
     margin-top: 0rem;
   }
