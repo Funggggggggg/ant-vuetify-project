@@ -34,15 +34,15 @@
         <span style=" color: #C04759; font-weight: 100;">Secret</span>
       </div>
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-h4">
-        紀念巢，<br>
-        存放您回憶改造的秘密巢穴。<br>
-        如螞蟻蒐集著一塊塊記憶碎片，<br>
-        步步築出自己的窩。<br>
-        在這裡，<br>
+        紀念巢<br>
+        存放您回憶改造的秘密巢穴<br>
+        如螞蟻蒐集著一塊塊記憶碎片<br>
+        步步築出自己的窩<br>
+        在這裡<br>
         重新思考物與人的關係<br>
-        從日復一日的麻木日常中，<br>
-        重建生活意義，<br>
-        找回記憶的溫度。<br>
+        從日復一日的麻木日常中<br>
+        重建生活意義<br>
+        找回記憶的溫度<br>
       </div>
     </div>
   </v-container>
@@ -57,10 +57,10 @@
         將回憶去蕪存菁<br>
         都是轉化的契機<br>
         一場重生的過程<br>
-        透過繪畫、文字與影像，<br>
-        用藝術賦予生活更深刻的意義。<br>
-        讓記憶不再是過往，<br>
-        而是能持續的現在與未來。<br>
+        透過繪畫、文字與影像<br>
+        用藝術賦予生活更深刻的意義<br>
+        讓記憶不再是過往<br>
+        而是能持續的現在與未來<br>
       </div>
       <!-- 用 Gsap 才可調進入動畫 -->
       <!-- <div data-aos="fade-down" data-aos-duration="1500" > -->
