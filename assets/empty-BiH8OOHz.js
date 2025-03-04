@@ -1,1 +1,0 @@
-import{_ as o,r as t,o as r,j as n,w as a,b as c,i as s}from"./index-8-GIi-2L.js";const _={};function i(f,l){const e=t("router-view");return r(),n(s,null,{default:a(()=>[c(e)]),_:1})}const u=o(_,[["render",i]]);export{u as default};
