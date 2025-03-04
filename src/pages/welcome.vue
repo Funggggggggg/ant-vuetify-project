@@ -117,7 +117,7 @@ const updateRowStyle = () => {
     rowStyle1.value.minHeight = '400px'
     rowStyle2.value.minHeight = '700px'
     rowStyle3.value.minHeight = '650px'
-  } else if (window.innerWidth >= 1200) {
+  } else if (window.innerWidth >= 1450) {
     rowStyle1.value.minHeight = '800px'
     rowStyle2.value.minHeight = '1500px'
     rowStyle3.value.minHeight = '1250px'
@@ -368,9 +368,9 @@ onMounted(() => {
 }
 
 /* ------------------------------------------------------------------------------------------------- */
-@media (min-width: 1200px) {
+@media (min-width: 1450px) {
   .text-h4 {
-    font-size: 1.8rem !important;
+    font-size: 1.8rem;
     line-height: 2;
   }
 
