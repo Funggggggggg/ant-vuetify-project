@@ -435,9 +435,9 @@ onMounted(() => {
   }
 
   .antimg {
-    width: 15rem;
-    left: 80rem;
-    top: 48rem;
+    width: 10rem;
+    left: 85rem;
+    top: 53rem;
   }
 }
 
