@@ -2,7 +2,7 @@
   <v-container v-if="post && post._id">
     <v-row class=" d-flex justify-center align-center">
       <v-col cols="12">
-        <h1 class="text-center text-snow text-h3 mt-4 mb-4 ">{{ post.title || '載入中...'  }}</h1>
+        <h1 class="text-center text-snow text-h3 mt-4 mb-4 text-klee-one">{{ post.title || '載入中...'  }}</h1>
       </v-col>
       <v-divider></v-divider>
       <v-col cols="5" md="6" class="mt-8">
@@ -15,9 +15,9 @@
           <Avatar :size="30" variant="beam" :name="post.account" :title="true"/>
           <div class="ms-4" style="font-size: x-large;">{{ post.account || '訪客' }}</div>
         </div>
-        <p class="mb-4 text-body-1 ">{{ '分類：'+ (post.category || '無分類') }}</p>
+        <p class="mb-4 text-body-1 text-klee-one ">{{ '分類：'+ (post.category || '無分類') }}</p>
         <!-- <p>{{ post.like }}</p> -->
-        <p v-if="post.content" class="mb-4 text-body-2 text-abril">{{ post.content|| '內容加載中...'}}</p>
+        <p v-if="post.content" class="mb-4 text-body-2 text-klee-one">{{ post.content|| '內容加載中...'}}</p>
         <!-- 購物車數量 -->
         <v-form :disabled="isSubmitting" class="w-100 d-flex align-center justify-end">
           <v-btn type="submit" :loading="isSubmitting" variant="text">

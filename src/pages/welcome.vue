@@ -7,11 +7,12 @@
       <v-col cols="12">
         <div class="text-overlay maintitle d-flex flex-column align-items-end text-end">
           <h1 class="text-abril d-flex flex-column" style="color: #3B6C73;">
-            <p data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
+            <p
+              data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
             class="text-snow text-klee-one maintitle-chi">紀念巢
             </p>
             <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500" class="me-0"> Memorial</div>
-            <span class="text-body-1 text-abril " style="color: #3B6C73;"data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1700" >
+            <span class="text-body-1 text-abril " style="color: #3B6C73;" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1700" >
                 A secret base for collecting memories.
               </span>
             <!-- &nbsp; -->
