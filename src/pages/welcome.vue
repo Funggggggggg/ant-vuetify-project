@@ -29,7 +29,7 @@
   </v-container>
 
   <v-container class="page-container" fluid>
-    <div class="content-area text-center" justify="center" align="center" style="min-height: 1100px;">
+    <v-col class="content-area text-center" justify="center" align="center" style="min-height: 1100px;">
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
         <span style=" color: #C04759; font-weight: 100;">Secret</span>
       </div>
@@ -44,7 +44,7 @@
         重建生活意義<br>
         找回記憶的溫度<br>
       </div>
-    </div>
+    </v-col>
   </v-container>
 
   <v-container class="page-container" fluid>
