@@ -7,6 +7,7 @@
           prepend-inner-icon="mdi-magnify"
           density="comfortable"
           single-line
+          color="#EDE5D2"
           class="text-body-1 text-snow d-flex align-center me-4 search-bar"
         ></v-text-field>
         <v-btn
@@ -255,6 +256,11 @@ const closeDialog = () => {
 <style scoped>
 .load-more-trigger {
   height: 1px;
+}
+
+.search-bar {
+  max-width: 200px;  /* 縮小搜尋欄 */
+  transition: width 0.3s ease-in-out;
 }
 
 .search-bar ::v-deep .v-input__control {

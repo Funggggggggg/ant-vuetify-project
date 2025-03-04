@@ -1,6 +1,6 @@
 <template>
   <v-container class="page-container" fluid>
-    <v-row class="content-area text-snow text-center mb-5" justify="center" align="center" style="min-height: 600px; ">
+    <v-row class="content-area text-snow text-center mb-5" justify="center" align="center" :style="rowStyle1">
       <div class="background-wrapper">
         <img src="/welcomeBackGround3.png" class="background-image" alt="background" />
       </div>
@@ -29,7 +29,7 @@
   </v-container>
 
   <v-container class="page-container" fluid>
-    <v-col class="content-area text-center" justify="center" align="center" style="min-height: 1100px;">
+    <v-col class="content-area text-center" justify="center" align="center" :style="rowStyle2">
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
         <span style=" color: #C04759; font-weight: 100;">Secret</span>
       </div>
@@ -48,7 +48,7 @@
   </v-container>
 
   <v-container class="page-container" fluid>
-    <div class="content-area text-center" justify="center" align="center" style="min-height: 1050px;">
+    <div class="content-area text-center" justify="center" align="center" :style="rowStyle3">
       <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle text-abril text-snow">
         <span style=" color: #C04759; font-weight: 100;">Rebirth</span>
       </div>
@@ -63,7 +63,6 @@
         而是能持續的現在與未來<br>
       </div>
       <!-- 用 Gsap 才可調進入動畫 -->
-      <!-- <div data-aos="fade-down" data-aos-duration="1500" > -->
         <router-link to="/" class="d-flex align-center">
           <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
         </router-link>
@@ -78,7 +77,6 @@
           </div>
         </template>
       </div>
-    <!-- </div> -->
   </v-container>
 
   <v-footer
@@ -106,6 +104,34 @@ import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
 const isLoggedIn = userStore.isLoggedIn
+
+import { ref, onMounted } from 'vue'
+
+// 響應式設定 row 的最小高度
+const rowStyle1 = ref({ minHeight: '600px' })
+const rowStyle2 = ref({ minHeight: '1100px' })
+const rowStyle3 = ref({ minHeight: '1050px' })
+
+const updateRowStyle = () => {
+  if (window.innerWidth < 768) {
+    rowStyle1.value.minHeight = '400px'
+    rowStyle2.value.minHeight = '700px'
+    rowStyle3.value.minHeight = '650px'
+  } else if (window.innerWidth >= 1200) {
+    rowStyle1.value.minHeight = '800px'
+    rowStyle2.value.minHeight = '1500px'
+    rowStyle3.value.minHeight = '1250px'
+  } else {
+    rowStyle1.value.minHeight = '600px'
+    rowStyle2.value.minHeight = '1100px'
+    rowStyle3.value.minHeight = '1050px'
+  }
+}
+
+onMounted(() => {
+  updateRowStyle()
+  window.addEventListener('resize', updateRowStyle)
+})
 </script>
 
 <style scoped>
@@ -155,6 +181,11 @@ const isLoggedIn = userStore.isLoggedIn
   margin-top: auto; /* 確保 footer 在頁面底部 */
   z-index: 1; /* 確保 footer 在文字上方 */
   /* background-color: rgba(0, 0, 0, 0.5); 背景色透明 */
+}
+
+.antFooter a:hover {
+  color: #C04759 !important;
+  transition: 0.3s !important;
 }
 /* ---------------------------------------------------------------------------- */
 .background-image {
@@ -294,7 +325,6 @@ const isLoggedIn = userStore.isLoggedIn
 
 /* ----------------------------------------------------- */
 .video {
-  /* mask: url('/mask1.png') no-repeat center; */
   mask: url('/mask.png') no-repeat center;
   border-style: none;
   position: absolute;
@@ -334,6 +364,80 @@ const isLoggedIn = userStore.isLoggedIn
   }
   67%, 100% {
     opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------------- */
+@media (min-width: 1200px) {
+  .text-h4 {
+    font-size: 1.8rem !important;
+    line-height: 2;
+  }
+
+  .text-body-1 {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.2em;
+    margin-top: 0rem;
+  }
+  .background-image {
+    left: -20rem;
+    min-width: 1500px;
+    min-height: 800px;
+  }
+
+  .maintitle {
+    font-size: 5.5rem;
+    right: 10rem;
+    bottom: 5rem;
+  }
+
+  .video {
+    top: 39rem;
+    left: 32rem;
+  }
+
+  .subtitle {
+    font-size: 10rem;
+    left: 12rem;
+    top: 32rem;
+  }
+
+  .subtitle-content {
+    width: 52rem;
+    top: 43rem;
+    left: 38rem;
+  }
+
+  .thirdtitle {
+    font-size: 10rem;
+    right: 8rem;
+    top: 5rem;
+  }
+
+  .thirdtitle-content {
+    width: 50rem;
+    top: 15rem;
+    left: 30rem;
+  }
+
+  .btn-explore {
+    font-size: 4rem;
+    line-height: 5rem;
+    left: 50rem;
+    top: 60rem;
+  }
+
+  .btn-login {
+    font-size: 4rem;
+    line-height: 5rem;
+    left: 82rem;
+    top: 49rem;
+  }
+
+  .antimg {
+    width: 15rem;
+    left: 80rem;
+    top: 48rem;
   }
 }
 
