@@ -404,6 +404,11 @@ onMounted(() => {
     bottom: 5rem;
   }
 
+  .maintitle-chi {
+  right: 0rem;
+  bottom: 22rem;
+}
+
   .video {
     top: 39rem;
     left: 32rem;
