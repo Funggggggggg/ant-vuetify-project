@@ -7,13 +7,6 @@
           prepend-inner-icon="mdi-magnify"
           density="comfortable"
           single-line
-          color="#EDE5D2"
-          :style="{
-            width: search.length > 0 ? '350px' : '100px',
-            transition: 'width 0.3s ease-in-out',
-            textAlign: 'left',
-            marginLeft: search.length > 0 ? '20px' : '0px' // 讓它往右移動
-          }"
           class="text-body-1 text-snow d-flex align-center me-4 search-bar"
         ></v-text-field>
         <v-btn
