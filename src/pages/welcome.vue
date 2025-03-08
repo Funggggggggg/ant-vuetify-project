@@ -58,12 +58,10 @@
         <span style=" color: #C04759; font-weight: 100;">Rebirth</span>
       </div>
       <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle-content text-abril text-klee-one text-h4">
-        每一次紀念
+        每一次紀念<br>
         將回憶去蕪存菁<br>
-        都是轉化的契機<br>
-        一場重生的過程<br>
-        透過繪畫、文字與影像<br>
-        用藝術賦予生活更深刻的意義<br>
+        都是轉化與重生的契機<br>
+        透過藝術 賦予生活更深刻的意義<br>
         讓記憶不再是過往<br>
         而是能持續的現在與未來<br>
       </div>
@@ -423,8 +421,8 @@ onMounted(() => {
 
   .subtitle-content {
     width: 52rem;
-    top: 43rem;
-    left: 38rem;
+    top: 46rem;
+    left: 36rem;
   }
 
   .thirdtitle {
