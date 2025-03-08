@@ -199,7 +199,10 @@ onMounted(() => {
   min-width: 1200px; /* 設置最小寬度 */
   min-height: 800px; /* 設置最小高度 */
   z-index: -1; /* 確保背景圖片在最底層 */
-  /* object-fit: contain */
+  background-size: contain; /* 確保背景圖片包含在容器內 */
+  background-attachment: fixed; /* 固定背景圖片 */
+  background-repeat: no-repeat; /* 背景圖片不重複 */
+  background-position: center; /* 背景圖片居中 */
 }
 
 .background-wrapper {
@@ -393,8 +396,8 @@ onMounted(() => {
   }
   .background-image {
     left: -20rem;
-    min-width: 1500px;
-    min-height: 800px;
+    min-width: 600px;
+    min-height: 600px;
   }
 
   .maintitle {
@@ -421,8 +424,8 @@ onMounted(() => {
 
   .subtitle-content {
     width: 52rem;
-    top: 46rem;
-    left: 36rem;
+    top: 49rem;
+    left: 35rem;
   }
 
   .thirdtitle {
@@ -433,22 +436,22 @@ onMounted(() => {
 
   .thirdtitle-content {
     width: 50rem;
-    top: 15rem;
-    left: 30rem;
+    top: 19rem;
+    left: 29rem;
   }
 
   .btn-explore {
     font-size: 4rem;
     line-height: 5rem;
-    left: 50rem;
-    top: 60rem;
+    left: 49rem;
+    top: 62rem;
   }
 
   .btn-login {
     font-size: 4rem;
     line-height: 5rem;
-    left: 82rem;
-    top: 49rem;
+    left: 80rem;
+    top: 51rem;
   }
 
   .antimg {
