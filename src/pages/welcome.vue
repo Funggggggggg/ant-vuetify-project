@@ -17,10 +17,6 @@
               </span>
             <!-- &nbsp; -->
             <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" class="mt-2"> Nest </div>
-            <!-- <span class="text-h4 text-abril text-snow" style="line-height: 1rem;"> -->
-            <!-- <span class="text-body-1 text-abril" style="color: #3B6C73;"data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" >
-              A secret base for collecting memories.
-            </span> -->
           </h1>
         </div>
         <!-- 用 Gsap 才可調進入動畫 -->
@@ -138,247 +134,255 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.text-h4 {
-  font-size: 1.5rem !important;
-}
 
-.text-body-1 {
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
-  letter-spacing: 0.2em;
-  margin-top: 0rem;
-}
+@media (min-width: 576px) {}
+@media (min-width: 768px) {}
+@media (min-width: 992px) {}
+@media (min-width: 1200px) {}
 
-/* 頁面容器：填滿視窗高度 */
-.page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* 保證頁面至少填滿視窗高度 */
-  padding: 0;
-  margin: 0;
-  position: relative;
-  letter-spacing: 0.2em
-
-  /* background-size: cover; 背景圖片覆蓋整個容器 */
-  /* background-position: center; 背景圖片居中 */
-  /* background-repeat: no-repeat; 背景圖片不重複 */
-}
-
-/* 主要內容區域：允許頁面內容擴展 */
-.content-area {
-  flex: 1; /* 擴展內容區域以填滿空間 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  /* background-color: rosybrown; */
-  z-index: 1; /* 確保文字在背景圖片上方 */
-  flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
-  letter-spacing: 0.2em
-}
-
-/* 固定在頁面底部的 Footer */
-.antFooter {
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
-  margin-top: auto; /* 確保 footer 在頁面底部 */
-  z-index: 1; /* 確保 footer 在文字上方 */
-  /* background-color: rgba(0, 0, 0, 0.5); 背景色透明 */
-}
-
-.antFooter a:hover {
-  color: #C04759 !important;
-  transition: 0.3s !important;
-}
-/* ---------------------------------------------------------------------------- */
-.background-image {
-  position: absolute;
-  top: 1rem;
-  left: -15rem;
-  width: 100%;
-  min-width: 1200px; /* 設置最小寬度 */
-  min-height: 800px; /* 設置最小高度 */
-  z-index: -1; /* 確保背景圖片在最底層 */
-  background-size: contain; /* 確保背景圖片包含在容器內 */
-  background-attachment: fixed; /* 固定背景圖片 */
-  background-repeat: no-repeat; /* 背景圖片不重複 */
-  background-position: center; /* 背景圖片居中 */
-}
-
-.background-wrapper {
-  position: relative;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 200px;
-}
-/* ---------------------------------------------------------------------------- */
-
-.maintitle {
-  font-size: 4.7rem;
-  font-weight: 700;
-  line-height: 0.8;
-  position: absolute;
-  right: 5rem;
-  bottom: 7rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  /* letter-spacing: 0.1rem */
-}
-
-.maintitle-chi {
-  font-size: 5rem !important;
-  font-weight: normal;
-  position: absolute;
-  right: 0rem;
-  bottom: 19rem;
-}
-
-.maintitle-small {
-  position: absolute;
-  right: 0rem;
-  bottom: -2rem;
-}
-
-.subtitle {
-  font-size: 7rem;
-  font-weight: 700;
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
-  position: absolute;
-  left: 8rem;
-  top: 23rem;
-  z-index: 1;
-  letter-spacing: 0.1em
-  /* color: #C04759; */
-  /* background-color: red; */
-
-}
-
-.subtitle-content {
-  z-index: 1; /* 確保背景圖片在最底層 */
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
-  position: absolute;
-  color: #3B6C73;
-  text-align: center;
-  width: 40rem;
-  top: 28rem;
-  left: 28rem;
-  z-index: 1;
-  letter-spacing: 0.1em
-  /* background-color: red; */
-}
-
-.thirdtitle {
-  font-size: 7rem;
-  font-weight: 700;
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
-  position: absolute;
-  right: 8rem;
-  top: 1rem;
-  z-index: 1;
-  letter-spacing: 0.1em
-  /* color: #C04759; */
-  /* background-color: red; */
-}
-
-.thirdtitle-content {
-  z-index: 1; /* 確保背景圖片在最底層 */
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
-  position: absolute;
-  color: #3B6C73;
-  text-align: center;
-  width: 40rem;
-  top: 9rem;
-  left: 22rem;
-  z-index: 1;
-  /* background-color: red; */
-}
-
-.btn-explore {
-  font-size: 3rem;
-  line-height: 4rem;
-  font-weight: 700;
-  color: #C04759;
-  /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
-  position: absolute;
-  left: 37rem;
-  top: 44rem;
-  z-index: 2;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-}
-
-.btn-explore:hover {
-  color: #3B6C73;
-  transition: 0.3s;
-}
-
-.btn-login {
-  font-size: 3rem;
-  line-height: 4rem;
-  font-weight: 700;
-  color: #C04759;
-  /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
-  position: absolute;
-  left: 61rem;
-  top: 36rem;
-  z-index: 2;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-}
-
-.btn-login:hover {
-  color: #3B6C73;
-  transition: 0.3s;
-}
-
-.antimg {
-  position: absolute;
-  width: 10rem;
-  left: 61rem;
-  top: 36rem;
-  z-index: 2;
-}
-
-/* ----------------------------------------------------- */
-.video {
-  mask: url('/mask.png') no-repeat center;
-  border-style: none;
-  position: absolute;
-  top: 33rem;
-  left: 22rem;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-  z-index: 99999;
-}
-
-.video video {
-  position: relative;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: bottom;
-}
-
-.video::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #94a1cc6d;
-  z-index: 1;
-}
-
-
-@keyframes video-animation {
-  0%, 33% {
-    opacity: 1;
+@media (min-width: 1450px) {
+  .text-h4 {
+    font-size: 1.5rem !important;
   }
-  34%, 66% {
-    opacity: 0;
+
+  .text-body-1 {
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+    letter-spacing: 0.2em;
+    margin-top: 0rem;
   }
-  67%, 100% {
-    opacity: 1;
+
+  /* 頁面容器：填滿視窗高度 */
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 保證頁面至少填滿視窗高度 */
+    padding: 0;
+    margin: 0;
+    position: relative;
+    letter-spacing: 0.2em
+
+    /* background-size: cover; 背景圖片覆蓋整個容器 */
+    /* background-position: center; 背景圖片居中 */
+    /* background-repeat: no-repeat; 背景圖片不重複 */
+  }
+
+  /* 主要內容區域：允許頁面內容擴展 */
+  .content-area {
+    flex: 1; /* 擴展內容區域以填滿空間 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* background-color: rosybrown; */
+    z-index: 1; /* 確保文字在背景圖片上方 */
+    flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
+    letter-spacing: 0.2em
+  }
+
+  /* 固定在頁面底部的 Footer */
+  .antFooter {
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto; /* 確保 footer 在頁面底部 */
+    z-index: 1; /* 確保 footer 在文字上方 */
+    /* background-color: rgba(0, 0, 0, 0.5); 背景色透明 */
+  }
+
+  .antFooter a:hover {
+    color: #C04759 !important;
+    transition: 0.3s !important;
+  }
+  /* ---------------------------------------------------------------------------- */
+  .background-image {
+    position: absolute;
+    top: 1rem;
+    left: -15rem;
+    width: 100%;
+    min-width: 1200px; /* 設置最小寬度 */
+    min-height: 800px; /* 設置最小高度 */
+    z-index: -1; /* 確保背景圖片在最底層 */
+    background-size: contain; /* 確保背景圖片包含在容器內 */
+    background-attachment: fixed; /* 固定背景圖片 */
+    background-repeat: no-repeat; /* 背景圖片不重複 */
+    background-position: center; /* 背景圖片居中 */
+  }
+
+  .background-wrapper {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 200px;
+  }
+  /* ---------------------------------------------------------------------------- */
+
+  .maintitle {
+    font-size: 4.7rem;
+    font-weight: 700;
+    line-height: 0.8;
+    position: absolute;
+    right: 5rem;
+    bottom: 7rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    /* letter-spacing: 0.1rem */
+  }
+
+  .maintitle-chi {
+    font-size: 5rem !important;
+    font-weight: normal;
+    position: absolute;
+    right: 0rem;
+    bottom: 19rem;
+  }
+
+  .maintitle-small {
+    position: absolute;
+    right: 0rem;
+    bottom: -2rem;
+  }
+
+  .subtitle {
+    font-size: 7rem;
+    font-weight: 700;
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    left: 8rem;
+    top: 23rem;
+    z-index: 1;
+    letter-spacing: 0.1em
+    /* color: #C04759; */
+    /* background-color: red; */
+
+  }
+
+  .subtitle-content {
+    z-index: 1; /* 確保背景圖片在最底層 */
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    color: #3B6C73;
+    text-align: center;
+    width: 40rem;
+    top: 28rem;
+    left: 28rem;
+    z-index: 1;
+    letter-spacing: 0.1em
+    /* background-color: red; */
+  }
+
+  .thirdtitle {
+    font-size: 7rem;
+    font-weight: 700;
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    right: 8rem;
+    top: 1rem;
+    z-index: 1;
+    letter-spacing: 0.1em
+    /* color: #C04759; */
+    /* background-color: red; */
+  }
+
+  .thirdtitle-content {
+    z-index: 1; /* 確保背景圖片在最底層 */
+    /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    color: #3B6C73;
+    text-align: center;
+    width: 40rem;
+    top: 9rem;
+    left: 22rem;
+    z-index: 1;
+    /* background-color: red; */
+  }
+
+  .btn-explore {
+    font-size: 3rem;
+    line-height: 4rem;
+    font-weight: 700;
+    color: #C04759;
+    /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    left: 37rem;
+    top: 44rem;
+    z-index: 2;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+
+  .btn-explore:hover {
+    color: #3B6C73;
+    transition: 0.3s;
+  }
+
+  .btn-login {
+    font-size: 3rem;
+    line-height: 4rem;
+    font-weight: 700;
+    color: #C04759;
+    /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
+    position: absolute;
+    left: 61rem;
+    top: 36rem;
+    z-index: 2;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+
+  .btn-login:hover {
+    color: #3B6C73;
+    transition: 0.3s;
+  }
+
+  .antimg {
+    position: absolute;
+    width: 10rem;
+    left: 61rem;
+    top: 36rem;
+    z-index: 2;
+  }
+
+  /* ----------------------------------------------------- */
+  .video {
+    mask: url('/mask.png') no-repeat center;
+    border-style: none;
+    position: absolute;
+    top: 33rem;
+    left: 22rem;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    z-index: 99999;
+  }
+
+  .video video {
+    position: relative;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+  }
+
+  .video::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #94a1cc6d;
+    z-index: 1;
+  }
+
+
+  @keyframes video-animation {
+    0%, 33% {
+      opacity: 1;
+    }
+    34%, 66% {
+      opacity: 0;
+    }
+    67%, 100% {
+      opacity: 1;
+    }
   }
 }
 
