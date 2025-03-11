@@ -1,6 +1,6 @@
 <template>
   <v-container class="page-container" fluid>
-    <v-row class="content-area text-snow text-center mb-5" justify="center" align="center" :style="rowStyle1">
+    <v-row class="content-area text-snow text-center mb-5" justify="center" align="center" :style="HeightStyle1">
       <div class="background-wrapper">
         <img src="/welcomeBackGround3.png" class="background-image" alt="background" />
       </div>
@@ -30,26 +30,28 @@
   </v-container>
 
   <v-container class="page-container" fluid>
-    <v-col class="content-area text-center" justify="center" align="center" :style="rowStyle2">
-      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
-        <span style=" color: #C04759; font-weight: 100;">Secret</span>
-      </div>
-      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-klee-one text-h4">
-        紀念巢<br>
-        存放您回憶改造的秘密巢穴<br>
-        如螞蟻蒐集著一塊塊記憶碎片<br>
-        步步築出自己的窩<br>
-        在這裡<br>
-        重新思考物與人的關係<br>
-        從日復一日的麻木日常中<br>
-        重建生活意義<br>
-        找回記憶的溫度<br>
-      </div>
-    </v-col>
+    <v-row>
+      <v-col class="content-area text-center" justify="center" align="center" :style="HeightStyle2">
+        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+          <span style=" color: #C04759; font-weight: 100;">Secret</span>
+        </div>
+        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle-content text-abril text-klee-one text-h4">
+          紀念巢<br>
+          存放您回憶改造的秘密巢穴<br>
+          如螞蟻蒐集著一塊塊記憶碎片<br>
+          步步築出自己的窩<br>
+          在這裡<br>
+          重新思考物與人的關係<br>
+          從日復一日的麻木日常中<br>
+          重建生活意義<br>
+          找回記憶的溫度<br>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 
   <v-container class="page-container" fluid>
-    <div class="content-area text-center" justify="center" align="center" :style="rowStyle3">
+    <div class="content-area text-center" justify="center" align="center" :style="HeightStyle3">
       <div data-aos="fade-left" data-aos-duration="1500" class="thirdtitle text-abril text-snow">
         <span style=" color: #C04759; font-weight: 100;">Rebirth</span>
       </div>
@@ -106,30 +108,38 @@ const isLoggedIn = userStore.isLoggedIn
 
 import { ref, onMounted } from 'vue'
 
-// 響應式設定 row 的最小高度
-const rowStyle1 = ref({ minHeight: '600px' })
-const rowStyle2 = ref({ minHeight: '1100px' })
-const rowStyle3 = ref({ minHeight: '1050px' })
+// 響應式設定的最小高度
+const HeightStyle1 = ref({ minHeight: '600px' })
+const HeightStyle2 = ref({ minHeight: '1100px' })
+const HeightStyle3 = ref({ minHeight: '1050px' })
 
-const updateRowStyle = () => {
-  if (window.innerWidth < 768) {
-    rowStyle1.value.minHeight = '400px'
-    rowStyle2.value.minHeight = '700px'
-    rowStyle3.value.minHeight = '650px'
+const updateHeightStyle = () => {
+  if (window.innerWidth < 576) {
+    HeightStyle1.value.minHeight = '300px'
+    HeightStyle2.value.minHeight = '600px'
+    HeightStyle3.value.minHeight = '550px'
+  } else if (window.innerWidth < 768) {
+    HeightStyle1.value.minHeight = '400px'
+    HeightStyle2.value.minHeight = '700px'
+    HeightStyle3.value.minHeight = '650px'
+  } else if (window.innerWidth < 992) {
+    HeightStyle1.value.minHeight = '500px'
+    HeightStyle2.value.minHeight = '900px'
+    HeightStyle3.value.minHeight = '850px'
   } else if (window.innerWidth >= 1450) {
-    rowStyle1.value.minHeight = '800px'
-    rowStyle2.value.minHeight = '1500px'
-    rowStyle3.value.minHeight = '1250px'
+    HeightStyle1.value.minHeight = '800px'
+    HeightStyle2.value.minHeight = '1500px'
+    HeightStyle3.value.minHeight = '1250px'
   } else {
-    rowStyle1.value.minHeight = '600px'
-    rowStyle2.value.minHeight = '1100px'
-    rowStyle3.value.minHeight = '1050px'
+    HeightStyle1.value.minHeight = '600px'
+    HeightStyle2.value.minHeight = '1100px'
+    HeightStyle3.value.minHeight = '1050px'
   }
 }
 
 onMounted(() => {
-  updateRowStyle()
-  window.addEventListener('resize', updateRowStyle)
+  updateHeightStyle()
+  window.addEventListener('resize', updateHeightStyle)
 })
 </script>
 
