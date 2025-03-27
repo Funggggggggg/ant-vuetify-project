@@ -1,8 +1,9 @@
 # Memorial Nest | 紀念巢 
 ## 舊物改造儲藏基地
-	• 概念：透過數位平台記錄舊物的轉化歷程，賦予物件新的情感價值與生命
-	• 以螞蟻作為品牌視覺形象
-	• 前端運用 Vue.js 與 Vuetify
+## 前端
+• 概念：透過數位平台記錄舊物的轉化歷程，賦予物件新的情感價值與生命
+• 設計品牌視覺形象，以螞蟻作為象徵
+• 前端運用 Vue.js 與 Vuetify
  
 ![image](https://github.com/user-attachments/assets/2488ab31-d3f9-4df8-ad4f-09122f476323)
 
