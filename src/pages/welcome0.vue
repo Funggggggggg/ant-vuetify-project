@@ -19,7 +19,6 @@
             <div data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000" class="mt-2"> Nest </div>
           </h1>
         </div>
-        <!-- 用 Gsap 才可調進入動畫 -->
         <div class="video">
           <video autoplay loop muted>
             <source src="/videos/video-4.mp4" type="video/mp4">
