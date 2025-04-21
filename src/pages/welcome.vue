@@ -19,8 +19,6 @@
           data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
           class="maintitle-chiness text-klee-one" style="color: #3B6C73;"> 紀念巢
         </h1>
-        <!-- class="maintitle-chiness text-klee-one" style="color: #383431cc;"> 紀念巢 -->
-        <!-- class="maintitle-chiness text-klee-one text-snow"> 紀念巢 -->
         <div
           data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500"
           class="me-1 "> Memorial
@@ -37,6 +35,7 @@
     </div>
   </v-container>
 
+  <!-- FIXME 如何讓這邊的排版固定 subtitle 在上面滿版，subtitle-content 在下面？-->
   <v-container class="container">
     <div class="content-area area-second text-snow text-center mb-0">
       <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
@@ -56,8 +55,19 @@
   </v-container>
 
   <v-container class="container">
-    <div class="content-area area-third text-snow text-center mb-0">
-
+    <div class="content-area area-third text-center mb-0">
+      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+          <span style=" color: #C04759">Story</span>
+      </div>
+      <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
+        靈感來自對親友的思念<br>
+        每一次紀念<br>
+        都是回憶的淬鍊<br>
+        是轉化與重生的開始<br>
+        透過藝術 讓記憶不再只是過去<br>
+        而是延續至此刻<br>
+        走向未來<br>
+      </div>
     </div>
     <div></div>
   </v-container>
@@ -87,7 +97,7 @@
 
 /* 主要內容區域：允許頁面內容擴展 */
 .content-area {
-  height: 600px; /* 固定高度 */
+  height: 600px;
   flex: 1; /* 擴展內容區域以填滿空間 */
   display: flex;
   justify-content: center;
@@ -122,18 +132,16 @@
 .video {
   -webkit-mask: url('/mask.png') no-repeat center;
   mask: url('/mask.png') no-repeat center;
-  width: 120%;
+  width: 100vw;
+  max-width: 1200px; /* 設置最大寬度 */
   border-style: none;
-  position: absolute;
-  /* top: 33rem; */
-  top: 40rem;
-  /* top: 35rem; */
-  left: 12rem;
-  transform: translate(-50%, -50%); /* 使 mask 元素居中 */
   overflow: hidden;
   z-index: -2 !important;
-  /* animation: video-animation 3s infinite;  */
-  /* background-color: red; */
+  position: absolute;
+  transform: translate(-50%, -50%); /* 使 mask 元素居中 */
+  top: 40rem; /* 仍保留固定感覺，但加 media query 控制 */
+  left: 50%;
+  height: auto;
 }
 
 .video video {
@@ -183,6 +191,7 @@
   position: relative;
   right: 0rem;
   bottom: -1rem;
+  word-break: keep-all; /* 保持單詞不斷行 */
   /* text-shadow: #b4bebf 1px 1px 3px; */
 }
 
@@ -193,16 +202,18 @@
 .text-body-1 {
   /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   letter-spacing: 0.1em !important;
-  line-height: 0;
+  line-height: 1.5rem;
 }
 
 .area-second {
-  width: 100%;
+  width: 100vw;
 }
 
 .area-third {
-  width: 100%;
+  width: 100vw;
   background-color: #F1D87F !important;
+  color: #383431cc;
+  /* font-weight: 800 !important ; */
 }
 
 .subtitle {
@@ -219,25 +230,80 @@
   font-weight: 500 !important;
   line-height: 2.5rem;
   position: relative;
-  z-index: 9999 !important;
   right: 6rem;
   bottom: -5rem;
   word-break: keep-all; /* 保持單詞不斷行 */
 }
 
-@media (min-width: 576px) {}
-@media (min-width: 768px) {}
-@media (min-width: 992px) {
-  .container { /* 開始放背景片照片 => 設置容器的最大寬度和內邊距 */
-    width: 100%;
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
+/* ✅ 手機版 RWD 調整 */
+@media (max-width: 768px) {
+  .video {
+    width: 100vw;
+    top: 18rem; /* 手機版往下移，避免卡住畫面上半部 */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .subtitle {
+    font-size: 2.2rem !important;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+  }
+
+  .subtitle-content {
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 0 1rem;
+  }
+  .maintitle {
+    font-size: 3rem;
+    text-align: center;
+    bottom: 2rem;
   }
 }
-@media (min-width: 1200px) {}
+/* ✅ 手機橫向補救 */
+@media (orientation: landscape) and (max-width: 812px) {
+  /* .video top 太固定	用 orientation 媒體查詢修正 */
+  .video {
+    top: 80vh;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ✅ 小手機（例如 iPhone SE）調整用 */
+@media (max-width: 576px) {
+  .subtitle {
+    font-size: 2rem !important;
+  }
+  .subtitle-content {
+    font-size: 0.9rem;
+    line-height: 1.8rem;
+  }
+}
+
+/* 📐 平板起點（可安排兩欄排版） */
+@media (min-width: 768px) {
+    /* TODO: tablet layout 將 subtitle-content 轉為兩欄？ */
+}
+
+/* ✅ 桌機起點 */
+@media (min-width: 992px) {
+  .container { /* 開始放背景片照片 => 設置容器的最大寬度和內邊距 */
+    max-width: 1200px;
+    margin: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* 📺 大桌機（可加字體放大、主圖） */
+@media (min-width: 1200px) {
+  /* TODO: 加大 .maintitle-chiness 字體尺寸、行高調整 */
+}
+
+/* 🖥 超大桌機背景圖片位置微調 */
 @media (min-width: 1450px) {
   .background-image {
     position: absolute;
@@ -253,7 +319,12 @@
     background-position: center; /* 背景圖片居中 */
   }
 }
-@media (min-width: 1880px) {}
+
+/* 🧠 極大螢幕（視差滾動、特殊背景） */
+@media (min-width: 1880px) {
+  /* TODO: 增加背景視差動畫？或左右區塊分離設計 */
+}
+
 </style>
 
 <route lang="yaml">
