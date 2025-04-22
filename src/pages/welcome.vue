@@ -35,41 +35,71 @@
     </div>
   </v-container>
 
-  <!-- FIXME 如何讓這邊的排版固定 subtitle 在上面滿版，subtitle-content 在下面？-->
   <v-container class="container">
-    <div class="content-area area-second text-snow text-center mb-0">
-      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+    <v-row class="content-area area-second text-snow text-center" style="gap: 0rem;">
+      <v-col cols="12"></v-col> <!-- 排版好看 -->
+      <v-col cols="12" class="d-flex justify-center pb-0">
+        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
           <span style=" color: #C04759">Secret</span>
-      </div>
-      <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
-          存放您回憶改造的秘密巢穴<br>
-          如螞蟻蒐集著一塊塊記憶碎片<br>
-          步步築出自己的窩<br>
-          在這裡<br>
-          重新思考物與人的關係<br>
-          從日復一日的麻木日常中<br>
-          重建生活意義<br>
-          找回記憶的溫度<br>
-      </div>
-    </div>
+        </div>
+      </v-col>
+
+      <v-col cols="12" class="d-flex justify-center pt-0">
+        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
+            存放您回憶改造的秘密巢穴<br>
+            如螞蟻蒐集著一塊塊記憶碎片<br>
+            步步築出自己的窩<br>
+            在這裡<br>
+            重新思考物與人的關係<br>
+            從日復一日的麻木日常中<br>
+            重建生活意義<br>
+            找回記憶的溫度<br>
+        </div>
+      </v-col>
+      <v-col cols="12"></v-col> <!-- 排版好看 -->
+    </v-row>
   </v-container>
 
   <v-container class="container">
-    <div class="content-area area-third text-center mb-0">
-      <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
-          <span style=" color: #C04759">Story</span>
-      </div>
-      <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
-        靈感來自對親友的思念<br>
-        每一次紀念<br>
-        都是回憶的淬鍊<br>
-        是轉化與重生的開始<br>
-        透過藝術 讓記憶不再只是過去<br>
-        而是延續至此刻<br>
-        走向未來<br>
-      </div>
-    </div>
-    <div></div>
+    <v-row class="content-area area-third text-center mb-0 justify-space-between">
+      <v-col cols="12" class="d-flex justify-center">
+        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+            <span style=" color: #C04759">Story</span>
+        </div>
+      </v-col>
+
+      <v-col cols="12" class="d-flex justify-center">
+        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
+          靈感來自對親友的思念<br>
+          每一次紀念<br>
+          都是回憶的淬鍊<br>
+          是轉化與重生的開始<br>
+          透過藝術 讓記憶不再只是過去<br>
+          而是延續至此刻<br>
+          走向未來<br>
+        </div>
+      </v-col>
+      <v-col cols="12" class="d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="300">
+        <router-link to="/" class="d-flex align-center ma-3">
+          <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
+        </router-link>
+        <!-- <template v-if="!isLoggedIn"> -->
+          <router-link to="/login/" class="d-flex align-center ma-3">
+            <v-toolbar-title class="btn-login text-abril">Login</v-toolbar-title>
+          </router-link>
+        <!-- </template> -->
+        <!-- <template v-else> -->
+          <div>
+            <img class="antimg" src="/ant.png">
+          </div>
+        <!-- </template> -->
+      </v-col>
+<!--
+      <v-col cols="6">
+
+      </v-col> -->
+
+    </v-row>
   </v-container>
 </template>
 
@@ -78,8 +108,12 @@
   import 'aos/dist/aos.css';
 
   AOS.init();
+
   // import { useUserStore } from '@/stores/user'
+
   // const userStore = useUserStore()
+  // const isLoggedIn = computed(() => userStore.isLoggedIn);
+
 </script>
 
 <style scoped>
@@ -219,20 +253,46 @@
 .subtitle {
   font-size: 4.5rem !important;
   font-weight: 500 !important;
-  position: relative;
   z-index: 9999 !important;
-  left: 8rem;
-  bottom: 13rem;
+  /* position: relative; */
+  /* left: 8rem; */
+  /* bottom: 13rem; */
 }
 
 .subtitle-content {
   font-size: 1rem !important;
   font-weight: 500 !important;
-  line-height: 2.5rem;
-  position: relative;
-  right: 6rem;
-  bottom: -5rem;
+  line-height: 2;
+  max-width: 700px;
+  text-align: center;
   word-break: keep-all; /* 保持單詞不斷行 */
+  /* position: absolute; */
+  /* right: 0rem; */
+  /* bottom: 10rem; */
+}
+
+.btn-explore,
+.btn-login {
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #C04759;
+  /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
+  /* position: absolute; */
+  /* left: 10rem; */
+  /* top: 0rem; */
+  z-index: 2;
+  text-decoration: none !important;
+  letter-spacing: 0.1em;
+}
+.btn-explore:hover,
+.btn-login:hover {
+  color: #3B6C73;
+  transition: 0.3s;
+}
+
+.antimg {
+  display: none;
 }
 
 /* ✅ 手機版 RWD 調整 */
@@ -242,25 +302,34 @@
     top: 18rem; /* 手機版往下移，避免卡住畫面上半部 */
     left: 50%;
     transform: translateX(-50%);
+    font-size: 2.5rem !important; /* 中文主標在小裝置不會爆字、可以置中 */
+    text-align: center;
   }
 
   .subtitle {
-    font-size: 2.2rem !important;
-    left: 0;
-    bottom: 0;
+    font-size: 4rem !important;
+    left: 0.7rem;
+    top: 5rem;
     text-align: center;
   }
 
   .subtitle-content {
-    right: 0;
-    bottom: 0;
+    left: 1rem;
+    top: -8rem;
+    line-height: 2;
     text-align: center;
     padding: 0 1rem;
   }
+
   .maintitle {
     font-size: 3rem;
     text-align: center;
     bottom: 2rem;
+  }
+
+  .area-third {       /* 使其不卡邊緣*/
+  padding: 2rem 1rem;
+  text-align: center;
   }
 }
 /* ✅ 手機橫向補救 */
@@ -275,11 +344,11 @@
 /* ✅ 小手機（例如 iPhone SE）調整用 */
 @media (max-width: 576px) {
   .subtitle {
-    font-size: 2rem !important;
+    font-size: 3rem !important;
   }
   .subtitle-content {
     font-size: 0.9rem;
-    line-height: 1.8rem;
+    line-height: 2;
   }
 }
 
