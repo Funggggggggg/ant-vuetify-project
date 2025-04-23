@@ -27,7 +27,6 @@
           data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1700"
           class="text-body-1 text-abril text-to-top"> A secret base for collecting memories.
         </span>
-        <!-- &nbsp; -->
         <div
           data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000"
           class="text-to-top"> Nest </div>
@@ -299,7 +298,7 @@
 @media (max-width: 768px) {
   .video {
     width: 100vw;
-    top: 18rem; /* 手機版往下移，避免卡住畫面上半部 */
+    top: 13rem; /* 手機版往下移，避免卡住畫面上半部 */
     left: 50%;
     transform: translateX(-50%);
     font-size: 2.5rem !important; /* 中文主標在小裝置不會爆字、可以置中 */
@@ -334,7 +333,7 @@
 }
 /* ✅ 手機橫向補救 */
 @media (orientation: landscape) and (max-width: 812px) {
-  /* .video top 太固定	用 orientation 媒體查詢修正 */
+  /* .video top 太固定 	用 orientation 媒體查詢修正 */
   .video {
     top: 80vh;
     transform: translate(-50%, -50%);
