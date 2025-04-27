@@ -72,7 +72,6 @@
 | `@media (max-width: 576px)`    | ✅ 小手機版樣式 |
 | `@media (min-width: 576px)`    | 寬度小於等於 576px 時生效 |
 | `@media (min-width: 768px)`    | 寬度大於等於 576px 時生效 |
-| `@media (max-width: 768px)`    | ✅ 手機版樣式 |
 | `@media (min-width: 992px)`    | ✅ 桌機寬度設定，**內容良好** |
 | `@media (min-width: 1200px)`   | 🟡 空的，**保留 OK** |
 | `@media (min-width: 1450px)`   | ✅ 用於背景圖樣式，**OK** |
@@ -117,5 +116,37 @@
 |------|---------|------|-----------|-----|
 | line-height: 1.8; | 相對值 → 為「字體大小 × 1.8」的行高 |RWD 彈性好，跟字體一起變 | 較難精準控制對齊 | 內文段落、文章文字（推薦） |
 | line-height: 1.8rem; | 絕對值 → 行高固定為「1.8rem（通常是 28.8px）」| 固定排版可控 | 在小字大字切換時會不自然 | 標題、特效、對齊需求精準的區塊 |
+
+---
+
+- `<router-link>`的底線 (`underline`) 消不掉
+
+問題核心是：
+Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
+
+而在瀏覽器的預設行為裡，**`<a>` 標籤天生有 `text-decoration: underline;`**
+因此，外面 `v-col` 設 `text-decoration: none` ➔ **沒影響裡面的 `<router-link>`**
+裡面的 `v-toolbar-title` 也不會直接影響到 `<router-link>` 的 `underline`
+所以要控制的是 `a`，不是 `div`、不是 `v-col`
+消除須直接針對**直接針對 `<router-link>` 本身加上 `text-decoration: none`**
+
+ HTML 結構如下：
+
+```js
+<router-link to="/" class="d-flex align-center">
+  <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
+</router-link>
+```
+
+轉成真實 DOM 時，會變成：
+
+```js
+<a href="/" class="d-flex align-center router-link-active">
+  <div class="v-toolbar-title btn-explore text-abril">Explore</div>
+</a>
+```
+
+< a > 是真正有底線的，.btn-explore 是套在 < div > 上的，沒有改到 < a >。
+最終解法：將放 text-decoration: none !important; 的 class 放到 router-link 上。
 
 ---

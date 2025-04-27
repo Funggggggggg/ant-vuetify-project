@@ -79,27 +79,43 @@
         </div>
       </v-col>
       <v-col cols="12" class="d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="300">
-        <router-link to="/" class="d-flex align-center ma-3">
-          <v-toolbar-title class="btn-explore text-abril">Explore</v-toolbar-title>
+        <router-link to="/" class="btn-explore d-flex align-center ma-3">
+          <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
         </router-link>
-        <!-- <template v-if="!isLoggedIn"> -->
-          <router-link to="/login/" class="d-flex align-center ma-3">
-            <v-toolbar-title class="btn-login text-abril">Login</v-toolbar-title>
+
+        <template v-if="!isLoggedIn">
+          <router-link to="/login/" class="btn-login d-flex align-center">
+            <v-toolbar-title class=" text-abril">Login</v-toolbar-title>
           </router-link>
-        <!-- </template> -->
-        <!-- <template v-else> -->
+        </template>
+        <template v-else>
           <div>
             <img class="antimg" src="/ant.png">
           </div>
-        <!-- </template> -->
+        </template>
+
       </v-col>
-<!--
-      <v-col cols="6">
-
-      </v-col> -->
-
     </v-row>
   </v-container>
+
+  <v-footer
+    class="text-body-2 d-flex justify-center
+    background-dark
+    text-snow
+    text-abril
+    antFooter
+    ga-3"
+    height="50">
+
+    <div> &nbsp;</div>
+    <div class="text-klee-one">2025 Memorial Nest 紀念巢</div>
+    <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
+      <v-icon icon="mdi-instagram" ></v-icon>
+    </a>
+    <a class="text-snow" href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
+      <v-icon icon="mdi-email"></v-icon>
+    </a>
+  </v-footer>
 </template>
 
 <script setup>
@@ -145,7 +161,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh; /* 確保填滿畫面 */
-  background-color: #F1D87F !important;
+  background-color: #F1D87F ;
 }
 
 .background-defalt {
@@ -154,7 +170,7 @@
   left: 0rem;
   width: 100vw;
   height: 100vh;
-  background-color: #F1D87F !important;
+  background-color: #F1D87F ;
 }
 
 .background-image {
@@ -172,7 +188,9 @@
   z-index: -2 !important;
   position: absolute;
   transform: translate(-50%, -50%); /* 使 mask 元素居中 */
-  top: 40rem; /* 仍保留固定感覺，但加 media query 控制 */
+  top: 80vh;
+  /* ❌ top: 40rem; */
+  /* 高度是寫死的（rem 是相對字體大小的單位），但畫面在不同裝置或方向下並不一致，所以會上下飄 */
   left: 50%;
   height: auto;
 }
@@ -265,25 +283,20 @@
   max-width: 700px;
   text-align: center;
   word-break: keep-all; /* 保持單詞不斷行 */
-  /* position: absolute; */
-  /* right: 0rem; */
-  /* bottom: 10rem; */
 }
 
 .btn-explore,
 .btn-login {
+  text-decoration: none !important;
   font-size: 1.5rem;
   line-height: 1;
   font-weight: 700;
   color: #C04759;
-  /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); */
-  /* position: absolute; */
-  /* left: 10rem; */
-  /* top: 0rem; */
   z-index: 2;
-  text-decoration: none !important;
-  letter-spacing: 0.1em;
 }
+.btn-explore div,
+.btn-login
+
 .btn-explore:hover,
 .btn-login:hover {
   color: #3B6C73;
@@ -293,15 +306,36 @@
 .antimg {
   display: none;
 }
+/* ✅ 手機橫向補救 */
+/* .video top 太固定 	用 orientation 媒體查詢修正 */
+/* @media (orientation: landscape) and (max-width: 812px) {
+  .video {
+    top: 80vh;
+    transform: translate(-50%, -50%);
+  }
+} */
 
-/* ✅ 手機版 RWD 調整 */
-@media (max-width: 768px) {
+/* ------------------------------------------------------------ */
+/* ✅ 小手機（例如 iPhone SE）調整用 */
+@media (max-width: 576px) {
+  .subtitle {
+    font-size: 3rem !important;
+  }
+  .subtitle-content {
+    font-size: 0.9rem;
+    line-height: 2;
+  }
+}
+
+@media (mix-width: 576px) {
   .video {
     width: 100vw;
-    top: 13rem; /* 手機版往下移，避免卡住畫面上半部 */
+    top: 13rem;
+    /* 手機版往下移，避免卡住畫面上半部 */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2.5rem !important; /* 中文主標在小裝置不會爆字、可以置中 */
+    font-size: 2.5rem !important;
+    /* 中文主標在小裝置不會爆字、可以置中 */
     text-align: center;
   }
 
@@ -331,25 +365,7 @@
   text-align: center;
   }
 }
-/* ✅ 手機橫向補救 */
-@media (orientation: landscape) and (max-width: 812px) {
-  /* .video top 太固定 	用 orientation 媒體查詢修正 */
-  .video {
-    top: 80vh;
-    transform: translate(-50%, -50%);
-  }
-}
 
-/* ✅ 小手機（例如 iPhone SE）調整用 */
-@media (max-width: 576px) {
-  .subtitle {
-    font-size: 3rem !important;
-  }
-  .subtitle-content {
-    font-size: 0.9rem;
-    line-height: 2;
-  }
-}
 
 /* 📐 平板起點（可安排兩欄排版） */
 @media (min-width: 768px) {
@@ -374,6 +390,7 @@
 /* 🖥 超大桌機背景圖片位置微調 */
 @media (min-width: 1450px) {
   .background-image {
+    display: block; /* 顯示背景圖片 */
     position: absolute;
     top: 1rem;
     left: -15rem;
@@ -385,6 +402,12 @@
     background-attachment: fixed; /* 固定背景圖片 */
     background-repeat: no-repeat; /* 背景圖片不重複 */
     background-position: center; /* 背景圖片居中 */
+  }
+
+  .background-wrapper,
+  .background-defalt,
+  .area-third {
+    background-color: #383431cc !important;
   }
 }
 
