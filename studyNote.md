@@ -150,3 +150,14 @@ Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
 最終解法：將放 text-decoration: none !important; 的 class 放到 router-link 上。
 
 ---
+
+4/28
+
+- 寬度超過 1190px 之後背景圖就停止放大？
+因為我在 @media (min-width: 992px) 中設置了 .container { max-width:1200px }
+
+- video 又跑版，還沒調整好。 => vw 單位不適合設置嗎？
+  在 764px 時 video 會跟下面的 secret 重疊，為什麼？為什麼會往下掉？而不是乖乖待在指定位置，是否要重設回 position 呢？
+
+- 解決 video 在 776px 之後背景的兩個顏色區域之邊界即現行
+    => 改為同一種顏色背景？

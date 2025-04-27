@@ -288,14 +288,20 @@
 .btn-explore,
 .btn-login {
   text-decoration: none !important;
-  font-size: 1.5rem;
   line-height: 1;
   font-weight: 700;
   color: #C04759;
   z-index: 2;
 }
+
 .btn-explore div,
-.btn-login
+.btn-login div {
+  font-size: 2.5rem;
+  /* background: #000; */
+  min-height: 60px; /* 用 min-height 代替 height */
+  padding: 0.5rem 1rem; /* 加一點內距，讓按鈕好看 */
+  display: inline-flex; /* 保持內部對齊，又能隨內容大小 */
+}
 
 .btn-explore:hover,
 .btn-login:hover {
@@ -327,12 +333,13 @@
   }
 }
 
-@media (mix-width: 576px) {
+@media (min-width: 576px) {
   .video {
     width: 100vw;
-    top: 13rem;
+    /* top: 13rem; */
+    top: 25vh;
     /* 手機版往下移，避免卡住畫面上半部 */
-    left: 50%;
+    /* left: 50%; */
     transform: translateX(-50%);
     font-size: 2.5rem !important;
     /* 中文主標在小裝置不會爆字、可以置中 */
@@ -369,6 +376,9 @@
 
 /* 📐 平板起點（可安排兩欄排版） */
 @media (min-width: 768px) {
+    .video {
+      top: 1vh;
+    }
     /* TODO: tablet layout 將 subtitle-content 轉為兩欄？ */
 }
 
