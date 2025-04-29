@@ -85,25 +85,17 @@
 
 - 在使用 `z-index` 時，必須配合 **position: relative/ absolute/ fixed** 才生效。
 - ⭐⭐⭐⭐ 影片（.video）會上下飄移！
-- 原因
-
-| 問題點 | 解釋 |
-|--------|------|
-| `top: 40rem` | 高度是寫死的（rem 是相對字體大小的單位），但畫面在不同裝置或方向下並不一致，所以會上下飄 |
-| 外層容器非固定高度 | `.content-area` 沒有隨螢幕高度自動撐滿，因此 `.video` 不容易有固定參考位置 |
-| 多重 `position: absolute` | 沒有使用好 `position: relative` 來限定參考範圍，導致影片以整個 `<body>` 為基準移動 |
-| AOS 動畫干擾 | `data-aos="fade"` 加上動畫延遲時間，有時會「重新排版」或觸發一次 `layout shift` |
-
----
-
-- 解法重點
-
-| 做法 | 詳細 |
-|------|------|
-| ✅ **將 `.video` 的 `top` 改為 `vh` 單位** | 例如：`top: 50vh`，讓影片位置依照螢幕高度固定下來 |
-| ✅ **確保 `.content-area` 或其外層是 `position: relative`** | 這樣 `.video { position: absolute }` 才會釘在這塊內部不亂飛 |
-| ✅ **避免在影片容器內用 `AOS` 做 `fade + delay`** | 如果一定要加動畫，建議用 opacity + transition 取代，避免 layout shift |
-| ✅ **善用 media query + `transform: translate` 修正各裝置** | 對 `top` 做補救微調很有幫助 |
+| 問題類型 | 具體問題現象 | 原因說明 | 解法與實作建議 |
+|----------|---------------|-----------|----------------|
+| ① 定位錯誤 | `video` 一直「飛到 Secret 上面」或「遮住文字」 | 使用 `position: absolute` 卻沒有相對定位的容器（`relative` parent）  
+或 `top` 設得太靠近內容 | ✅ 為 `video` 包一層 `.video-wrapper`  
+並確保 `.video-wrapper` 是 `position: relative` 的容器，讓 `top: 450px` 有錨點依附 |
+| ② 響應式飄移 | 影片在不同螢幕寬度下會亂飄、左右偏移 | `left: 50% + transform: translate(-50%)` 是相對於 `100vw` 計算，隨視窗縮放位置會變動 | ✅ 改用 `.video-wrapper { left: 0; margin: auto; max-width: 1200px; }` 限制最大寬度  
+或使用 `left: 50%; transform: translateX(-50%)` 並搭配 **固定的容器寬度** |
+| ③ 無法捲動 / 影片被截斷 | 加了影片卻整頁無法捲動，畫面被截斷 | `.background-defalt` 使用 `position: absolute` + `height: 100vh`，無法撐開空間 | ✅ 加上 `.background-defalt::after { height: 100vh }` 人為撐高空間<br>或讓 `.video-wrapper` 進入一般文流中 |
+| ④ `mask` 沒有效果 | 影片未遮罩、或遮罩只遮了部分 | `mask` 設定錯誤：需設定 `mask-size`, `no-repeat`, `center`，或圖檔本身透明區域不對 | ✅ 確保圖片 `/mask.png` 是白底黑透 <br> 並設定：<br>`mask: url('/mask.png') no-repeat center;`<br>`mask-size: contain` |
+| ⑤ 影片邊框或亮邊 | `video` 外圍出現亮框或背景色突兀 | `.video` 有預設邊界 / overflow 未處理，或影片尺寸與 `mask` 不合 | ✅ 加上 `border: none; overflow: hidden; background: transparent`，或使用 clipPath / container 修正邊緣裁切 |
+| ⑥ `object-fit` 沒作用 | 影片沒有自適應容器、拉伸或變形 | 需同時設定 `width: 100%`, `height: 100%`, 並加上 `object-fit: cover | contain` | ✅ `.video video` 設定：<br>`width: 100%; height: 100%; object-fit: cover` |
 
 ---
 
@@ -168,8 +160,6 @@ Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
 
 請 ChatGPT 幫我檢查 code 問題：
 
-#### 小結分析（你的原本問題點）
-
 | 元件        | 正確作法                  | 原本混亂處                     |
 |------------|---------------------------|-------------------------------|
 | `.background-wrapper` | 背景鋪滿畫面，不受 container 限制 | 背景和 container 混一起，易錯 |
@@ -186,10 +176,6 @@ Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
 
 ---
 
-以下是你今天除錯影片定位與排版的問題整理表，幫助你快速回顧每個調整點的背景與結論。
-
----
-
 ### 4/29 除錯整理表
 
 | 問題編號 | 問題描述 | 原因分析 | 解法 / 調整說明 |
@@ -200,15 +186,5 @@ Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
 | 4 | `.video` 出現多餘邊框、形狀不對 | 影片未正確被 mask 控制，或 `mask` 設定的 `size/position` 不一致 | 使用 `-webkit-mask` 和 `mask` 指定圖片並設 `no-repeat center`，視需要可再設 `mask-size: contain` |
 | 5 | `.video` 蓋到文字或擋住區塊 | `.video` 的 z-index / top 設定不當 | 控制 `.video` 的 `z-index` 為負值，並精確設定 `top`，避免蓋到 `.section-*` 區域 |
 | 6 | `.page-wrapper` 刪除會導致排版跑掉 | 原來很多結構依賴 `<v-container>` 排版與 spacing | 改用 `.section` div 時需重新補足 padding / max-width / margin 控制區塊寬度與對齊 |
-
-- **影片定位核心原則**：
-  - `position: absolute` → 外層要有一個 `position: relative` 的容器。
-  - `top/left + transform` 要配合比例、尺寸與捲動邏輯調整。
-  - `vw/vh` 單位若用在 `absolute` 定位中，視窗縮放時會讓物件「飄移」。
-
-- **樣式清晰建議**：
-  - `.section-*` 用來管理各區塊邏輯是好習慣。
-  - 若你不用 `<v-container>`，記得補上 `max-width` + `padding` + `margin` 控制整體排版寬度與留白。
-  - 製作可重複使用的 `.video-wrapper`、`.section-wrapper` class 對大型頁面維護性更好。
 
 ---
