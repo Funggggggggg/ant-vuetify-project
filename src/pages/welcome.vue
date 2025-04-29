@@ -1,19 +1,19 @@
 <template>
-  <v-container class="container">
-    <div class="content-area text-snow text-center mb-0">
-      <div class="background-wrapper">
-        <div class="background-defalt">
-              <!-- <div class="video" data-aos="fade" data-aos-duration="1000" data-aos-delay="800"> -->
-          <div data-aos="fade" data-aos-duration="1000" data-aos-delay="1500">
-            <div class="video">
-              <video autoplay loop muted>
-                <source src="/videos/video-4.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-        <img src="/welcomeBackGround3.png" class="background-image" alt="background"/>
+  <v-container class="background-wrapper" fluid>
+    <!-- 背景與影片 -->
+    <div class="background-defalt">
+      <div class="video-wrapper" data-aos="fade" data-aos-duration="1000" data-aos-delay="1500">
+        <div class="video">
+          <video autoplay loop muted>
+            <source src="/videos/video-4.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
+      <img src="/welcomeBackGround3.png" class="background-image" alt="background"/>
+    </div>
+
+    <!-- 第一區 主標題 -->
+    <div class="section section-nest text-snow text-center mb-0">
       <div class="maintitle d-flex flex-column align-items-end text-end text-abril">
         <h1
           data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
@@ -32,18 +32,16 @@
           class="text-to-top"> Nest </div>
       </div>
     </div>
-  </v-container>
 
-  <v-container class="container">
-    <v-row class="content-area area-second text-snow text-center" style="gap: 0rem;">
-      <v-col cols="12"></v-col> <!-- 排版好看 -->
-      <v-col cols="12" class="d-flex justify-center pb-0">
-        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+    <!-- 第二區 Secret 內容 -->
+    <v-row class="section section-secret text-center" style="gap: 3rem;">
+      <v-col cols="12"></v-col> <!-- FIXME 排版好看 -->
+      <v-col cols="12" class="d-flex justify-center">
+        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril">
           <span style=" color: #C04759">Secret</span>
         </div>
       </v-col>
-
-      <v-col cols="12" class="d-flex justify-center pt-0">
+      <v-col cols="12" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
             存放您回憶改造的秘密巢穴<br>
             如螞蟻蒐集著一塊塊記憶碎片<br>
@@ -57,16 +55,14 @@
       </v-col>
       <v-col cols="12"></v-col> <!-- 排版好看 -->
     </v-row>
-  </v-container>
 
-  <v-container class="container">
-    <v-row class="content-area area-third text-center mb-0 justify-space-between">
+    <!-- 第三區 Story + 按鈕 -->
+    <v-row class="section section-story text-center justify-space-between">
       <v-col cols="12" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
             <span style=" color: #C04759">Story</span>
         </div>
       </v-col>
-
       <v-col cols="12" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
           靈感來自對親友的思念<br>
@@ -82,7 +78,6 @@
         <router-link to="/" class="btn-explore d-flex align-center ma-3">
           <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
         </router-link>
-
         <template v-if="!isLoggedIn">
           <router-link to="/login/" class="btn-login d-flex align-center">
             <v-toolbar-title class=" text-abril">Login</v-toolbar-title>
@@ -93,29 +88,28 @@
             <img class="antimg" src="/ant.png">
           </div>
         </template>
-
       </v-col>
     </v-row>
+    <!-- Footer -->
+    <v-footer
+      class="text-body-2 d-flex justify-center
+      text-snow
+      text-abril
+      antFooter
+      ga-3"
+      style="background-color: #383431cc;"
+      height="50">
+
+      <div> &nbsp;</div>
+      <div class="text-klee-one">2025 Memorial Nest 紀念巢</div>
+      <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
+        <v-icon icon="mdi-instagram" ></v-icon>
+      </a>
+      <a class="text-snow" href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
+        <v-icon icon="mdi-email"></v-icon>
+      </a>
+    </v-footer>
   </v-container>
-
-  <v-footer
-    class="text-body-2 d-flex justify-center
-    background-dark
-    text-snow
-    text-abril
-    antFooter
-    ga-3"
-    height="50">
-
-    <div> &nbsp;</div>
-    <div class="text-klee-one">2025 Memorial Nest 紀念巢</div>
-    <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
-      <v-icon icon="mdi-instagram" ></v-icon>
-    </a>
-    <a class="text-snow" href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
-      <v-icon icon="mdi-email"></v-icon>
-    </a>
-  </v-footer>
 </template>
 
 <script setup>
@@ -132,36 +126,58 @@
 </script>
 
 <style scoped>
-
- /* 頁面容器：填滿視窗高度 */
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* 保證頁面至少填滿視窗高度 */
-  padding: 0;
-  margin: 0;
-  position: relative;
-  letter-spacing: 0.2em
+.v-container.section {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-/* 主要內容區域：允許頁面內容擴展 */
-.content-area {
+ /* 頁面容器：填滿視窗高度 */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto 5rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.section-nest {
   height: 600px;
-  flex: 1; /* 擴展內容區域以填滿空間 */
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  z-index: 1; /* 確保文字在背景圖片上方 */
+  z-index: 3; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
+  background-color: #F1D87F ;
   /* background-color: rosybrown; */
 }
 
-.background-wrapper {
-  position: relative;
+.section-secret {
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0; /* 確保文字在背景圖片上方 */
+  flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
+  color: #383431cc;
+  background-color: #F1D87F !important;
+}
+
+.section-story {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 1; /* 確保文字在背景圖片上方 */
+  flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   width: 100%;
-  min-height: 100vh; /* 確保填滿畫面 */
-  background-color: #F1D87F ;
+  background-color: #383431cc !important;
 }
 
 .background-defalt {
@@ -170,7 +186,26 @@
   left: 0rem;
   width: 100vw;
   height: 100vh;
-  background-color: #F1D87F ;
+  /* background-color: #F1D87F ; */
+  min-height: 100vh;
+  z-index: 2 !important;
+
+  /* height: 100vh; 這會讓它始終只有一頁高，導致不能捲動 */
+}
+
+/* 預留跟 video 一樣高的空間，讓卷軸滾動 */
+.background-defalt::after {
+  content: '';
+  display: block;
+  height: 100vh; /* 預留跟 video 一樣高的空間，讓 scrollable */
+}
+
+.background-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh; /* 確保填滿畫面 */
+  overflow: visible;
+  /* overflow: hidden; 阻止內容超出時產生 scrollbar */
 }
 
 .background-image {
@@ -179,27 +214,22 @@
 }
 
 .video {
-  -webkit-mask: url('/mask.png') no-repeat center;
-  mask: url('/mask.png') no-repeat center;
-  width: 100vw;
-  max-width: 1200px; /* 設置最大寬度 */
   border-style: none;
   overflow: hidden;
-  z-index: -2 !important;
   position: absolute;
+  top: 450px;
+  left: 40%;
+  width: 100vw;
   transform: translate(-50%, -50%); /* 使 mask 元素居中 */
-  top: 80vh;
-  /* ❌ top: 40rem; */
-  /* 高度是寫死的（rem 是相對字體大小的單位），但畫面在不同裝置或方向下並不一致，所以會上下飄 */
-  left: 50%;
-  height: auto;
+  -webkit-mask: url('/mask.png') no-repeat center;
+  mask: url('/mask.png') no-repeat center;
+  object-fit: cover;
 }
 
 .video video {
   position: relative;
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
   object-position: bottom;
   z-index: -2;
 }
@@ -256,30 +286,17 @@
   line-height: 1.5rem;
 }
 
-.area-second {
-  width: 100vw;
-}
-
-.area-third {
-  width: 100vw;
-  background-color: #F1D87F !important;
-  color: #383431cc;
-  /* font-weight: 800 !important ; */
-}
-
 .subtitle {
   font-size: 4.5rem !important;
   font-weight: 500 !important;
   z-index: 9999 !important;
-  /* position: relative; */
-  /* left: 8rem; */
-  /* bottom: 13rem; */
 }
 
 .subtitle-content {
   font-size: 1rem !important;
   font-weight: 500 !important;
-  line-height: 2;
+  line-height: 3;
+  margin: 1rem;
   max-width: 700px;
   text-align: center;
   word-break: keep-all; /* 保持單詞不斷行 */
@@ -297,8 +314,8 @@
 .btn-explore div,
 .btn-login div {
   font-size: 2.5rem;
-  /* background: #000; */
   min-height: 60px; /* 用 min-height 代替 height */
+  margin: 1rem;
   padding: 0.5rem 1rem; /* 加一點內距，讓按鈕好看 */
   display: inline-flex; /* 保持內部對齊，又能隨內容大小 */
 }
@@ -312,6 +329,7 @@
 .antimg {
   display: none;
 }
+
 /* ✅ 手機橫向補救 */
 /* .video top 太固定 	用 orientation 媒體查詢修正 */
 /* @media (orientation: landscape) and (max-width: 812px) {
@@ -323,7 +341,7 @@
 
 /* ------------------------------------------------------------ */
 /* ✅ 小手機（例如 iPhone SE）調整用 */
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .subtitle {
     font-size: 3rem !important;
   }
@@ -331,18 +349,14 @@
     font-size: 0.9rem;
     line-height: 2;
   }
-}
+} */
 
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
   .video {
     width: 100vw;
-    /* top: 13rem; */
-    top: 25vh;
-    /* 手機版往下移，避免卡住畫面上半部 */
-    /* left: 50%; */
     transform: translateX(-50%);
     font-size: 2.5rem !important;
-    /* 中文主標在小裝置不會爆字、可以置中 */
+    中文主標在小裝置不會爆字、可以置中
     text-align: center;
   }
 
@@ -367,35 +381,34 @@
     bottom: 2rem;
   }
 
-  .area-third {       /* 使其不卡邊緣*/
+  .area-third {
   padding: 2rem 1rem;
   text-align: center;
   }
-}
+} */
 
 
 /* 📐 平板起點（可安排兩欄排版） */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .video {
-      top: 1vh;
+      TODO: tablet layout 將 subtitle-content 轉為兩欄？
     }
-    /* TODO: tablet layout 將 subtitle-content 轉為兩欄？ */
-}
+} */
 
 /* ✅ 桌機起點 */
-@media (min-width: 992px) {
-  .container { /* 開始放背景片照片 => 設置容器的最大寬度和內邊距 */
-    max-width: 1200px;
+/* @media (min-width: 992px) {
+  .container {
+    開始放背景片照片 => 設置容器的最大寬度和內邊距
     margin: auto;
     padding-left: 1rem;
     padding-right: 1rem;
   }
-}
+} */
 
 /* 📺 大桌機（可加字體放大、主圖） */
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) { */
   /* TODO: 加大 .maintitle-chiness 字體尺寸、行高調整 */
-}
+/* } */
 
 /* 🖥 超大桌機背景圖片位置微調 */
 @media (min-width: 1450px) {
@@ -414,9 +427,17 @@
     background-position: center; /* 背景圖片居中 */
   }
 
+  .background-wrapper {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 200px;
+  }
+
   .background-wrapper,
   .background-defalt,
-  .area-third {
+  .section-secret,
+  .section-story{
     background-color: #383431cc !important;
   }
 }

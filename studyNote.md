@@ -151,7 +151,7 @@ Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
 
 ---
 
-4/28
+### 4/28
 
 - 寬度超過 1190px 之後背景圖就停止放大？
 因為我在 @media (min-width: 992px) 中設置了 .container { max-width:1200px }
@@ -161,3 +161,54 @@ Vue Router 會自動在 `<router-link>` 產生預設的 `<a>` 標籤。
 
 - 解決 video 在 776px 之後背景的兩個顏色區域之邊界即現行
     => 改為同一種顏色背景？
+
+- 是否 video 跟第一區塊的背景要用 position 固定高度，同時使用固定單位，才能在縮放時不會飄移？
+
+---
+
+請 ChatGPT 幫我檢查 code 問題：
+
+#### 小結分析（你的原本問題點）
+
+| 元件        | 正確作法                  | 原本混亂處                     |
+|------------|---------------------------|-------------------------------|
+| `.background-wrapper` | 背景鋪滿畫面，不受 container 限制 | 背景和 container 混一起，易錯 |
+| `.container` | 控制「內容最大寬度」(如 1200px)，居中 | 有時 container 裡又塞背景 |
+| `.content-area` | 包裹每個內容區（可用 flex 撐高） | 正常，但 row/col 混在 background 裡 |
+| `.video` | 位置絕對、寬度100vw、左50% | 固定 top: rem 容易跑掉，需要優化 |
+
+重點邏輯：
+
+- 背景圖、遮罩、影片這些 ➔ 全放 `.background-wrapper` ➔ 蓋整個畫面。
+- 內層 `<v-container>` ➔ 控制最大寬度（1200px），居中排版。
+- `<v-row><v-col>` 正常 RWD，負責內文排版。
+- **不要在 container 裡面又放絕對定位的東西**（避免背景與內容互相影響）。
+
+---
+
+以下是你今天除錯影片定位與排版的問題整理表，幫助你快速回顧每個調整點的背景與結論。
+
+---
+
+### 4/29 除錯整理表
+
+| 問題編號 | 問題描述 | 原因分析 | 解法 / 調整說明 |
+|----------|-----------|-----------|------------------|
+| 1 | 畫面無法滾動 | `.background-defalt` 設定 `height: 100vh`、`position: absolute`，導致內容區域無高度撐開 | 用 `::after` 虛擬元素預留捲動空間：`height: 100vh` |
+| 2 | video 跑版、在不同解析度會「亂飄」 | 使用 `position: absolute` 並搭配 `vw` / `vh` 設定會受視窗變化影響，尤其影片沒有容器做定位基準 | 建議影片放入 `.video-wrapper` 容器內，該容器設 `position: relative` 作為定位依附 |
+| 3 | `.section-*` 無法置中 | 原本 `.v-container` 有內邊距，section 裡文字沒滿版，無法垂直置中 | 改用 `.section` div 自己負責版面，並使用 `flex + align-items + justify-content` 做置中處理 |
+| 4 | `.video` 出現多餘邊框、形狀不對 | 影片未正確被 mask 控制，或 `mask` 設定的 `size/position` 不一致 | 使用 `-webkit-mask` 和 `mask` 指定圖片並設 `no-repeat center`，視需要可再設 `mask-size: contain` |
+| 5 | `.video` 蓋到文字或擋住區塊 | `.video` 的 z-index / top 設定不當 | 控制 `.video` 的 `z-index` 為負值，並精確設定 `top`，避免蓋到 `.section-*` 區域 |
+| 6 | `.page-wrapper` 刪除會導致排版跑掉 | 原來很多結構依賴 `<v-container>` 排版與 spacing | 改用 `.section` div 時需重新補足 padding / max-width / margin 控制區塊寬度與對齊 |
+
+- **影片定位核心原則**：
+  - `position: absolute` → 外層要有一個 `position: relative` 的容器。
+  - `top/left + transform` 要配合比例、尺寸與捲動邏輯調整。
+  - `vw/vh` 單位若用在 `absolute` 定位中，視窗縮放時會讓物件「飄移」。
+
+- **樣式清晰建議**：
+  - `.section-*` 用來管理各區塊邏輯是好習慣。
+  - 若你不用 `<v-container>`，記得補上 `max-width` + `padding` + `margin` 控制整體排版寬度與留白。
+  - 製作可重複使用的 `.video-wrapper`、`.section-wrapper` class 對大型頁面維護性更好。
+
+---
