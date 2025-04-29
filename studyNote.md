@@ -85,17 +85,15 @@
 
 - 在使用 `z-index` 時，必須配合 **position: relative/ absolute/ fixed** 才生效。
 - ⭐⭐⭐⭐ 影片（.video）會上下飄移！
+
 | 問題類型 | 具體問題現象 | 原因說明 | 解法與實作建議 |
 |----------|---------------|-----------|----------------|
-| ① 定位錯誤 | `video` 一直「飛到 Secret 上面」或「遮住文字」 | 使用 `position: absolute` 卻沒有相對定位的容器（`relative` parent）  
-或 `top` 設得太靠近內容 | ✅ 為 `video` 包一層 `.video-wrapper`  
-並確保 `.video-wrapper` 是 `position: relative` 的容器，讓 `top: 450px` 有錨點依附 |
-| ② 響應式飄移 | 影片在不同螢幕寬度下會亂飄、左右偏移 | `left: 50% + transform: translate(-50%)` 是相對於 `100vw` 計算，隨視窗縮放位置會變動 | ✅ 改用 `.video-wrapper { left: 0; margin: auto; max-width: 1200px; }` 限制最大寬度  
-或使用 `left: 50%; transform: translateX(-50%)` 並搭配 **固定的容器寬度** |
-| ③ 無法捲動 / 影片被截斷 | 加了影片卻整頁無法捲動，畫面被截斷 | `.background-defalt` 使用 `position: absolute` + `height: 100vh`，無法撐開空間 | ✅ 加上 `.background-defalt::after { height: 100vh }` 人為撐高空間<br>或讓 `.video-wrapper` 進入一般文流中 |
-| ④ `mask` 沒有效果 | 影片未遮罩、或遮罩只遮了部分 | `mask` 設定錯誤：需設定 `mask-size`, `no-repeat`, `center`，或圖檔本身透明區域不對 | ✅ 確保圖片 `/mask.png` 是白底黑透 <br> 並設定：<br>`mask: url('/mask.png') no-repeat center;`<br>`mask-size: contain` |
-| ⑤ 影片邊框或亮邊 | `video` 外圍出現亮框或背景色突兀 | `.video` 有預設邊界 / overflow 未處理，或影片尺寸與 `mask` 不合 | ✅ 加上 `border: none; overflow: hidden; background: transparent`，或使用 clipPath / container 修正邊緣裁切 |
-| ⑥ `object-fit` 沒作用 | 影片沒有自適應容器、拉伸或變形 | 需同時設定 `width: 100%`, `height: 100%`, 並加上 `object-fit: cover | contain` | ✅ `.video video` 設定：<br>`width: 100%; height: 100%; object-fit: cover` |
+| ① 定位錯誤 | `video` 一直「飛到 Secret 上面」或「遮住文字」 | 使用 `position: absolute` 卻沒有相對定位的容器（`relative` parent），或 `top` 設得太靠近內容 | ✅ 為 `video` 包一層 `.video-wrapper`，並確保 `.video-wrapper` 是 `position: relative` 的容器，讓 `top: 450px` 有錨點依附 |
+| ② 響應式飄移 | 影片在不同螢幕寬度下會亂飄、左右偏移 | `left: 50% + transform: translate(-50%)` 是相對於 `100vw` 計算，隨視窗縮放位置會變動 | ✅ 改用 `.video-wrapper { left: 0; margin: auto; max-width: 1200px; }` 限制最大寬度，或使用 `left: 50%; transform: translateX(-50%)` 並搭配固定的容器寬度 |
+| ③ 無法捲動 / 影片被截斷 | 加了影片卻整頁無法捲動，畫面被截斷 | `.background-defalt` 使用 `position: absolute` + `height: 100vh`，無法撐開空間 | ✅ 加上 `.background-defalt::after { height: 100vh }` 人為撐高空間，或讓 `.video-wrapper` 進入一般文流中 |
+| ④ `mask` 沒有效果 | 影片未遮罩、或遮罩只遮了部分 | `mask` 設定錯誤：需設定 `mask-size`, `no-repeat`, `center`，或圖檔本身透明區域不對 | ✅ 確保圖片 `/mask.png` 是白底黑透，並設定 `mask: url('/mask.png') no-repeat center;` 和 `mask-size: contain` |
+| ⑤ 影片邊框或亮邊 | `video` 外圍出現亮框或背景色突兀 | `.video` 有預設邊界 / overflow 未處理，或影片尺寸與 `mask` 不合 | ✅ 加上 `border: none; overflow: hidden; background: transparent`，或使用 `clip-path` / container 修正邊緣裁切 |
+| ⑥ `object-fit` 沒作用 | 影片沒有自適應容器、拉伸或變形 | 需同時設定 `width: 100%`, `height: 100%`，並加上 `object-fit: cover` 或 `contain` | ✅ `.video video` 設定為 `width: 100%; height: 100%; object-fit: cover` |
 
 ---
 
