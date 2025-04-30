@@ -35,7 +35,6 @@
 
     <!-- 第二區 Secret 內容 -->
     <v-row class="section section-secret text-center" style="gap: 3rem;">
-      <v-col cols="12"></v-col> <!-- FIXME 排版好看 -->
       <v-col cols="12" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril">
           <span style=" color: #C04759">Secret</span>
@@ -53,7 +52,6 @@
             找回記憶的溫度<br>
         </div>
       </v-col>
-      <v-col cols="12"></v-col> <!-- 排版好看 -->
     </v-row>
 
     <!-- 第三區 Story + 按鈕 -->
@@ -101,11 +99,17 @@
       height="50">
 
       <div> &nbsp;</div>
-      <div class="text-klee-one">2025 Memorial Nest 紀念巢</div>
-      <a class="text-snow" href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
+      <div
+      style="color: #3B6C73;"
+      class="text-klee-one">2025 Memorial Nest 紀念巢</div>
+      <a
+      style="color: #3B6C73;"
+      href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
         <v-icon icon="mdi-instagram" ></v-icon>
       </a>
-      <a class="text-snow" href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
+      <a
+      style="color: #3B6C73;"
+      href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
         <v-icon icon="mdi-email"></v-icon>
       </a>
     </v-footer>
@@ -126,9 +130,9 @@
 </script>
 
 <style scoped>
-.v-container.section {
-  padding-left: 0;
-  padding-right: 0;
+.v-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
  /* 頁面容器：填滿視窗高度 */
@@ -140,13 +144,14 @@
 
   max-width: 1200px;
   width: 100%;
-  margin: 0 auto 5rem;
+  margin: 0 auto;
   padding: 0 1rem;
   text-align: center;
 }
 
 .section-nest {
   height: 600px;
+  height: 800px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,6 +163,7 @@
 
 .section-secret {
   min-height: 600px;
+  min-height: 800px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,10 +171,12 @@
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   color: #383431cc;
   background-color: #F1D87F !important;
+  padding-top: 0rem;
 }
 
 .section-story {
   min-height: 600px;
+  min-height: 900px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -178,26 +186,7 @@
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   width: 100%;
   background-color: #383431cc !important;
-}
-
-.background-defalt {
-  position: absolute;
-  top: 0rem;
-  left: 0rem;
-  width: 100vw;
-  height: 100vh;
-  /* background-color: #F1D87F ; */
-  min-height: 100vh;
-  z-index: 2 !important;
-
-  /* height: 100vh; 這會讓它始終只有一頁高，導致不能捲動 */
-}
-
-/* 預留跟 video 一樣高的空間，讓卷軸滾動 */
-.background-defalt::after {
-  content: '';
-  display: block;
-  height: 100vh; /* 預留跟 video 一樣高的空間，讓 scrollable */
+  padding-top: 5rem;
 }
 
 .background-wrapper {
@@ -206,24 +195,48 @@
   min-height: 100vh; /* 確保填滿畫面 */
   overflow: visible;
   /* overflow: hidden; 阻止內容超出時產生 scrollbar */
+  /* background-color: aquamarine; */
+}
+
+.background-defalt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  z-index: 2 !important;
+  /* background-color:#6366; */
+  /* height: 100vh; 這會讓它始終只有一頁高，導致不能捲動 */
 }
 
 .background-image {
   display: none;
   /* 預設隱藏背景圖片 */
 }
+.video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* 確保背景圖片在最底層 */
+  /* background-color: red; */
+}
 
 .video {
+  position: absolute;
+  top: 570px;
+  /* left: 40% 會讓基準點從偏右 40% 開始 */
+  left: 50%;
+  transform: translateX(-50%); /* 使 mask 元素居中 */
+  width: 100vw;
+  height: auto;
+  object-fit: cover;
   border-style: none;
   overflow: hidden;
-  position: absolute;
-  top: 450px;
-  left: 40%;
-  width: 100vw;
-  transform: translate(-50%, -50%); /* 使 mask 元素居中 */
   -webkit-mask: url('/mask.png') no-repeat center;
   mask: url('/mask.png') no-repeat center;
-  object-fit: cover;
 }
 
 .video video {
@@ -242,7 +255,6 @@
   width: 100%;
   height: 100%;
   background-color: #b8c9ff85;
-  /* background-color: rgba(184, 201, 255, 0.3); */
   z-index: -1;
 }
 
@@ -296,7 +308,7 @@
   font-size: 1rem !important;
   font-weight: 500 !important;
   line-height: 3;
-  margin: 1rem;
+  margin-bottom: 3rem;
   max-width: 700px;
   text-align: center;
   word-break: keep-all; /* 保持單詞不斷行 */
