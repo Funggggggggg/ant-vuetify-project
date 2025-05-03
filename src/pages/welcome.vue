@@ -2,7 +2,7 @@
   <v-container class="background-wrapper" fluid>
     <!-- 背景與影片 -->
     <div class="background-defalt">
-      <div class="video-wrapper" data-aos="fade" data-aos-duration="1000" data-aos-delay="1500">
+      <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500">
         <div class="video">
           <video autoplay loop muted>
             <source src="/videos/video-4.mp4" type="video/mp4">
@@ -72,7 +72,7 @@
           走向未來<br>
         </div>
       </v-col>
-      <v-col cols="12" class="d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="300">
+      <v-col cols="12" class="d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500" >
         <router-link to="/" class="btn-explore d-flex align-center ma-3">
           <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
         </router-link>
@@ -100,15 +100,15 @@
 
       <div> &nbsp;</div>
       <div
-      style="color: #3B6C73;"
+      style="color: #F1D87F;"
       class="text-klee-one">2025 Memorial Nest 紀念巢</div>
       <a
-      style="color: #3B6C73;"
+      style="color: #F1D87F;"
       href="https://www.instagram.com/fungfung_1995?igsh=am15aHV3ZjBsY2sw" title="fungfung_1995">
         <v-icon icon="mdi-instagram" ></v-icon>
       </a>
       <a
-      style="color: #3B6C73;"
+      style="color: #F1D87F;"
       href="mailto:fung.8021@gmail.com" title="fung.8021@gmail.com">
         <v-icon icon="mdi-email"></v-icon>
       </a>
@@ -214,30 +214,20 @@
   display: none;
   /* 預設隱藏背景圖片 */
 }
-.video-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1; /* 確保背景圖片在最底層 */
-  /* background-color: red; */
-}
 
 .video {
-  position: absolute;
-  top: 570px;
-  /* left: 40% 會讓基準點從偏右 40% 開始 */
-  left: 50%;
-  transform: translateX(-50%); /* 使 mask 元素居中 */
-  width: 100vw;
-  height: auto;
-  object-fit: cover;
-  border-style: none;
-  overflow: hidden;
   -webkit-mask: url('/mask.png') no-repeat center;
   mask: url('/mask.png') no-repeat center;
+  position: fixed;
+  top: -280px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1800px;
+  object-fit: cover;
+  z-index: 1000;
 }
+
 
 .video video {
   position: relative;
