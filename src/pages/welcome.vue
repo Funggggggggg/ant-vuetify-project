@@ -93,7 +93,6 @@
       class="text-body-2 d-flex justify-center
       text-snow
       text-abril
-      antFooter
       ga-3"
       style="background-color: #383431cc;"
       height="50">
@@ -150,7 +149,6 @@
 }
 
 .section-nest {
-  height: 600px;
   height: 800px;
   display: flex;
   justify-content: center;
@@ -162,7 +160,6 @@
 }
 
 .section-secret {
-  min-height: 600px;
   min-height: 800px;
   display: flex;
   justify-content: center;
@@ -175,7 +172,6 @@
 }
 
 .section-story {
-  min-height: 600px;
   min-height: 900px;
   display: flex;
   flex-direction: column;
@@ -332,18 +328,18 @@
   display: none;
 }
 
+/* ------------------------------------------------------------ */
 /* ✅ 手機橫向補救 */
 /* .video top 太固定 	用 orientation 媒體查詢修正 */
-/* @media (orientation: landscape) and (max-width: 812px) {
+@media (orientation: landscape) and (max-width: 812px) {
   .video {
     top: 80vh;
     transform: translate(-50%, -50%);
   }
-} */
+}
 
-/* ------------------------------------------------------------ */
 /* ✅ 小手機（例如 iPhone SE）調整用 */
-/* @media (max-width: 576px) {
+@media (max-width: 576px) {
   .subtitle {
     font-size: 3rem !important;
   }
@@ -351,44 +347,11 @@
     font-size: 0.9rem;
     line-height: 2;
   }
-} */
-
-/* @media (min-width: 576px) {
-  .video {
-    width: 100vw;
-    transform: translateX(-50%);
-    font-size: 2.5rem !important;
-    中文主標在小裝置不會爆字、可以置中
-    text-align: center;
+  .btn-explore div,
+  .btn-login div {
+    font-size: 2rem;
   }
-
-  .subtitle {
-    font-size: 4rem !important;
-    left: 0.7rem;
-    top: 5rem;
-    text-align: center;
-  }
-
-  .subtitle-content {
-    left: 1rem;
-    top: -8rem;
-    line-height: 2;
-    text-align: center;
-    padding: 0 1rem;
-  }
-
-  .maintitle {
-    font-size: 3rem;
-    text-align: center;
-    bottom: 2rem;
-  }
-
-  .area-third {
-  padding: 2rem 1rem;
-  text-align: center;
-  }
-} */
-
+}
 
 /* 📐 平板起點（可安排兩欄排版） */
 /* @media (min-width: 768px) {

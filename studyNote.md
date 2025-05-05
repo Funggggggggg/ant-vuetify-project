@@ -265,7 +265,7 @@ top: calc(60vh - 100px); /* 根據視窗高度，再微調固定偏移 */
 
 ## 最終版本
 
-一段影片「永遠」出現在某個確切的「畫面位置」，無論螢幕怎麼變動，它就是完全固定在那個點，就像貼死在那裡，不要跟著其他元素走、不要變高變低、不飄移，不要被什麼文流、padding、scroll、flex 搞亂。
+一段影片「永遠」出現在某個確切的「畫面位置」，無論螢幕怎麼變動，它就是完全固定在那個點，就像貼死在那裡，不要跟著其他元素走、不要變高變低、不飄移，不被文流、padding、scroll、flex 搞亂。
 
 ### 正確做法：用 position: fixed + left/top + transform
 
@@ -283,3 +283,46 @@ top: calc(60vh - 100px); /* 根據視窗高度，再微調固定偏移 */
   z-index: 1000;
 }
 ```
+
+---
+整理如下表格，總結你這幾天在調整 `<video>` 元素位置時，遇到的常見問題與對應解法：
+
+---
+
+### 🎬 `<video>` 定位問題與解法整理表
+
+| 問題類型 | 描述 | 原因 | 解決方法 | 重點 CSS |
+|----------|------|------|------------|-----------|
+| 飛走 / 飄移 | `<video>` 本來好好的，改了別的元素後位置跑掉 | 使用 `position: absolute` 受父層影響，或 layout 變動 | 改用 `position: fixed` 脫離文流 | `position: fixed; top: Ypx; left: 50%; transform: translateX(-50%)` |
+| 被裁掉 | 影片本來完整，後來上下被切掉 | 父層或上層元素有 `overflow: hidden` | 讓 `<video>` **不被包在任何有 overflow 的容器內** | `position: fixed;` 並讓其不在被裁範圍內 |
+| 不置中 | 視覺上影片偏左或偏右 | `left` 單用會以左上角對齊 | 加上 `transform: translateX(-50%)` | `left: 50%; transform: translateX(-50%)` |
+| 被其他元素擋住 | 看不到影片，或影片底下被蓋住 | `z-index` 不夠高，或其他元素有 `position` | 給 `<video>` 加 `z-index: 999`（甚至更高） | `z-index: 1000;` |
+| 無法互動（或不該互動） | 點不到 `<video>`，或點影片會擋住下層按鈕 | pointer 事件問題 | 用 `pointer-events: none` 禁止影片遮住點擊 | `pointer-events: none;` |
+| 跟著滑動 | 影片不是固定在視窗內，而是滑上滑下 | 用了 `absolute` 或其他 layout 定位 | 改成 `fixed` | `position: fixed;` |
+| 重複設定影響結果 | 看似一樣的 CSS 卻有時失效 | 順序錯誤、被 override、選擇器不夠強 | 使用唯一 `.video` class 並確認優先順序 | 使用明確 class 並檢查 DevTools |
+
+---
+
+### ✅ 最推薦配置：
+
+```css
+.video {
+  position: fixed;
+  top: 570px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: auto;
+  object-fit: cover;
+  z-index: 1000;
+  pointer-events: none;
+}
+```
+
+---
+
+需要我幫你把這些整理成一個 Markdown 或 PDF 方便保存？  
+或者要不要我幫你做個 HTML + CSS 的對照 Demo 展示每種錯誤情境？
+
+**a.** 要我幫你做一個錯誤對照 Demo（錯誤 vs 正確）看得更清楚嗎？  
+**b.** 要將這份表格存成可下載的 PDF 或 Markdown 文件嗎？
