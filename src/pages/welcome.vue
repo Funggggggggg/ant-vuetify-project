@@ -9,7 +9,9 @@
           </video>
         </div>
       </div>
-      <img src="/welcomeBackGround3.png" class="background-image" alt="background"/>
+      <div class="background-image" >
+        <img src="/welcomeBackGround3.png" alt="background"/>
+      </div>
     </div>
 
     <!-- 第一區 主標題 -->
@@ -379,17 +381,20 @@
 @media (min-width: 1450px) {
   .background-image {
     display: block; /* 顯示背景圖片 */
-    position: absolute;
-    top: 1rem;
-    left: -15rem;
-    width: 100%;
-    min-width: 1200px; /* 設置最小寬度 */
-    min-height: 800px; /* 設置最小高度 */
-    z-index: -1; /* 確保背景圖片在最底層 */
+    position: relative;
     background-size: contain; /* 確保背景圖片包含在容器內 */
     background-attachment: fixed; /* 固定背景圖片 */
     background-repeat: no-repeat; /* 背景圖片不重複 */
     background-position: center; /* 背景圖片居中 */
+  }
+  .background-image img {
+    position: absolute;
+    left: -160px;
+    width: 100%;
+    width: 2000px;
+    z-index: -1000; /* 確保背景圖片在最底層 */
+    padding: 32px;
+    /* background-color: #C04759; */
   }
 
   .background-wrapper {
@@ -403,8 +408,20 @@
   .background-defalt,
   .section-secret,
   .section-story{
-    background-color: #383431cc !important;
+    background-color: #383431 !important;
   }
+
+  .section {
+    min-height: 1200px;
+    background: none;
+  }
+  .section-secret v-col {
+
+  }
+  .subtitle-content {
+    z-index: 3;
+  }
+
 }
 
 /* 🧠 極大螢幕（視差滾動、特殊背景） */
