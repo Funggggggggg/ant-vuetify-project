@@ -382,23 +382,31 @@
   .background-image {
     display: block; /* 顯示背景圖片 */
     position: relative;
+    width: 1800px;
     background-size: contain; /* 確保背景圖片包含在容器內 */
     background-attachment: fixed; /* 固定背景圖片 */
     background-repeat: no-repeat; /* 背景圖片不重複 */
     background-position: center; /* 背景圖片居中 */
+    z-index: -1000;
+    overflow: visible;
+    transform: translateX(-50%);
+    left: 50%;
   }
   .background-image img {
-    position: absolute;
-    left: -160px;
     width: 100%;
-    width: 2000px;
-    z-index: -1000; /* 確保背景圖片在最底層 */
+    height: 100%;
+    margin-top: 100px;
     padding: 32px;
     /* background-color: #C04759; */
   }
 
+  .video {
+    top: -220px;
+    transform: translateX(-60%);
+  }
+
   .background-wrapper {
-    position: relative;
+    /* position: relative; */
     width: 100%;
     text-align: center;
     margin-bottom: 200px;
@@ -415,9 +423,7 @@
     min-height: 1200px;
     background: none;
   }
-  .section-secret v-col {
 
-  }
   .subtitle-content {
     z-index: 3;
   }
