@@ -37,13 +37,13 @@
 
     <!-- 第二區 Secret 內容 -->
     <v-row class="section section-secret text-center" style="gap: 3rem;">
-      <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril">
-          <span style=" color: #C04759">Secret</span>
+      <v-col :cols="vcalCols" class="d-flex justify-center bg-red">
+        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril pt-15">
+          <span style=" color: #C04759;">Secret</span>
         </div>
       </v-col>
-      <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
+      <v-col :cols="vcalCols" class="d-flex justify-center">
+        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one bg-white">
             存放您回憶改造的秘密巢穴<br>
             如螞蟻蒐集著一塊塊記憶碎片<br>
             步步築出自己的窩<br>
@@ -58,12 +58,12 @@
 
     <!-- 第三區 Story + 按鈕 -->
     <v-row class="section section-story text-center justify-space-between">
-      <v-col cols="12" class="d-flex justify-center">
+      <v-col :cols="vcalCols" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
             <span style=" color: #C04759">Story</span>
         </div>
       </v-col>
-      <v-col cols="12" class="d-flex justify-center">
+      <v-col :cols="vcalCols" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
           靈感來自對親友的思念<br>
           每一次紀念<br>
@@ -128,6 +128,17 @@
   // const userStore = useUserStore()
   // const isLoggedIn = computed(() => userStore.isLoggedIn);
 
+  import { computed, toRef } from 'vue';
+  import { useDisplay } from 'vuetify';
+
+  const display = useDisplay()
+  const width = toRef(display, 'width')
+  const vcalCols = computed(() => {
+      return width.value >= 1450 ? 5 : 12
+  })
+  console.log('目前寬度:', width.value)
+
+
 </script>
 
 <style scoped>
@@ -138,10 +149,10 @@
 
  /* 頁面容器：填滿視窗高度 */
 .section {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 
   max-width: 1200px;
   width: 100%;
@@ -158,28 +169,28 @@
   z-index: 3; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   background-color: #F1D87F ;
-  /* background-color: rosybrown; */
 }
 
 .section-secret {
   min-height: 800px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
   z-index: 0; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   color: #383431cc;
-  background-color: #F1D87F !important;
-  padding-top: 0rem;
+  background-color: #F1D87F;
+  /* padding-top: 0rem; */
+  /* background-color: aqua; */
 }
 
 .section-story {
   min-height: 900px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* text-align: center; */
   z-index: 1; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   width: 100%;
@@ -406,7 +417,6 @@
   }
 
   .background-wrapper {
-    /* position: relative; */
     width: 100%;
     text-align: center;
     margin-bottom: 200px;
@@ -424,10 +434,25 @@
     background: none;
   }
 
+  .subtitle {
+    font-size: 10rem !important;
+  }
+
   .subtitle-content {
     z-index: 3;
   }
 
+  .section {
+    /* max-width: auto; */
+    /* background-color: #C04759; */
+  }
+
+  .section-secret {
+    min-height: 900px;
+  }
+  .section-story {
+    min-height: 900px;
+  }
 }
 
 /* 🧠 極大螢幕（視差滾動、特殊背景） */
