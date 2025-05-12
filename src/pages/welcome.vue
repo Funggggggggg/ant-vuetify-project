@@ -60,14 +60,14 @@
 
     <!-- 第三區 Story + 按鈕 -->
     <v-row class="section section-story text-center justify-space-between">
-      <v-col cols="12" class="d-flex justify-center bg-red">
+      <v-col cols="12" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
             <span class="storyWord" style=" color: #C04759">Story</span>
         </div>
       </v-col>
       <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one bg-black">
-          <span>
+        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
+          <span class="storyInside">
             靈感來自對親友的思念<br>
             每一次紀念<br>
             都是回憶的淬鍊<br>
@@ -78,7 +78,7 @@
           </span>
         </div>
       </v-col>
-      <v-col cols="12" class="d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500" >
+      <v-col cols="12" class="btnAll d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500">
         <router-link to="/" class="btn-explore d-flex align-center ma-3">
           <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
         </router-link>
@@ -150,7 +150,7 @@
 }
 
 .section-nest {
-  height: 800px;
+  height: 850px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -172,7 +172,6 @@
   z-index: 1; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   width: 100%;
-  background-color: #383431cc !important;
   padding-top: 5rem;
 }
 
@@ -243,9 +242,6 @@
   right: 1rem;
   bottom: 6rem;
   color: #383431cc !important;
-  /* color: #3B6C73 !important; */
-  /* background-color: aliceblue; */
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
 }
 
 .text-to-top {
@@ -268,7 +264,6 @@
   }
 
 .text-body-1 {
-  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   letter-spacing: 0.1em !important;
   line-height: 1.5rem;
 }
@@ -281,8 +276,8 @@
 
 .subtitle-content {
   width: 100%;
-  font-size: 1rem !important;
-  font-weight: 500 !important;
+  font-size: 1.3rem !important;
+  font-weight: 600 !important;
   line-height: 3;
   margin-bottom: 3rem;
   max-width: 700px;
@@ -303,9 +298,9 @@
 .btn-explore div,
 .btn-login div {
   font-size: 2.5rem;
-  min-height: 60px; /* 用 min-height 代替 height */
+  min-height: 70px; /* 用 min-height 代替 height */
   margin: 1rem;
-  padding: 0.5rem 1rem; /* 加一點內距，讓按鈕好看 */
+  padding: 1rem ; /* 加一點內距，讓按鈕好看 */
   display: inline-flex; /* 保持內部對齊，又能隨內容大小 */
 }
 
@@ -422,35 +417,69 @@
   }
 
   .section-secret {
-    /* position: fixed; */
     min-height: 900px;
   }
+
   .secretWord {
     position: absolute;
     width: 100%;
     top: 80px;
     left: -500px;
-
   }
+
   .secretInside {
     position: absolute;
     width: 100%;
     top: -300px;
     left: 220px;
     font-weight: 600 !important;
-    /* background-color: #C04759; */
   }
 
   .section-story {
-    /* position: relative; */
-    /* top: 100vh; */
-    min-height: 900px;
+    min-height: 1200px;
     color: #383431cc;
-    background-color: #F1D87F;
-    /* z-index: -1001 !important; */
   }
-  .storyWord {
 
+  .storyWord {
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    left: -500px;
+  }
+
+  .storyInside {
+    position: absolute;
+    width: 100%;
+    top: -250px;
+    left: 220px;
+    font-weight: 600 !important;
+    color: #383431;
+  }
+
+  .btnAll {
+    z-index: 9999999;
+    width: 100%;
+    /* background-color: #3B6C73; */
+  }
+  .btnAll div {
+    font-size: 2.8rem !important;
+    font-weight: 800 !important;
+    height: auto;
+    min-height: 100px;
+    padding: 1rem ;
+    line-height:100%;
+  }
+
+  .btn-explore{
+    position: absolute;
+    top: 60px;
+    left: 740px;
+  }
+
+  .btn-login {
+    position: absolute;
+    top: -85px;
+    right: -180px;
   }
 }
 
