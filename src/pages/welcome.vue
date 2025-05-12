@@ -37,13 +37,14 @@
 
     <!-- 第二區 Secret 內容 -->
     <v-row class="section section-secret text-center" style="gap: 3rem;">
-      <v-col :cols="vcalCols" class="d-flex justify-center bg-red">
+      <v-col cols="12" class="d-flex justify-center">
         <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril pt-15">
-          <span style=" color: #C04759;">Secret</span>
+          <span class="secretWord" style=" color: #C04759;">Secret</span>
         </div>
       </v-col>
-      <v-col :cols="vcalCols" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one bg-white">
+      <v-col cols="12" class="d-flex justify-center">
+        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content ">
+          <span class="secretInside text-abril text-klee-one">
             存放您回憶改造的秘密巢穴<br>
             如螞蟻蒐集著一塊塊記憶碎片<br>
             步步築出自己的窩<br>
@@ -52,26 +53,29 @@
             從日復一日的麻木日常中<br>
             重建生活意義<br>
             找回記憶的溫度<br>
+          </span>
         </div>
       </v-col>
     </v-row>
 
     <!-- 第三區 Story + 按鈕 -->
     <v-row class="section section-story text-center justify-space-between">
-      <v-col :cols="vcalCols" class="d-flex justify-center">
+      <v-col cols="12" class="d-flex justify-center bg-red">
         <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
-            <span style=" color: #C04759">Story</span>
+            <span class="storyWord" style=" color: #C04759">Story</span>
         </div>
       </v-col>
-      <v-col :cols="vcalCols" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
-          靈感來自對親友的思念<br>
-          每一次紀念<br>
-          都是回憶的淬鍊<br>
-          是轉化與重生的開始<br>
-          透過藝術 讓記憶不再只是過去<br>
-          而是延續至此刻<br>
-          走向未來<br>
+      <v-col cols="12" class="d-flex justify-center">
+        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one bg-black">
+          <span>
+            靈感來自對親友的思念<br>
+            每一次紀念<br>
+            都是回憶的淬鍊<br>
+            是轉化與重生的開始<br>
+            透過藝術 讓記憶不再只是過去<br>
+            而是延續至此刻<br>
+            走向未來<br>
+          </span>
         </div>
       </v-col>
       <v-col cols="12" class="d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500" >
@@ -128,17 +132,6 @@
   // const userStore = useUserStore()
   // const isLoggedIn = computed(() => userStore.isLoggedIn);
 
-  import { computed, toRef } from 'vue';
-  import { useDisplay } from 'vuetify';
-
-  const display = useDisplay()
-  const width = toRef(display, 'width')
-  const vcalCols = computed(() => {
-      return width.value >= 1450 ? 5 : 12
-  })
-  console.log('目前寬度:', width.value)
-
-
 </script>
 
 <style scoped>
@@ -149,11 +142,6 @@
 
  /* 頁面容器：填滿視窗高度 */
 .section {
-  /* display: flex; */
-  /* flex-direction: column; */
-  align-items: center;
-  /* justify-content: center; */
-
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -173,24 +161,14 @@
 
 .section-secret {
   min-height: 800px;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   z-index: 0; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   color: #383431cc;
   background-color: #F1D87F;
-  /* padding-top: 0rem; */
-  /* background-color: aqua; */
 }
 
 .section-story {
   min-height: 900px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* text-align: center; */
   z-index: 1; /* 確保文字在背景圖片上方 */
   flex-grow: 1; /* 讓主要內容區域填滿可用空間 */
   width: 100%;
@@ -203,8 +181,6 @@
   width: 100%;
   min-height: 100vh; /* 確保填滿畫面 */
   overflow: visible;
-  /* overflow: hidden; 阻止內容超出時產生 scrollbar */
-  /* background-color: aquamarine; */
 }
 
 .background-defalt {
@@ -304,13 +280,15 @@
 }
 
 .subtitle-content {
+  width: 100%;
   font-size: 1rem !important;
   font-weight: 500 !important;
   line-height: 3;
   margin-bottom: 3rem;
   max-width: 700px;
   text-align: center;
-  word-break: keep-all; /* 保持單詞不斷行 */
+  word-break: keep-all;
+  /* 保持單詞不斷行 */
 }
 
 .btn-explore,
@@ -440,18 +418,39 @@
 
   .subtitle-content {
     z-index: 3;
-  }
-
-  .section {
-    /* max-width: auto; */
-    /* background-color: #C04759; */
+    font-size: 1.5rem !important;
   }
 
   .section-secret {
+    /* position: fixed; */
     min-height: 900px;
   }
+  .secretWord {
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    left: -500px;
+
+  }
+  .secretInside {
+    position: absolute;
+    width: 100%;
+    top: -300px;
+    left: 220px;
+    font-weight: 600 !important;
+    /* background-color: #C04759; */
+  }
+
   .section-story {
+    /* position: relative; */
+    /* top: 100vh; */
     min-height: 900px;
+    color: #383431cc;
+    background-color: #F1D87F;
+    /* z-index: -1001 !important; */
+  }
+  .storyWord {
+
   }
 }
 
