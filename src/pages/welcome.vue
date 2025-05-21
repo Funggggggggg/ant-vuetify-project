@@ -18,19 +18,19 @@
     <div class="section section-nest text-snow text-center mb-0">
       <div class="maintitle d-flex flex-column align-items-end text-end text-abril">
         <h1
-          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
+          data-aos="fade-down" data-aos-duration="1000"
           class="maintitle-chiness text-klee-one" style="color: #3B6C73;"> 紀念巢
         </h1>
         <div
-          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500"
+          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1000"
           class="me-1 "> Memorial
         </div>
         <span
-          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1700"
+          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1500"
           class="text-body-1 text-abril text-to-top"> A secret base for collecting memories.
         </span>
         <div
-          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="2000"
+          data-aos="fade-down" data-aos-duration="1000" data-aos-delay="1800"
           class="text-to-top"> Nest </div>
       </div>
     </div>
@@ -38,12 +38,12 @@
     <!-- 第二區 Secret 內容 -->
     <v-row class="section section-secret text-center" style="gap: 3rem;">
       <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril pt-15">
+        <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="500" class="subtitle text-abril pt-15">
           <span class="secretWord" style=" color: #C04759;">Secret</span>
         </div>
       </v-col>
       <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content ">
+        <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="500" class="subtitle-content ">
           <span class="secretInside text-abril text-klee-one">
             存放您回憶改造的秘密巢穴<br>
             如螞蟻蒐集著一塊塊記憶碎片<br>
@@ -61,12 +61,12 @@
     <!-- 第三區 Story + 按鈕 -->
     <v-row class="section section-story text-center justify-space-between">
       <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" class="subtitle text-abril text-snow">
+        <div data-aos="fade-right" data-aos-duration="1000" class="subtitle text-abril text-snow">
             <span class="storyWord" style=" color: #C04759">Story</span>
         </div>
       </v-col>
       <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
+        <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="500" class="subtitle-content text-abril text-klee-one">
           <span class="storyInside">
             靈感來自對親友的思念<br>
             每一次紀念<br>
@@ -78,7 +78,7 @@
           </span>
         </div>
       </v-col>
-      <v-col cols="12" class="btnAll d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1500">
+      <v-col cols="12" class="btnAll d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1000">
         <router-link to="/" class="btn-explore d-flex align-center ma-3">
           <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
         </router-link>
