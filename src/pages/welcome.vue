@@ -54,7 +54,6 @@
             重新思考物與人的關係<br>
             從日復一日的麻木日常中<br>
             重建生活意義<br>
-            找回記憶的溫度<br>
           </span>
         </div>
       </v-col>
@@ -80,7 +79,7 @@
           </span>
         </div>
       </v-col>
-      <v-col cols="12" class="btnAll d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1000">
+      <v-col cols="12" class="btnAll d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="500" >
         <router-link to="/" class="btn-explore d-flex align-center ma-3">
           <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
         </router-link>
@@ -366,7 +365,8 @@
 /* 🖥 超大桌機背景圖片位置微調 */
 @media (min-width: 1450px) {
   .background-image {
-    display: block; /* 顯示背景圖片 */
+    display: block;
+    /* 顯示背景圖片*/
     position: relative;
     width: 1800px;
     background-size: contain; /* 確保背景圖片包含在容器內 */
@@ -378,6 +378,7 @@
     transform: translateX(-50%);
     left: 50%;
   }
+
   .background-image img {
     width: 100%;
     height: 100%;
@@ -433,7 +434,7 @@
     position: absolute;
     width: 100%;
     top: -300px;
-    left: 220px;
+    left: 350px;
     font-weight: 600 !important;
   }
 
@@ -474,14 +475,14 @@
 
   .btn-explore{
     position: absolute;
-    top: 60px;
+    top: 70px;
     left: 740px;
   }
 
   .btn-login {
     position: absolute;
-    top: -85px;
-    right: -180px;
+    top: -60px;
+    right: -200px;
   }
 }
 
