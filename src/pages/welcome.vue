@@ -40,7 +40,7 @@
     <!-- 第二區 Secret 內容 -->
     <v-row class="section section-secret text-center" style="gap: 3rem;">
       <v-col cols="12" class="d-flex justify-center">
-        <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="500" class="subtitle text-abril pt-15">
+        <div data-aos="fade-right" data-aos-duration="1000" class="subtitle text-abril pt-15">
           <span class="secretWord" style=" color: #C04759;">Secret</span>
         </div>
       </v-col>
@@ -79,20 +79,24 @@
           </span>
         </div>
       </v-col>
-      <v-col cols="12" class="btnAll d-flex justify-center mb-10" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="500" >
-        <router-link to="/" class="btn-explore d-flex align-center ma-3">
-          <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
-        </router-link>
-        <template v-if="!isLoggedIn">
-          <router-link to="/login/" class="btn-login d-flex align-center">
-            <v-toolbar-title class=" text-abril">Login</v-toolbar-title>
+      <v-col cols="12">
+        <div class="btnAll d-flex justify-center mb-10" data-aos="fade" data-aos-duration="1500">
+          <router-link to="/" class="btn-explore d-flex align-center ma-3">
+            <v-toolbar-title class=" text-abril">Explore</v-toolbar-title>
           </router-link>
-        </template>
-        <template v-else>
-          <div>
-            <img class="antimg" src="/ant.png">
+          <div class="btn-login d-flex align-center">
+            <template v-if="!isLoggedIn">
+              <router-link to="/login/">
+                <v-toolbar-title class="text-abril">Login</v-toolbar-title>
+              </router-link>
+            </template>
+            <template v-else>
+              <div>
+                <img class="antimg" src="/ant.png">
+              </div>
+            </template>
           </div>
-        </template>
+        </div>
       </v-col>
     </v-row>
     <!-- Footer -->
@@ -125,13 +129,14 @@
 <script setup>
   import AOS from 'aos';
   import 'aos/dist/aos.css';
+  import { computed } from 'vue';
 
   AOS.init();
 
-  // import { useUserStore } from '@/stores/user'
+  import { useUserStore } from '@/stores/user'
 
-  // const userStore = useUserStore()
-  // const isLoggedIn = computed(() => userStore.isLoggedIn);
+  const userStore = useUserStore()
+  const isLoggedIn = computed(() => userStore.isLoggedIn);
 
 </script>
 
@@ -287,8 +292,13 @@
   /* 保持單詞不斷行 */
 }
 
+.storyInside {
+  position: static; /* ✅ 預設使用 flex 排版 */
+}
+
 .btn-explore,
 .btn-login {
+  position: static; /* ✅ 預設使用 flex 排版 */
   text-decoration: none !important;
   line-height: 1;
   font-weight: 700;
@@ -309,6 +319,16 @@
 .btn-login:hover {
   color: #3B6C73;
   transition: 0.3s;
+}
+
+.btn-explore a:visited,
+.btn-login a:visited {
+  text-decoration: none;
+  color: #C04759;
+}
+
+.btn-explore div {
+  margin-left: 5rem;
 }
 
 .antimg {
@@ -441,6 +461,7 @@
   .section-story {
     min-height: 1200px;
     color: #383431cc;
+    /* position: relative; */
   }
 
   .storyWord {
@@ -479,10 +500,20 @@
     left: 740px;
   }
 
+  .btn-explore div {
+    margin-left: 0rem;
+  }
+
   .btn-login {
     position: absolute;
-    top: -60px;
-    right: -200px;
+    top: -90px;
+    right: -220px;
+  }
+
+  .antimg {
+    display: block;
+    width: 100px;
+    height: 60px;
   }
 }
 
