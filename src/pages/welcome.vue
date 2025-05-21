@@ -1,16 +1,18 @@
 <template>
   <v-container class="background-wrapper" fluid>
     <!-- 背景與影片 -->
-    <div class="background-defalt">
-      <div data-aos="fade" data-aos-duration="1000" data-aos-delay="2500">
-        <div class="video">
-          <video autoplay loop muted>
-            <source src="/videos/video-4.mp4" type="video/mp4">
-          </video>
+    <div data-aos="fade" data-aos-duration="1000">
+      <div class="background-defalt">
+        <div data-aos="fade" data-aos-duration="1000" data-aos-delay="500">
+          <div class="video">
+            <video autoplay loop muted>
+              <source src="/videos/video-4.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
-      </div>
-      <div class="background-image" >
-        <img src="/welcomeBackGround3.png" alt="background"/>
+        <div class="background-image" >
+          <img src="/welcomeBackGround3.png" alt="background"/>
+        </div>
       </div>
     </div>
 
