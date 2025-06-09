@@ -2,6 +2,9 @@
 
 ## 前端
 
+ ![image](https://github.com/user-attachments/assets/1f6ac884-a98e-497e-b316-7674c9bafb67)
+ 完整專案報告思路： https://drive.google.com/file/d/1YirvwUJhC1BURCWWMaHXLm27IpBCbpEo/view?usp=drive_link
+
 ## 專題特色
 1. 以 「舊物改造的儲藏基地」 為概念，透過數位平台記錄舊物的轉化歷程，賦予物件新的情感價值與生命。
 2. 獨立完成一個從設計到開發的完整前後端專案，並展示對 UI 設計與 RWD 排版的整合能力。
@@ -27,9 +30,6 @@
 像螞蟻一點一滴拾起記憶的碎片，慢慢築起一個內在安全的巢穴空間。<br>
 在這裡，藝術不只是形式，而是與自己對話的媒介，是穿越麻木日常、重新思考人與物關係的橋樑。<br>
 每一次創作，都是一次對生活意義的重建。<br>
-  
- ![image](https://github.com/user-attachments/assets/1f6ac884-a98e-497e-b316-7674c9bafb67)
- 完整專案報告思路： https://drive.google.com/file/d/1YirvwUJhC1BURCWWMaHXLm27IpBCbpEo/view?usp=drive_link
 
 ## Vuetify (Default)
 
