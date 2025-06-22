@@ -25,7 +25,7 @@
 藝術是與自我對話的練習，是對抗日常麻木、重建生活意義的橋樑。
 
 ## 技術實踐
-- 針對各種裝置設計 RWD 排版，透過 CSS Flexbox 與 Media Query 做出流暢切換，處理絕對定位與 RWD 衝突問題，調整 transform、z-index 與 flex 配置。並搭配 t ransition 與 AOS 滾動動畫提升互動體驗。
+- 針對各種裝置設計 RWD 排版，透過 CSS Flexbox 與 Media Query 做出流暢切換，處理絕對定位與 RWD 衝突問題，調整 transform、z-index 與 flex 配置。並搭配 transition 與 AOS 滾動動畫提升互動體驗。
 - 整合 Node.js + Express 後端服務，處理前端資料請求與驗證流程。
 - 使用 MongoDB 作為資料儲存，實作使用者註冊登入功能，並配合 JWT 驗證與 .env 管理敏感資訊。
 - 熟悉使用 F12 開發者工具進行錯誤追蹤，具備 Axios、JWT 驗證與 .env 環境變數相關除錯經驗。
